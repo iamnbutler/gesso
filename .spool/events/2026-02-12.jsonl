@@ -59,3 +59,17 @@
 {"v":1,"op":"create","id":"mliv4z2q-f8u6","ts":"2026-02-12T02:52:10.514960Z","by":"@iamnbutler","branch":"main","d":{"description":"MetalRenderer with device, command queue, pipeline, buffers","priority":"p2","stream":"mliupru8-vi36","title":"Create MetalRenderer struct"}}
 {"v":1,"op":"create","id":"mliv4zsm-acbd","ts":"2026-02-12T02:52:11.446879Z","by":"@iamnbutler","branch":"main","d":{"description":"Implement render() with instance buffer upload and draw call","priority":"p2","stream":"mliupru8-vi36","title":"Implement Renderer trait for MetalRenderer"}}
 {"v":1,"op":"create","id":"mliv50j9-s37c","ts":"2026-02-12T02:52:12.405280Z","by":"@iamnbutler","branch":"main","d":{"description":"Use MetalRenderer and MetalSurface to display a centered red square","priority":"p2","stream":"mliupru8-vi36","title":"Update hello_window to render red quad"}}
+{"v":1,"op":"complete","id":"mliv4v78-3gli","ts":"2026-02-12T02:57:53.840558Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv4wgl-xddu","ts":"2026-02-12T02:57:53.863264Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv4xae-ndad","ts":"2026-02-12T02:57:53.884989Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv4y2h-4rvd","ts":"2026-02-12T02:57:53.905526Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv4z2q-f8u6","ts":"2026-02-12T02:57:53.926072Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv4zsm-acbd","ts":"2026-02-12T02:57:53.947421Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliv50j9-s37c","ts":"2026-02-12T02:57:53.970783Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mlivqou8-ql2j","ts":"2026-02-12T03:09:03.680283Z","by":"@iamnbutler","branch":"main","d":{"description":"Window wasn't triggering initial redraw. Added window.request_redraw() in resumed handler.","stream":"mliupru8-vi36","title":"Fix: request initial redraw in hello_window"}}
+{"v":1,"op":"complete","id":"mlivqou8-ql2j","ts":"2026-02-12T03:09:03.706838Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create_stream","id":"mlivqqj9-49yd","ts":"2026-02-12T03:09:05.877312Z","by":"@iamnbutler","branch":"main","d":{"description":"Performance tracing and benchmarking infrastructure","name":"tracing-bench"}}
+{"v":1,"op":"create","id":"mlivqxto-2nvx","ts":"2026-02-12T03:09:15.324611Z","by":"@iamnbutler","branch":"main","d":{"description":"Benchmark rendering performance with configurable quad counts and accurate timing stats","priority":"p1","stream":"mlivqqj9-49yd","title":"Create quad_bench example with 1k/10k/1m modes"}}
+{"v":1,"op":"complete","id":"mlivqxto-2nvx","ts":"2026-02-12T03:11:18.516635Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mlivvjqc-664i","ts":"2026-02-12T03:12:50.340924Z","by":"@iamnbutler","branch":"main","d":{"description":"1k: 155 FPS, 0.15M/s | 10k: 190 FPS, 1.9M/s | 100k: 180 FPS, 18M/s | 1M: 139 FPS, 139M/s. At 1M quads, CPU scene build (4.7ms) dominates over GPU render (2.5ms).","stream":"mlivqqj9-49yd","title":"Initial benchmark results logged"}}
+{"v":1,"op":"complete","id":"mlivvjqc-664i","ts":"2026-02-12T03:12:50.369720Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}

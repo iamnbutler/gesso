@@ -7,3 +7,10 @@ edition.workspace = true
 gesso_core = { path = "../gesso_core" }
 glamour = "0.18"
 winit = "0.30"
+
+[dev-dependencies]
+rand = { version = "0.8", features = ["small_rng"] }
+
+[[bench]]
+name = "quad_bench"
+harness = false

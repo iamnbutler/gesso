@@ -1,12 +1,14 @@
 //! Benchmark quad rendering performance.
 //!
-//! Usage: cargo run --example quad_bench --release -- [1k|10k|100k|1m]
+//! Usage: cargo bench --bench quad_bench -- [1k|10k|100k|1m]
 
 use gesso_core::{
     metal::{MetalRenderer, MetalSurface},
     DeviceRect, Quad, Renderer, Scene, Srgba,
 };
 use glamour::{Point2, Size2};
+use rand::{Rng, SeedableRng};
+use rand::rngs::SmallRng;
 use std::time::{Duration, Instant};
 use winit::{
     application::ApplicationHandler,
@@ -108,34 +110,33 @@ impl App {
     fn build_scene(&mut self, width: f32, height: f32) {
         self.scene.clear();
 
-        // Grid of quads filling the viewport
-        let cols = (self.quad_count as f32).sqrt().ceil() as usize;
-        let rows = (self.quad_count + cols - 1) / cols;
+        // Seeded RNG for reproducibility, but re-seed each frame for variation
+        let mut rng = SmallRng::seed_from_u64(self.frame_count as u64);
 
-        let quad_w = width / cols as f32;
-        let quad_h = height / rows as f32;
+        let min_size = 4.0_f32;
+        let max_size = 100.0_f32.min(width / 10.0).min(height / 10.0);
 
-        // Slightly smaller to show gaps
-        let inset = 1.0;
+        for _ in 0..self.quad_count {
+            // Random size
+            let w = rng.gen_range(min_size..max_size);
+            let h = rng.gen_range(min_size..max_size);
 
-        for i in 0..self.quad_count {
-            let col = i % cols;
-            let row = i / cols;
+            // Random position (ensuring quad stays within viewport)
+            let x = rng.gen_range(0.0..(width - w).max(1.0));
+            let y = rng.gen_range(0.0..(height - h).max(1.0));
 
-            let x = col as f32 * quad_w + inset;
-            let y = row as f32 * quad_h + inset;
-
-            // Cycle through colors
-            let r = ((col * 37) % 255) as f32 / 255.0;
-            let g = ((row * 53) % 255) as f32 / 255.0;
-            let b = ((i * 17) % 255) as f32 / 255.0;
+            // Random color
+            let r = rng.gen_range(0.0..1.0);
+            let g = rng.gen_range(0.0..1.0);
+            let b = rng.gen_range(0.0..1.0);
+            let a = rng.gen_range(0.5..1.0); // Semi-transparent to fully opaque
 
             let quad = Quad::new(
                 DeviceRect::new(
                     Point2::new(x, y),
-                    Size2::new(quad_w - inset * 2.0, quad_h - inset * 2.0),
+                    Size2::new(w, h),
                 ),
-                Srgba::new(r, g, b, 1.0),
+                Srgba::new(r, g, b, a),
             );
             self.scene.push_quad(quad);
         }
