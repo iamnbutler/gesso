@@ -9,6 +9,8 @@ Gesso provides a foundation for building high-performance UI applications with i
 - **Coordinate Spaces**: Type-safe distinction between LogicalPixels (DPI-independent) and DevicePixels (physical)
 - **Layout Primitives**: Edges, Corners for padding/margin/border/radii
 - **Glamour Integration**: Re-exports glamour's Unit trait for custom coordinate spaces
+- **Painter's Stack**: Closure-scoped transform/clip for hierarchical drawing
+- **Scene**: Typed primitive vectors in device pixels, GPU-ready
 
 ## Crates
 
@@ -18,6 +20,7 @@ Gesso provides a foundation for building high-performance UI applications with i
 ## Documentation
 
 - [Geometry Design](docs/plans/2026-02-11-geometry-module-design.md) - Architecture decisions for geometry module
+- [Draw Abstraction Design](docs/plans/2026-02-11-draw-abstraction-design.md) - Scene, DrawContext, Renderer trait
 
 ## Key Files
 
