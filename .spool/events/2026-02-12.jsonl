@@ -6,3 +6,10 @@
 {"v":1,"op":"create","id":"mlisex6c-hne6","ts":"2026-02-12T01:35:55.764950Z","by":"@iamnbutler","branch":"main","d":{"description":"TDD: Axis enum with Horizontal, Vertical and invert method","priority":"p1","stream":"mliseo67-rrg4","title":"Add Axis enum"}}
 {"v":1,"op":"create","id":"mlisexub-u4bh","ts":"2026-02-12T01:35:56.627856Z","by":"@iamnbutler","branch":"main","d":{"description":"Add glamour::Unit re-export, pub use geometry::* from lib.rs","priority":"p2","stream":"mliseo67-rrg4","title":"Export geometry types"}}
 {"v":1,"op":"create","id":"mliseyj8-w042","ts":"2026-02-12T01:35:57.524996Z","by":"@iamnbutler","branch":"main","d":{"description":"Add dependency, convert to lib.rs, re-export gesso_core","priority":"p2","stream":"mliseo67-rrg4","title":"Wire gesso crate to gesso_core"}}
+{"v":1,"op":"complete","id":"mliset9r-fobc","ts":"2026-02-12T01:42:31.566181Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliseuwe-gxb7","ts":"2026-02-12T01:42:31.589346Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mlisevpo-058j","ts":"2026-02-12T01:42:31.610363Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mlisewh0-1fyz","ts":"2026-02-12T01:42:31.631535Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mlisex6c-hne6","ts":"2026-02-12T01:42:31.652733Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mlisexub-u4bh","ts":"2026-02-12T01:42:31.675130Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"complete","id":"mliseyj8-w042","ts":"2026-02-12T01:42:31.700727Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
