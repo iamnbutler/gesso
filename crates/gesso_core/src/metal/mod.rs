@@ -10,21 +10,11 @@ use metal::{
     Buffer, CommandQueue, CompileOptions, Device, MTLResourceOptions,
     MetalLayer, RenderPipelineDescriptor, RenderPipelineState,
 };
+use objc2::msg_send;
+use objc2::runtime::AnyObject;
+use objc2_app_kit::NSView;
 use std::mem;
-use objc::{msg_send, sel, sel_impl, runtime::{Object, YES}};
 use winit::raw_window_handle::{HasWindowHandle, RawWindowHandle};
-
-#[repr(C)]
-struct CGRect {
-    origin: CGPoint,
-    size: CGSize,
-}
-
-#[repr(C)]
-struct CGPoint {
-    x: f64,
-    y: f64,
-}
 
 /// Unit quad vertices for triangle strip: [0,0], [1,0], [0,1], [1,1]
 const UNIT_QUAD_VERTICES: [[f32; 2]; 4] = [
@@ -83,7 +73,9 @@ impl MetalSurface {
             panic!("Expected AppKit window handle on macOS");
         };
 
-        let ns_view = handle.ns_view.as_ptr() as *mut Object;
+        let ns_view: &NSView = unsafe {
+            (handle.ns_view.as_ptr() as *const NSView).as_ref().unwrap()
+        };
 
         let layer = MetalLayer::new();
         layer.set_device(device);
@@ -91,12 +83,13 @@ impl MetalSurface {
         layer.set_presents_with_transaction(false);
 
         // Set layer on view
-        let _: () = msg_send![ns_view, setWantsLayer: YES];
-        let _: () = msg_send![ns_view, setLayer: layer.as_ptr()];
+        ns_view.setWantsLayer(true);
+        let layer_ptr = layer.as_ptr() as *mut AnyObject;
+        let _: () = unsafe { msg_send![ns_view, setLayer: layer_ptr] };
 
         // Get initial size
-        let bounds: CGRect = msg_send![ns_view, bounds];
-        let scale: f64 = msg_send![ns_view, backingScaleFactor];
+        let bounds = ns_view.bounds();
+        let scale = ns_view.window().map_or(1.0, |w| w.backingScaleFactor());
         let drawable_size = (
             (bounds.size.width * scale) as f32,
             (bounds.size.height * scale) as f32,

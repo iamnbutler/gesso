@@ -562,7 +562,9 @@ dependencies = [
  "glam 0.32.0",
  "glamour",
  "metal",
- "objc",
+ "objc2",
+ "objc2-app-kit",
+ "objc2-foundation",
  "palette",
  "winit",
 ]
