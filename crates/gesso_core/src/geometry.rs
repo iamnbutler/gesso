@@ -55,6 +55,46 @@ impl ScaleFactor {
     }
 }
 
+/// Edge values for padding, margin, border widths.
+/// Follows CSS order: top, right, bottom, left.
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct Edges<T> {
+    pub top: T,
+    pub right: T,
+    pub bottom: T,
+    pub left: T,
+}
+
+impl<T: Copy> Edges<T> {
+    pub fn all(value: T) -> Self {
+        Self {
+            top: value,
+            right: value,
+            bottom: value,
+            left: value,
+        }
+    }
+
+    pub fn symmetric(vertical: T, horizontal: T) -> Self {
+        Self {
+            top: vertical,
+            bottom: vertical,
+            left: horizontal,
+            right: horizontal,
+        }
+    }
+}
+
+impl<T: Copy + std::ops::Add<Output = T>> Edges<T> {
+    pub fn horizontal(&self) -> T {
+        self.left + self.right
+    }
+
+    pub fn vertical(&self) -> T {
+        self.top + self.bottom
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -79,5 +119,17 @@ mod tests {
         assert_eq!(original.origin.y, back.origin.y);
         assert_eq!(original.size.width, back.size.width);
         assert_eq!(original.size.height, back.size.height);
+    }
+
+    #[test]
+    fn edges_sums() {
+        let edges = Edges {
+            top: 1.0,
+            right: 2.0,
+            bottom: 3.0,
+            left: 4.0,
+        };
+        assert_eq!(edges.horizontal(), 6.0); // 4 + 2
+        assert_eq!(edges.vertical(), 4.0); // 1 + 3
     }
 }
