@@ -28,3 +28,15 @@
 {"v":1,"op":"complete","id":"mlitps63-pf4q","ts":"2026-02-12T02:12:22.134619Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
 {"v":1,"op":"create","id":"mlitra3n-3ptg","ts":"2026-02-12T02:13:32.003089Z","by":"@iamnbutler","branch":"main","d":{"description":"Use trait Renderer with generics (Window<R: Renderer>) instead of dyn dispatch or enum. Extensible and zero overhead.","priority":"p3","stream":"mlita3ol-lr5j","title":"Decision: trait-based renderer with static dispatch"}}
 {"v":1,"op":"complete","id":"mlitra3n-3ptg","ts":"2026-02-12T02:13:32.029714Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliu4rzn-qcc2","ts":"2026-02-12T02:24:01.715153Z","by":"@iamnbutler","branch":"main","d":{"description":"GPU-friendly layout - typed vectors enable batching. Device pixels stored directly, no per-primitive conversion at render time.","priority":"p3","stream":"mlita3ol-lr5j","title":"Design: Scene holds typed Vec<Quad> in device pixels"}}
+{"v":1,"op":"complete","id":"mliu4rzn-qcc2","ts":"2026-02-12T02:24:01.749341Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliu4tge-m9bt","ts":"2026-02-12T02:24:03.614320Z","by":"@iamnbutler","branch":"main","d":{"description":"Offset and clip stacks with closure-scoped with_offset/with_clip. Compiler enforces matching. Logical pixels in, device pixels out.","priority":"p3","stream":"mlita3ol-lr5j","title":"Design: DrawContext painter's stack"}}
+{"v":1,"op":"complete","id":"mliu4tge-m9bt","ts":"2026-02-12T02:24:03.643019Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliu4uuz-4mq6","ts":"2026-02-12T02:24:05.435681Z","by":"@iamnbutler","branch":"main","d":{"description":"Single primitive for most UI: bounds, background, border_color, border_widths (Edges), corner_radii (Corners). All in device pixels.","priority":"p3","stream":"mlita3ol-lr5j","title":"Design: Quad primitive"}}
+{"v":1,"op":"complete","id":"mliu4uuz-4mq6","ts":"2026-02-12T02:24:05.464962Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliucjva-s75e","ts":"2026-02-12T02:30:04.438478Z","by":"@iamnbutler","branch":"main","d":{"priority":"p1","stream":"mlita3ol-lr5j","title":"Implement Scene and Quad"}}
+{"v":1,"op":"complete","id":"mliucjva-s75e","ts":"2026-02-12T02:30:04.470511Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliuck9d-phyy","ts":"2026-02-12T02:30:04.945513Z","by":"@iamnbutler","branch":"main","d":{"priority":"p1","stream":"mlita3ol-lr5j","title":"Implement DrawContext"}}
+{"v":1,"op":"complete","id":"mliuck9d-phyy","ts":"2026-02-12T02:30:04.972905Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create","id":"mliuckrn-l4tw","ts":"2026-02-12T02:30:05.603122Z","by":"@iamnbutler","branch":"main","d":{"priority":"p1","stream":"mlita3ol-lr5j","title":"Implement Renderer trait"}}
+{"v":1,"op":"complete","id":"mliuckrn-l4tw","ts":"2026-02-12T02:30:05.632173Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
