@@ -7,5 +7,6 @@ edition.workspace = true
 glam = "0.32"
 glamour = "0.18"
 palette = "0.7"
+winit = "0.30"
 
 [dev-dependencies]
