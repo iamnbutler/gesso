@@ -544,7 +544,7 @@ dependencies = [
 
 [[package]]
 name = "gesso"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "criterion",
  "gesso_core",
@@ -555,7 +555,7 @@ dependencies = [
 
 [[package]]
 name = "gesso_core"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "core-graphics-types",
  "foreign-types",
