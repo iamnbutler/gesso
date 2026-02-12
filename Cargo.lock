@@ -543,33 +543,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "gesso"
-version = "0.0.1"
-dependencies = [
- "criterion",
- "gesso_core",
- "glamour",
- "rand",
- "winit",
-]
-
-[[package]]
-name = "gesso_core"
-version = "0.0.1"
-dependencies = [
- "core-graphics-types",
- "foreign-types",
- "glam 0.32.0",
- "glamour",
- "metal",
- "objc2",
- "objc2-app-kit",
- "objc2-foundation",
- "palette",
- "winit",
-]
-
-[[package]]
 name = "gethostname"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -813,6 +786,33 @@ dependencies = [
  "log",
  "objc",
  "paste",
+]
+
+[[package]]
+name = "motif"
+version = "0.0.1"
+dependencies = [
+ "criterion",
+ "glamour",
+ "motif_core",
+ "rand",
+ "winit",
+]
+
+[[package]]
+name = "motif_core"
+version = "0.0.1"
+dependencies = [
+ "core-graphics-types",
+ "foreign-types",
+ "glam 0.32.0",
+ "glamour",
+ "metal",
+ "objc2",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "palette",
+ "winit",
 ]
 
 [[package]]

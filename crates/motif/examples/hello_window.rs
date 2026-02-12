@@ -1,6 +1,6 @@
 //! Opens a window and renders a red quad using Metal.
 
-use gesso_core::{
+use motif_core::{
     metal::{MetalRenderer, MetalSurface},
     DeviceRect, Quad, Renderer, Scene, Srgba,
 };
@@ -34,7 +34,7 @@ impl ApplicationHandler for App {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         if self.window.is_none() {
             let attrs = Window::default_attributes()
-                .with_title("Gesso - Hello Quad")
+                .with_title("Motif - Hello Quad")
                 .with_inner_size(winit::dpi::LogicalSize::new(800.0, 600.0));
             let window = event_loop.create_window(attrs).unwrap();
 

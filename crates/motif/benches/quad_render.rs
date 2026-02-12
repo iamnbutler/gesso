@@ -2,7 +2,7 @@
 //!
 //! Usage: cargo bench --bench quad_render
 
-use gesso_core::{
+use motif_core::{
     metal::{MetalRenderer, MetalSurface},
     DeviceRect, Quad, Renderer, Scene, Srgba,
 };
@@ -147,7 +147,7 @@ impl ApplicationHandler for App {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         if self.window.is_none() {
             let attrs = Window::default_attributes()
-                .with_title(format!("Gesso Bench - {} quads", self.quad_count))
+                .with_title(format!("Motif Bench - {} quads", self.quad_count))
                 .with_inner_size(winit::dpi::LogicalSize::new(1200.0, 800.0));
             let window = event_loop.create_window(attrs).unwrap();
 

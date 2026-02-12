@@ -73,3 +73,25 @@
 {"v":1,"op":"complete","id":"mlivqxto-2nvx","ts":"2026-02-12T03:11:18.516635Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
 {"v":1,"op":"create","id":"mlivvjqc-664i","ts":"2026-02-12T03:12:50.340924Z","by":"@iamnbutler","branch":"main","d":{"description":"1k: 155 FPS, 0.15M/s | 10k: 190 FPS, 1.9M/s | 100k: 180 FPS, 18M/s | 1M: 139 FPS, 139M/s. At 1M quads, CPU scene build (4.7ms) dominates over GPU render (2.5ms).","stream":"mlivqqj9-49yd","title":"Initial benchmark results logged"}}
 {"v":1,"op":"complete","id":"mlivvjqc-664i","ts":"2026-02-12T03:12:50.369720Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"create_stream","id":"mljo8bp6-bswr","ts":"2026-02-12T16:26:35.706920Z","by":"@iamnbutler","branch":"main","d":{"description":"Rename gesso -> motif for crates.io publishing","name":"motif-rename"}}
+{"v":1,"op":"create","id":"mljo8oif-wkbj","ts":"2026-02-12T16:26:52.311498Z","by":"@iamnbutler","branch":"main","d":{"description":"Rename crates/gesso_core -> crates/motif_core and crates/gesso -> crates/motif","priority":"p0","stream":"mljo8bp6-bswr","title":"Rename crate directories"}}
+{"v":1,"op":"create","id":"mljo8pa2-v186","ts":"2026-02-12T16:26:53.306385Z","by":"@iamnbutler","branch":"main","d":{"description":"Update workspace Cargo.toml (repository URL), motif_core/Cargo.toml (name, description), motif/Cargo.toml (name, dependency on motif_core)","priority":"p0","stream":"mljo8bp6-bswr","title":"Update Cargo.toml files"}}
+{"v":1,"op":"create","id":"mljo8qir-vvm3","ts":"2026-02-12T16:26:54.915533Z","by":"@iamnbutler","branch":"main","d":{"description":"Update crates/motif/src/lib.rs to use motif_core, update any doc comments referencing gesso","priority":"p1","stream":"mljo8bp6-bswr","title":"Update source files"}}
+{"v":1,"op":"create","id":"mljo8r88-w1vb","ts":"2026-02-12T16:26:55.832060Z","by":"@iamnbutler","branch":"main","d":{"description":"Update README.md and llms.txt to use motif instead of gesso","priority":"p1","stream":"mljo8bp6-bswr","title":"Update documentation"}}
+{"v":1,"op":"create","id":"mljo8s2e-hrtv","ts":"2026-02-12T16:26:56.918754Z","by":"@iamnbutler","branch":"main","d":{"description":"Update hello_window.rs, scene_build.rs, quad_render.rs imports","priority":"p1","stream":"mljo8bp6-bswr","title":"Update examples and benchmarks"}}
+{"v":1,"op":"create","id":"mljo8st0-4jbe","ts":"2026-02-12T16:26:57.876370Z","by":"@iamnbutler","branch":"main","d":{"description":"Update scripts/release.sh for motif crate names, create scripts/init_crate.sh for one-time initial publish","priority":"p1","stream":"mljo8bp6-bswr","title":"Update release scripts"}}
+{"v":1,"op":"create","id":"mljo8tho-4k9a","ts":"2026-02-12T16:26:58.764865Z","by":"@iamnbutler","branch":"main","d":{"description":"Run cargo build, cargo test, cargo clippy to verify everything works","priority":"p2","stream":"mljo8bp6-bswr","title":"Verify build and tests"}}
+{"v":1,"op":"assign","id":"mljo8oif-wkbj","ts":"2026-02-12T16:27:03.094429Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8oif-wkbj","ts":"2026-02-12T16:27:07.358601Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8pa2-v186","ts":"2026-02-12T16:27:07.382481Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8pa2-v186","ts":"2026-02-12T16:27:18.980524Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8qir-vvm3","ts":"2026-02-12T16:27:19.002680Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8qir-vvm3","ts":"2026-02-12T16:27:38.375867Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8r88-w1vb","ts":"2026-02-12T16:27:38.398437Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8r88-w1vb","ts":"2026-02-12T16:28:01.635660Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8s2e-hrtv","ts":"2026-02-12T16:28:01.656919Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8s2e-hrtv","ts":"2026-02-12T16:28:21.585060Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8st0-4jbe","ts":"2026-02-12T16:28:21.606264Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8st0-4jbe","ts":"2026-02-12T16:28:45.495641Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}
+{"v":1,"op":"assign","id":"mljo8tho-4k9a","ts":"2026-02-12T16:28:45.517359Z","by":"@iamnbutler","branch":"main","d":{"to":"@iamnbutler"}}
+{"v":1,"op":"complete","id":"mljo8tho-4k9a","ts":"2026-02-12T16:29:13.024183Z","by":"@iamnbutler","branch":"main","d":{"resolution":"done"}}

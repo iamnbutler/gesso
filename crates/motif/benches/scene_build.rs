@@ -1,7 +1,7 @@
 //! CPU benchmarks for scene building via DrawContext.
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
-use gesso_core::{DrawContext, Point, Rect, ScaleFactor, Scene, Size, Srgba};
+use motif_core::{DrawContext, Point, Rect, ScaleFactor, Scene, Size, Srgba};
 use rand::{Rng, SeedableRng};
 use rand::rngs::SmallRng;
 
@@ -94,8 +94,8 @@ fn bench_scene_clear(c: &mut Criterion) {
 
 #[cfg(target_os = "macos")]
 fn bench_quad_instance_conversion(c: &mut Criterion) {
-    use gesso_core::metal::QuadInstance;
-    use gesso_core::{DeviceRect, Quad};
+    use motif_core::metal::QuadInstance;
+    use motif_core::{DeviceRect, Quad};
     use glamour::{Point2, Size2};
 
     let mut group = c.benchmark_group("metal");

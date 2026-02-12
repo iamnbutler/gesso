@@ -7,8 +7,8 @@ version = "0.0.1"
 edition = "2021"
 authors = ["Nate Butler <iamnbutler@gmail.com>"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/natebutler/gesso"
-homepage = "https://github.com/natebutler/gesso"
+repository = "https://github.com/iamnbutler/motif"
+homepage = "https://github.com/iamnbutler/motif"
 keywords = ["ui", "graphics", "rendering", "metal", "gpu"]
 categories = ["gui", "graphics", "rendering"]
 

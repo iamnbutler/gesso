@@ -1,4 +1,4 @@
-# Gesso
+# Motif
 
 An immediate-mode UI framework for Rust with GPU rendering.
 
@@ -12,8 +12,8 @@ An immediate-mode UI framework for Rust with GPU rendering.
 
 ## Crates
 
-- `gesso` - Main crate
-- `gesso_core` - Core types and rendering primitives
+- `motif` - Main crate
+- `motif_core` - Core types and rendering primitives
 
 ## License
 

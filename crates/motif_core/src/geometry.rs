@@ -1,4 +1,4 @@
-//! Core geometry primitives for gesso.
+//! Core geometry primitives for motif.
 
 // Re-export Unit trait for users defining custom coordinate spaces
 pub use glamour::Unit;

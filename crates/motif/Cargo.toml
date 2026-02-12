@@ -1,5 +1,5 @@
 [package]
-name = "gesso"
+name = "motif"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -10,7 +10,7 @@ categories.workspace = true
 description = "An immediate-mode UI framework for Rust with GPU rendering"
 
 [dependencies]
-gesso_core = { version = "0.0.1", path = "../gesso_core" }
+motif_core = { version = "0.0.1", path = "../motif_core" }
 glamour = "0.18"
 winit = "0.30"
 

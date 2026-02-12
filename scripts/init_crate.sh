@@ -1,12 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
-# Release script for motif crates
+# One-time script to publish motif crates to crates.io for the first time.
+# Delete this script after successful initial publish.
 
 VERSION=$(cargo metadata --format-version 1 --no-deps | jq -r '.packages[] | select(.name == "motif") | .version')
 
-echo "=== Motif Release Script ==="
+echo "=== Motif Initial Publish ==="
 echo "Version: $VERSION"
+echo ""
+echo "This script publishes motif_core and motif to crates.io for the first time."
+echo "After successful publish, delete this script and use release.sh for future releases."
 echo ""
 
 # Check we're on main
@@ -32,12 +36,9 @@ cargo test --workspace --quiet
 echo "  - Running clippy..."
 cargo clippy --workspace --quiet -- -D warnings 2>/dev/null || true
 
-# Dry run publish
+# Only dry-run motif_core (motif can't dry-run until motif_core is published)
 echo "  - Checking motif_core publish..."
 cargo publish --dry-run -p motif_core --quiet
-
-echo "  - Checking motif publish..."
-cargo publish --dry-run -p motif --quiet
 
 echo ""
 echo "All checks passed!"
@@ -46,7 +47,9 @@ echo "This will publish:"
 echo "  - motif_core $VERSION"
 echo "  - motif $VERSION"
 echo ""
-read -p "Proceed with publish? [y/N] " -n 1 -r
+echo "NOTE: motif dry-run was skipped because motif_core must be published first."
+echo ""
+read -p "Proceed with initial publish? [y/N] " -n 1 -r
 echo ""
 
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -65,5 +68,8 @@ echo "Publishing motif..."
 cargo publish -p motif
 
 echo ""
-echo "=== Release complete! ==="
+echo "=== Initial publish complete! ==="
 echo "Published motif_core $VERSION and motif $VERSION"
+echo ""
+echo "You can now delete this script: rm scripts/init_crate.sh"
+echo "Use scripts/release.sh for future releases."
