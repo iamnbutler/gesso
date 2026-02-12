@@ -1,6 +1,7 @@
 [package]
 name = "gesso"
-version = "0.1.0"
-edition = "2024"
+version.workspace = true
+edition.workspace = true
 
 [dependencies]
+gesso_core = { path = "../gesso_core" }
