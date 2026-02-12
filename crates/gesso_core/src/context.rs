@@ -1,6 +1,6 @@
 //! DrawContext provides a painter's stack for building scenes.
 
-use crate::{DeviceRect, Point, Quad, Rect, ScaleFactor, Scene, Size};
+use crate::{DeviceRect, Point, Quad, Rect, ScaleFactor, Scene};
 use palette::Srgba;
 
 /// Painter's stack for hierarchical drawing.
@@ -73,6 +73,7 @@ impl<'a> DrawContext<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::Size;
 
     #[test]
     fn offset_stacking() {

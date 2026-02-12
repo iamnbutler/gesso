@@ -25,3 +25,6 @@ Gesso provides a foundation for building high-performance UI applications with i
 ## Key Files
 
 - [geometry.rs](crates/gesso_core/src/geometry.rs) - Core geometry primitives (Point, Size, Rect, Vector, Edges, Corners, Axis, ScaleFactor)
+- [scene.rs](crates/gesso_core/src/scene.rs) - Scene and Quad primitive
+- [context.rs](crates/gesso_core/src/context.rs) - DrawContext painter's stack
+- [renderer.rs](crates/gesso_core/src/renderer.rs) - Renderer trait, DebugRenderer
