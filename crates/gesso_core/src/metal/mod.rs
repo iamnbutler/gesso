@@ -1,5 +1,8 @@
 //! Metal renderer implementation (macOS only).
 
+/// Metal shader source, compiled at runtime.
+const SHADER_SOURCE: &str = include_str!("shaders.metal");
+
 use crate::Quad;
 
 /// GPU-side quad instance data.
