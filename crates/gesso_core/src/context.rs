@@ -1,6 +1,6 @@
 //! DrawContext provides a painter's stack for building scenes.
 
-use crate::{DeviceRect, Point, Quad, Rect, ScaleFactor, Scene};
+use crate::{DeviceRect, Point, Quad, Rect, ScaleFactor, Scene, Size};
 use palette::Srgba;
 
 /// Painter's stack for hierarchical drawing.
@@ -67,5 +67,81 @@ impl<'a> DrawContext<'a> {
         let scaled_origin = self.scale_factor.scale_point(origin);
         let scaled_size = self.scale_factor.scale_size(rect.size);
         DeviceRect::new(scaled_origin, scaled_size)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn offset_stacking() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        // Paint at origin
+        cx.paint_quad(
+            Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0)),
+            Srgba::new(1.0, 0.0, 0.0, 1.0),
+        );
+
+        // Paint with offset
+        cx.with_offset(Point::new(100.0, 50.0), |cx| {
+            cx.paint_quad(
+                Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0)),
+                Srgba::new(0.0, 1.0, 0.0, 1.0),
+            );
+        });
+
+        assert_eq!(scene.quad_count(), 2);
+
+        let quads = scene.quads();
+        // First quad at origin
+        assert_eq!(quads[0].bounds.origin.x, 0.0);
+        assert_eq!(quads[0].bounds.origin.y, 0.0);
+        // Second quad offset by (100, 50)
+        assert_eq!(quads[1].bounds.origin.x, 100.0);
+        assert_eq!(quads[1].bounds.origin.y, 50.0);
+    }
+
+    #[test]
+    fn nested_offsets() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.with_offset(Point::new(10.0, 10.0), |cx| {
+            cx.with_offset(Point::new(5.0, 5.0), |cx| {
+                cx.paint_quad(
+                    Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0)),
+                    Srgba::new(1.0, 0.0, 0.0, 1.0),
+                );
+            });
+        });
+
+        let quads = scene.quads();
+        // Nested offsets should accumulate: 10+5 = 15
+        assert_eq!(quads[0].bounds.origin.x, 15.0);
+        assert_eq!(quads[0].bounds.origin.y, 15.0);
+    }
+
+    #[test]
+    fn scale_factor_applied() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(2.0); // 2x HiDPI
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.paint_quad(
+            Rect::new(Point::new(10.0, 20.0), Size::new(100.0, 50.0)),
+            Srgba::new(1.0, 0.0, 0.0, 1.0),
+        );
+
+        let quads = scene.quads();
+        // Everything should be scaled by 2
+        assert_eq!(quads[0].bounds.origin.x, 20.0);
+        assert_eq!(quads[0].bounds.origin.y, 40.0);
+        assert_eq!(quads[0].bounds.size.width, 200.0);
+        assert_eq!(quads[0].bounds.size.height, 100.0);
     }
 }
