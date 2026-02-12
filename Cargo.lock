@@ -401,6 +401,7 @@ name = "gesso"
 version = "0.1.0"
 dependencies = [
  "gesso_core",
+ "glamour",
  "winit",
 ]
 
