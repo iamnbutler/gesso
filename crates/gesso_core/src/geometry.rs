@@ -95,6 +95,35 @@ impl<T: Copy + std::ops::Add<Output = T>> Edges<T> {
     }
 }
 
+/// Corner values for border radii.
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct Corners<T> {
+    pub top_left: T,
+    pub top_right: T,
+    pub bottom_right: T,
+    pub bottom_left: T,
+}
+
+impl<T: Copy> Corners<T> {
+    pub fn all(value: T) -> Self {
+        Self {
+            top_left: value,
+            top_right: value,
+            bottom_right: value,
+            bottom_left: value,
+        }
+    }
+
+    pub fn top_bottom(top: T, bottom: T) -> Self {
+        Self {
+            top_left: top,
+            top_right: top,
+            bottom_left: bottom,
+            bottom_right: bottom,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
