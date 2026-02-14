@@ -1,8 +1,8 @@
-//! Opens a window and renders a red quad using Metal.
+//! Opens a window and renders quads with borders using Metal.
 
 use motif_core::{
     metal::{MetalRenderer, MetalSurface},
-    DeviceRect, Quad, Renderer, Scene, Srgba,
+    DeviceRect, Edges, Quad, Renderer, Scene, Srgba,
 };
 use glamour::{Point2, Size2};
 use winit::{
@@ -68,13 +68,17 @@ impl ApplicationHandler for App {
 
                     let (width, height) = surface.drawable_size();
                     let quad_size = 200.0;
-                    let quad = Quad::new(
+
+                    // Red quad with blue border
+                    let mut quad = Quad::new(
                         DeviceRect::new(
                             Point2::new((width - quad_size) / 2.0, (height - quad_size) / 2.0),
                             Size2::new(quad_size, quad_size),
                         ),
-                        Srgba::new(1.0, 0.0, 0.0, 1.0), // Red
+                        Srgba::new(1.0, 0.0, 0.0, 1.0), // Red background
                     );
+                    quad.border_color = Srgba::new(0.0, 0.0, 1.0, 1.0); // Blue border
+                    quad.border_widths = Edges::all(4.0);
                     self.scene.push_quad(quad);
 
                     renderer.render(&self.scene, surface);

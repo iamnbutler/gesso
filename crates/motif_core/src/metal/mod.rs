@@ -27,14 +27,18 @@ const UNIT_QUAD_VERTICES: [[f32; 2]; 4] = [
 const INITIAL_INSTANCE_CAPACITY: usize = 1024;
 
 /// GPU-side quad instance data.
-/// Tightly packed for Metal buffer: 32 bytes per quad.
+/// Tightly packed for Metal buffer: 64 bytes per quad.
 #[repr(C)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuadInstance {
     /// x, y, width, height in device pixels
     pub bounds: [f32; 4],
-    /// r, g, b, a
+    /// r, g, b, a (background)
     pub color: [f32; 4],
+    /// r, g, b, a (border)
+    pub border_color: [f32; 4],
+    /// top, right, bottom, left
+    pub border_widths: [f32; 4],
 }
 
 impl QuadInstance {
@@ -51,6 +55,18 @@ impl QuadInstance {
                 quad.background.green,
                 quad.background.blue,
                 quad.background.alpha,
+            ],
+            border_color: [
+                quad.border_color.red,
+                quad.border_color.green,
+                quad.border_color.blue,
+                quad.border_color.alpha,
+            ],
+            border_widths: [
+                quad.border_widths.top,
+                quad.border_widths.right,
+                quad.border_widths.bottom,
+                quad.border_widths.left,
             ],
         }
     }
@@ -262,5 +278,30 @@ impl Renderer for MetalRenderer {
 
         command_buffer.present_drawable(drawable);
         command_buffer.commit();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{DeviceRect, Edges};
+    use glamour::{Point2, Size2};
+    use palette::Srgba;
+
+    #[test]
+    fn quad_instance_captures_border_data() {
+        let mut quad = Quad::new(
+            DeviceRect::new(Point2::new(10.0, 20.0), Size2::new(100.0, 50.0)),
+            Srgba::new(1.0, 0.0, 0.0, 1.0),
+        );
+        quad.border_color = Srgba::new(0.0, 0.0, 1.0, 1.0);
+        quad.border_widths = Edges::all(2.0);
+
+        let instance = QuadInstance::from_quad(&quad);
+
+        // Border color should be captured
+        assert_eq!(instance.border_color, [0.0, 0.0, 1.0, 1.0]);
+        // Border widths should be captured (top, right, bottom, left)
+        assert_eq!(instance.border_widths, [2.0, 2.0, 2.0, 2.0]);
     }
 }

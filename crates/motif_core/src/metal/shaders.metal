@@ -2,13 +2,19 @@
 using namespace metal;
 
 struct QuadInstance {
-    float4 bounds;    // x, y, width, height
-    float4 color;     // r, g, b, a
+    float4 bounds;        // x, y, width, height
+    float4 color;         // r, g, b, a (background)
+    float4 border_color;  // r, g, b, a
+    float4 border_widths; // top, right, bottom, left
 };
 
 struct VertexOut {
     float4 position [[position]];
     float4 color;
+    float4 border_color;
+    float4 border_widths;
+    float2 quad_size;     // width, height in pixels
+    float2 local_pos;     // position within quad in pixels
 };
 
 vertex VertexOut vertex_main(
@@ -31,9 +37,33 @@ vertex VertexOut vertex_main(
     VertexOut out;
     out.position = float4(clip, 0.0, 1.0);
     out.color = inst.color;
+    out.border_color = inst.border_color;
+    out.border_widths = inst.border_widths;
+    out.quad_size = inst.bounds.zw;
+    out.local_pos = unit_pos * inst.bounds.zw;
     return out;
 }
 
 fragment float4 fragment_main(VertexOut in [[stage_in]]) {
+    // Check if pixel is in border region
+    float2 pos = in.local_pos;
+    float2 size = in.quad_size;
+
+    // Distance from each edge
+    float dist_top = pos.y;
+    float dist_bottom = size.y - pos.y;
+    float dist_left = pos.x;
+    float dist_right = size.x - pos.x;
+
+    // Border widths: top, right, bottom, left
+    bool in_border = dist_top < in.border_widths.x ||
+                     dist_right < in.border_widths.y ||
+                     dist_bottom < in.border_widths.z ||
+                     dist_left < in.border_widths.w;
+
+    // Use border color if in border region and border has alpha
+    if (in_border && in.border_color.a > 0.0) {
+        return in.border_color;
+    }
     return in.color;
 }
