@@ -27,7 +27,7 @@ const UNIT_QUAD_VERTICES: [[f32; 2]; 4] = [
 const INITIAL_INSTANCE_CAPACITY: usize = 1024;
 
 /// GPU-side quad instance data.
-/// Tightly packed for Metal buffer: 64 bytes per quad.
+/// Tightly packed for Metal buffer: 80 bytes per quad.
 #[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuadInstance {
@@ -39,6 +39,8 @@ pub struct QuadInstance {
     pub border_color: [f32; 4],
     /// top, right, bottom, left
     pub border_widths: [f32; 4],
+    /// top_left, top_right, bottom_right, bottom_left
+    pub corner_radii: [f32; 4],
 }
 
 impl QuadInstance {
@@ -67,6 +69,12 @@ impl QuadInstance {
                 quad.border_widths.right,
                 quad.border_widths.bottom,
                 quad.border_widths.left,
+            ],
+            corner_radii: [
+                quad.corner_radii.top_left,
+                quad.corner_radii.top_right,
+                quad.corner_radii.bottom_right,
+                quad.corner_radii.bottom_left,
             ],
         }
     }
@@ -303,5 +311,21 @@ mod tests {
         assert_eq!(instance.border_color, [0.0, 0.0, 1.0, 1.0]);
         // Border widths should be captured (top, right, bottom, left)
         assert_eq!(instance.border_widths, [2.0, 2.0, 2.0, 2.0]);
+    }
+
+    #[test]
+    fn quad_instance_captures_corner_radii() {
+        use crate::Corners;
+
+        let mut quad = Quad::new(
+            DeviceRect::new(Point2::new(10.0, 20.0), Size2::new(100.0, 50.0)),
+            Srgba::new(1.0, 0.0, 0.0, 1.0),
+        );
+        quad.corner_radii = Corners::all(8.0);
+
+        let instance = QuadInstance::from_quad(&quad);
+
+        // Corner radii should be captured (top_left, top_right, bottom_right, bottom_left)
+        assert_eq!(instance.corner_radii, [8.0, 8.0, 8.0, 8.0]);
     }
 }

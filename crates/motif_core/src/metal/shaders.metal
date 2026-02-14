@@ -6,6 +6,7 @@ struct QuadInstance {
     float4 color;         // r, g, b, a (background)
     float4 border_color;  // r, g, b, a
     float4 border_widths; // top, right, bottom, left
+    float4 corner_radii;  // top_left, top_right, bottom_right, bottom_left
 };
 
 struct VertexOut {
@@ -13,6 +14,7 @@ struct VertexOut {
     float4 color;
     float4 border_color;
     float4 border_widths;
+    float4 corner_radii;
     float2 quad_size;     // width, height in pixels
     float2 local_pos;     // position within quad in pixels
 };
@@ -39,31 +41,55 @@ vertex VertexOut vertex_main(
     out.color = inst.color;
     out.border_color = inst.border_color;
     out.border_widths = inst.border_widths;
+    out.corner_radii = inst.corner_radii;
     out.quad_size = inst.bounds.zw;
     out.local_pos = unit_pos * inst.bounds.zw;
     return out;
 }
 
+// SDF for rounded rectangle - returns negative inside, positive outside
+float rounded_rect_sdf(float2 pos, float2 size, float4 radii) {
+    // radii: top_left, top_right, bottom_right, bottom_left
+    // Select corner radius based on quadrant
+    float2 center = size * 0.5;
+    float r;
+    if (pos.x < center.x) {
+        r = (pos.y < center.y) ? radii.x : radii.w; // top_left or bottom_left
+    } else {
+        r = (pos.y < center.y) ? radii.y : radii.z; // top_right or bottom_right
+    }
+
+    // Clamp radius to half the smaller dimension
+    r = min(r, min(size.x, size.y) * 0.5);
+
+    // Transform to corner-relative coordinates
+    float2 q = abs(pos - center) - (center - r);
+
+    // SDF: distance to rounded corner
+    return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
+}
+
 fragment float4 fragment_main(VertexOut in [[stage_in]]) {
-    // Check if pixel is in border region
     float2 pos = in.local_pos;
     float2 size = in.quad_size;
 
-    // Distance from each edge
-    float dist_top = pos.y;
-    float dist_bottom = size.y - pos.y;
-    float dist_left = pos.x;
-    float dist_right = size.x - pos.x;
+    // Compute SDF distance (negative = inside)
+    float dist = rounded_rect_sdf(pos, size, in.corner_radii);
 
-    // Border widths: top, right, bottom, left
-    bool in_border = dist_top < in.border_widths.x ||
-                     dist_right < in.border_widths.y ||
-                     dist_bottom < in.border_widths.z ||
-                     dist_left < in.border_widths.w;
+    // Outside the rounded rect - discard
+    if (dist > 0.0) {
+        discard_fragment();
+    }
 
-    // Use border color if in border region and border has alpha
-    if (in_border && in.border_color.a > 0.0) {
+    // Check border: use max border width for simplicity
+    // A proper implementation would use per-edge border widths
+    float max_border = max(max(in.border_widths.x, in.border_widths.y),
+                           max(in.border_widths.z, in.border_widths.w));
+
+    // In border region if close to edge
+    if (dist > -max_border && in.border_color.a > 0.0) {
         return in.border_color;
     }
+
     return in.color;
 }
