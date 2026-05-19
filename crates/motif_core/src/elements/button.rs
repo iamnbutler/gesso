@@ -202,7 +202,7 @@ pub fn button(label: impl Into<ArcStr>, id: ElementId) -> Button {
 mod tests {
     use super::*;
     use crate::element::LayoutContext;
-    use crate::{HitTree, LayoutEngine, Point, ScaleFactor, Scene, TextContext};
+    use crate::{HitTree, LayoutEngine, Point, ScaleFactor, Scene, Srgba, TextContext};
 
     #[test]
     fn button_registers_hit() {
@@ -280,5 +280,47 @@ mod tests {
         assert!(!normal.is_pressed);
         assert!(hovered.is_hovered);
         assert!(pressed.is_pressed);
+    }
+
+    fn paint_button(btn: &mut Button) -> Scene {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        let mut layout_cx = LayoutContext::new(&mut layout_engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = btn.request_layout(&mut layout_cx);
+        layout_engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        let bounds = layout_engine.layout_bounds(node_id);
+        let mut cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+        btn.paint(bounds, &mut cx);
+        scene
+    }
+
+    #[test]
+    fn button_paints_normal_background_color() {
+        let mut btn = button("Test", ElementId(1));
+        let scene = paint_button(&mut btn);
+        assert_eq!(scene.quads()[0].background, Srgba::new(0.2, 0.4, 0.8, 1.0));
+    }
+
+    #[test]
+    fn button_paints_hover_background_color() {
+        let mut btn = button("Test", ElementId(1)).hovered(true);
+        let scene = paint_button(&mut btn);
+        assert_eq!(scene.quads()[0].background, Srgba::new(0.3, 0.5, 0.9, 1.0));
+    }
+
+    #[test]
+    fn button_paints_press_background_color() {
+        let mut btn = button("Test", ElementId(1)).pressed(true);
+        let scene = paint_button(&mut btn);
+        assert_eq!(scene.quads()[0].background, Srgba::new(0.15, 0.3, 0.6, 1.0));
     }
 }
