@@ -407,4 +407,99 @@ mod tests {
 
         assert!(scene.text_run_count() > 0);
     }
+
+    #[test]
+    fn nested_clip_innermost_wins() {
+        // When with_clip is nested, the innermost clip (last pushed) takes
+        // precedence for quads painted inside it. After the inner closure
+        // returns, the outer clip is restored automatically.
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        let outer_bounds = Rect::new(Point::new(0.0, 0.0), Size::new(200.0, 200.0));
+        let inner_bounds = Rect::new(Point::new(50.0, 50.0), Size::new(60.0, 60.0));
+
+        cx.with_clip(outer_bounds, |cx| {
+            // Quad A: inside outer clip only
+            cx.paint_quad(
+                Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0)),
+                Srgba::new(1.0, 0.0, 0.0, 1.0),
+            );
+
+            cx.with_clip(inner_bounds, |cx| {
+                // Quad B: inside inner clip — innermost wins
+                cx.paint_quad(
+                    Rect::new(Point::new(55.0, 55.0), Size::new(10.0, 10.0)),
+                    Srgba::new(0.0, 1.0, 0.0, 1.0),
+                );
+            });
+
+            // Quad C: inner clip exited — outer clip restored
+            cx.paint_quad(
+                Rect::new(Point::new(10.0, 10.0), Size::new(10.0, 10.0)),
+                Srgba::new(0.0, 0.0, 1.0, 1.0),
+            );
+        });
+
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 3);
+
+        // Quad A: outer clip bounds
+        let clip_a = quads[0].clip_bounds.expect("quad A should have clip bounds");
+        assert_eq!(clip_a.origin.x, 0.0);
+        assert_eq!(clip_a.origin.y, 0.0);
+        assert_eq!(clip_a.size.width, 200.0);
+        assert_eq!(clip_a.size.height, 200.0);
+
+        // Quad B: inner clip bounds take precedence
+        let clip_b = quads[1].clip_bounds.expect("quad B should have clip bounds");
+        assert_eq!(clip_b.origin.x, 50.0);
+        assert_eq!(clip_b.origin.y, 50.0);
+        assert_eq!(clip_b.size.width, 60.0);
+        assert_eq!(clip_b.size.height, 60.0);
+
+        // Quad C: outer clip restored after inner closure exits
+        let clip_c = quads[2].clip_bounds.expect("quad C should have clip bounds");
+        assert_eq!(clip_c.origin.x, 0.0);
+        assert_eq!(clip_c.origin.y, 0.0);
+        assert_eq!(clip_c.size.width, 200.0);
+        assert_eq!(clip_c.size.height, 200.0);
+    }
+
+    #[test]
+    fn clip_not_applied_after_closure() {
+        // After with_clip exits, the clip stack is restored to its previous
+        // state. Quads painted outside the closure must not receive clip bounds.
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.with_clip(
+            Rect::new(Point::new(10.0, 10.0), Size::new(50.0, 50.0)),
+            |cx| {
+                cx.paint_quad(
+                    Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 100.0)),
+                    Srgba::new(1.0, 0.0, 0.0, 1.0),
+                );
+            },
+        );
+
+        // Outside the closure — clip stack is empty again
+        cx.paint_quad(
+            Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 100.0)),
+            Srgba::new(0.0, 1.0, 0.0, 1.0),
+        );
+
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 2);
+        assert!(
+            quads[0].clip_bounds.is_some(),
+            "quad inside closure should have clip bounds"
+        );
+        assert!(
+            quads[1].clip_bounds.is_none(),
+            "quad outside closure should have no clip bounds"
+        );
+    }
 }
