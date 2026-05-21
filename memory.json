@@ -1,19 +1,19 @@
 {
-  "last_run": "2026-05-19T00:00:00Z",
-  "last_run_id": "26120987111",
+  "last_run": "2026-05-21T00:00:00Z",
+  "last_run_id": "26249031527",
   "monthly_summary_issue": 67,
   "monthly_summary_month": "2026-05",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-05-19",
-    "task_3_improvements": "2026-05-19",
+    "task_11_monthly_summary": "2026-05-21",
+    "task_3_improvements": "2026-05-21",
+    "task_9_welcome": "2026-05-21",
     "task_1_triage": "2026-05-15",
     "task_7_labels": "2026-05-15",
     "task_5_maintain_prs": "2026-05-11",
     "task_10_forward": "2026-05-18",
     "task_4_deps": "2026-05-07",
-    "task_9_welcome": "2026-05-05",
     "task_8_release": "2026-05-05",
     "task_6_stale_nudges": "2026-05-05",
     "task_2_fix_prs": "2026-05-01"
@@ -87,7 +87,9 @@
     "callbacks-tests": "pr-81-open",
     "bindings-tests": "pr-82-open",
     "geometry-constructors-tests": "pr-83-open",
-    "button-visual-state-paint-tests": "pr-84-open"
+    "button-visual-state-paint-tests": "pr-84-open",
+    "context-clip-tests": "pr-85-open",
+    "div-children-paint-tests": "pr-86-open"
   },
   "improvement_ideas_submitted": [
     "workspace-deps-consolidation",
@@ -147,7 +149,9 @@
     "callbacks-registry-edge-case-tests",
     "bindings-cmd-home-end-shift-word-nav-tests",
     "geometry-constructors-axis-scalefactor-tests",
-    "button-visual-state-paint-color-tests"
+    "button-visual-state-paint-color-tests",
+    "context-nested-clip-bounds-tests",
+    "div-children-layout-paint-tests"
   ],
   "issues_created": {
     "13": "fix doc name clash",
@@ -159,10 +163,10 @@
     "67": "monthly summary may 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-05-19: Task 3: Added 3 unit tests to button.rs verifying visual state paint colors — PR #84 (branch repo-assist/improve-button-visual-state-paint-tests). Tests cover: button_paints_normal_background_color (0.2,0.4,0.8,1.0), button_paints_hover_background_color (0.3,0.5,0.9,1.0), button_paints_press_background_color (0.15,0.3,0.6,1.0). Also extracted paint_button helper to reduce test boilerplate. Coverage: 3 → 6 tests. Build fails on Linux due to known fontconfig infrastructure issue; should pass on macOS CI. Task 11: Updated May 2026 monthly summary issue #67. Next run priorities: task_2_fix_prs (2026-05-01 oldest - no bug issues open), task_6_stale_nudges (skip - no human PRs to nudge), task_8_release (skip - no merged PRs), task_9_welcome (skip - no new contributors), task_5_maintain_prs (check for CI failures on open PRs). Next improvement candidates: (a) context.rs — nested clip bounds test (innermost clip takes precedence); (b) div.rs — children layout paint test; (c) text.rs — paint test with font size.",
+  "notes": "2026-05-21: Task 3: Added 3 unit tests to div.rs verifying children paint behavior — PR #86 (branch repo-assist/improve-div-children-paint-tests). Tests cover: div_with_child_paints_two_quads (parent+child both bg → 2 quads), div_no_background_child_with_background_paints_one_quad (parent no bg, child has bg → 1 quad), div_child_quad_fits_within_parent_bounds (child DeviceRect contained in parent DeviceRect). Also extracted paint_div() helper. Coverage: 5 → 8 tests. Task 9: No human contributor PRs found. Task 11: Updated May 2026 monthly summary issue #67. Next run priorities: task_2_fix_prs (2026-05-01 oldest - no bug issues open but could check for fixable code issues), task_8_release (skip - no merged PRs), task_6_stale_nudges (skip - no human PRs), task_5_maintain_prs (check CI on open Repo Assist PRs), task_1_triage (check for new issues). Next improvement candidates: (a) text.rs — paint test with font size; (b) hit_tree.rs — deeper test coverage.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-05-05",
-  "open_repo_assist_prs": [20, 21, 22, 25, 27, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84],
+  "open_repo_assist_prs": [20, 21, 22, 25, 27, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86],
   "open_repo_assist_prs_pending": [],
   "prs_to_close": [20, 21],
   "priority_pr": 36,
@@ -179,7 +183,21 @@
       "glamour": "0.18.0",
       "subsecond": "0.7.3"
     },
-    "notes": "Verified 2026-05-07: still same versions as 2026-04-26 audit. No urgent updates needed."
+    "notes": "Verified 2026-05-07: still same versions as 2026-04-26 audit. No urgent updates needed. Next check ~2026-05-28."
+  },
+  "div_children_paint_tests_pr_2026_05_21": {
+    "status": "SUBMITTED — PR #86 (branch repo-assist/improve-div-children-paint-tests)",
+    "files_changed": [
+      "crates/motif_core/src/elements/div.rs (3 new tests + paint_div helper in existing #[cfg(test)] mod tests block)"
+    ],
+    "approach": "Covers: div_with_child_paints_two_quads (parent+child both bg → 2 quads), div_no_background_child_with_background_paints_one_quad (1 quad), div_child_quad_fits_within_parent_bounds (DeviceRect containment). Extracts paint_div helper. Coverage 5 → 8."
+  },
+  "context_clip_tests_pr_2026_05_20": {
+    "status": "SUBMITTED — PR #85 (branch repo-assist/improve-context-clip-tests)",
+    "files_changed": [
+      "crates/motif_core/src/context.rs (2 new tests in existing #[cfg(test)] mod tests block)"
+    ],
+    "approach": "Covers: nested_clip_innermost_wins (clip_stack LIFO — deepest clip takes precedence), with_clip_restores_previous_clip (clip stack restored after closure). Coverage 8 → 10."
   },
   "button_visual_state_paint_tests_pr_2026_05_19": {
     "status": "SUBMITTED — PR #84 (branch repo-assist/improve-button-visual-state-paint-tests)",
@@ -187,26 +205,5 @@
       "crates/motif_core/src/elements/button.rs (3 new tests + paint_button helper in existing #[cfg(test)] mod tests block)"
     ],
     "approach": "Covers: button_paints_normal_background_color (0.2,0.4,0.8,1.0), button_paints_hover_background_color (0.3,0.5,0.9,1.0), button_paints_press_background_color (0.15,0.3,0.6,1.0). Extracts paint_button helper. Coverage 3 → 6."
-  },
-  "geometry_constructors_tests_pr_2026_05_18": {
-    "status": "SUBMITTED — PR #83 (branch repo-assist/improve-geometry-constructors-tests)",
-    "files_changed": [
-      "crates/motif_core/src/geometry.rs (8 new tests in existing #[cfg(test)] mod tests block)"
-    ],
-    "approach": "Covers: Edges::all, Edges::symmetric, Corners::all, Corners::top_bottom, Axis::invert (both directions), ScaleFactor::scale_size, ScaleFactor::unscale_size."
-  },
-  "callbacks_tests_pr_2026_05_16": {
-    "status": "SUBMITTED — PR #81 (branch repo-assist/improve-callbacks-tests)",
-    "files_changed": [
-      "crates/motif_core/src/callbacks.rs (7 new tests in existing #[cfg(test)] mod tests block)"
-    ],
-    "approach": "Covers: dispatch returns true, Default::default() empty, on_click overwrite (HashMap insert semantics), handler persists across multiple dispatches, dispatch after clear returns false, dispatching one id doesn't affect others, has_click_handler explicit assertion."
-  },
-  "arc_str_tests_pr_2026_05_15": {
-    "status": "SUBMITTED — PR #80 (branch repo-assist/improve-arc-str-tests)",
-    "files_changed": [
-      "crates/motif_core/src/arc_str.rs (10 new tests in existing #[cfg(test)] mod tests block)"
-    ],
-    "approach": "Covers: new() creates Owned variant, From<Arc<str>>, Deref to &str, Display format, Debug format (quoted), Ord/PartialOrd lexicographic, Static==Owned same content, PartialEq<String>, AsRef<str>."
   }
 }
