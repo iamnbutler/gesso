@@ -327,4 +327,87 @@ mod tests {
             .child(crate::element::Empty);
         assert_eq!(d.children.len(), 2);
     }
+
+    fn paint_div(mut d: Div) -> Scene {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        let mut layout_cx = LayoutContext::new(&mut layout_engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = d.request_layout(&mut layout_cx);
+        layout_engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+
+        let bounds = layout_engine.layout_bounds(node_id);
+        let mut cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+        d.paint(bounds, &mut cx);
+        scene
+    }
+
+    #[test]
+    fn div_with_child_paints_two_quads() {
+        // Parent and child both have backgrounds → 2 quads in scene
+        let d = div()
+            .size(Size::new(100.0, 50.0))
+            .background(Srgba::new(1.0, 0.0, 0.0, 1.0))
+            .child(
+                div()
+                    .size(Size::new(40.0, 20.0))
+                    .background(Srgba::new(0.0, 1.0, 0.0, 1.0)),
+            );
+        let scene = paint_div(d);
+        assert_eq!(scene.quad_count(), 2);
+    }
+
+    #[test]
+    fn div_no_background_child_with_background_paints_one_quad() {
+        // Parent has no background; child has a background → 1 quad
+        let d = div()
+            .size(Size::new(100.0, 50.0))
+            .child(
+                div()
+                    .size(Size::new(40.0, 20.0))
+                    .background(Srgba::new(0.0, 0.0, 1.0, 1.0)),
+            );
+        let scene = paint_div(d);
+        assert_eq!(scene.quad_count(), 1);
+    }
+
+    #[test]
+    fn div_child_quad_fits_within_parent_bounds() {
+        // Child quad must be contained within parent quad's bounds
+        let d = div()
+            .size(Size::new(100.0, 50.0))
+            .background(Srgba::new(1.0, 0.0, 0.0, 1.0))
+            .child(
+                div()
+                    .size(Size::new(40.0, 20.0))
+                    .background(Srgba::new(0.0, 1.0, 0.0, 1.0)),
+            );
+        let scene = paint_div(d);
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 2);
+
+        let parent_quad = &quads[0]; // parent paints first
+        let child_quad = &quads[1]; // child paints second
+
+        // Child origin must be >= parent origin
+        assert!(child_quad.bounds.origin.x >= parent_quad.bounds.origin.x);
+        assert!(child_quad.bounds.origin.y >= parent_quad.bounds.origin.y);
+        // Child far edge must be <= parent far edge
+        assert!(
+            child_quad.bounds.origin.x + child_quad.bounds.size.width
+                <= parent_quad.bounds.origin.x + parent_quad.bounds.size.width
+        );
+        assert!(
+            child_quad.bounds.origin.y + child_quad.bounds.size.height
+                <= parent_quad.bounds.origin.y + parent_quad.bounds.size.height
+        );
+    }
 }
