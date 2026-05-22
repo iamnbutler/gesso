@@ -1,13 +1,13 @@
 {
-  "last_run": "2026-05-21T00:00:00Z",
-  "last_run_id": "26249031527",
+  "last_run": "2026-05-22T00:00:00Z",
+  "last_run_id": "26308384723",
   "monthly_summary_issue": 67,
   "monthly_summary_month": "2026-05",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-05-21",
-    "task_3_improvements": "2026-05-21",
+    "task_11_monthly_summary": "2026-05-22",
+    "task_3_improvements": "2026-05-22",
     "task_9_welcome": "2026-05-21",
     "task_1_triage": "2026-05-15",
     "task_7_labels": "2026-05-15",
@@ -89,7 +89,8 @@
     "geometry-constructors-tests": "pr-83-open",
     "button-visual-state-paint-tests": "pr-84-open",
     "context-clip-tests": "pr-85-open",
-    "div-children-paint-tests": "pr-86-open"
+    "div-children-paint-tests": "pr-86-open",
+    "text-element-paint-tests": "pr-branch-open"
   },
   "improvement_ideas_submitted": [
     "workspace-deps-consolidation",
@@ -151,7 +152,8 @@
     "geometry-constructors-axis-scalefactor-tests",
     "button-visual-state-paint-color-tests",
     "context-nested-clip-bounds-tests",
-    "div-children-layout-paint-tests"
+    "div-children-layout-paint-tests",
+    "text-element-paint-tests"
   ],
   "issues_created": {
     "13": "fix doc name clash",
@@ -163,7 +165,7 @@
     "67": "monthly summary may 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-05-21: Task 3: Added 3 unit tests to div.rs verifying children paint behavior — PR #86 (branch repo-assist/improve-div-children-paint-tests). Tests cover: div_with_child_paints_two_quads (parent+child both bg → 2 quads), div_no_background_child_with_background_paints_one_quad (parent no bg, child has bg → 1 quad), div_child_quad_fits_within_parent_bounds (child DeviceRect contained in parent DeviceRect). Also extracted paint_div() helper. Coverage: 5 → 8 tests. Task 9: No human contributor PRs found. Task 11: Updated May 2026 monthly summary issue #67. Next run priorities: task_2_fix_prs (2026-05-01 oldest - no bug issues open but could check for fixable code issues), task_8_release (skip - no merged PRs), task_6_stale_nudges (skip - no human PRs), task_5_maintain_prs (check CI on open Repo Assist PRs), task_1_triage (check for new issues). Next improvement candidates: (a) text.rs — paint test with font size; (b) hit_tree.rs — deeper test coverage.",
+  "notes": "2026-05-22: Task 3: Added paint-phase tests to elements/text.rs — branch repo-assist/improve-text-element-paint-tests. Tests: text_element_paints_text_run_for_nonempty_content (non-empty → ≥1 TextRun), text_element_does_not_paint_when_empty (empty string → 0 TextRuns), text_element_larger_font_size_produces_text_run (12px and 48px both work), text_element_no_quads_painted (text emits TextRuns not Quads). Also adds paint_text() helper and missing color assertion to text_builder_chain. Coverage 4→8. Build blocked by fontconfig as usual. Task 11: Updated May 2026 monthly summary issue #67. Next run priorities: task_2_fix_prs (2026-05-01 oldest - no bug issues open), task_8_release (2026-05-05 - no merged PRs yet), task_6_stale_nudges (2026-05-05), task_4_deps (2026-05-07 - next check ~2026-05-28), task_5_maintain_prs (2026-05-11). Next improvement candidates: (a) element.rs — PaintContext::set_offset()/layout_bounds()-with-offset test, render_view() integration test; (b) accessibility.rs — verify test coverage for tab navigation edge cases.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-05-05",
   "open_repo_assist_prs": [20, 21, 22, 25, 27, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86],
@@ -184,6 +186,13 @@
       "subsecond": "0.7.3"
     },
     "notes": "Verified 2026-05-07: still same versions as 2026-04-26 audit. No urgent updates needed. Next check ~2026-05-28."
+  },
+  "text_element_paint_tests_pr_2026_05_22": {
+    "status": "SUBMITTED — branch repo-assist/improve-text-element-paint-tests",
+    "files_changed": [
+      "crates/motif_core/src/elements/text.rs (4 new tests + paint_text helper; added color assertion to text_builder_chain)"
+    ],
+    "approach": "Covers: text_element_paints_text_run_for_nonempty_content (≥1 TextRun), text_element_does_not_paint_when_empty (0 TextRuns), text_element_larger_font_size_produces_text_run (12px+48px), text_element_no_quads_painted. Coverage 4→8."
   },
   "div_children_paint_tests_pr_2026_05_21": {
     "status": "SUBMITTED — PR #86 (branch repo-assist/improve-div-children-paint-tests)",
