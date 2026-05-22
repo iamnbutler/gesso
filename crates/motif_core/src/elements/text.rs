@@ -123,6 +123,8 @@ impl IntoElement for ArcStr {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::element::LayoutContext;
+    use crate::{HitTree, LayoutEngine, ScaleFactor, Scene, TextContext};
 
     #[test]
     fn text_builder_defaults() {
@@ -138,6 +140,7 @@ mod tests {
             .color(Srgba::new(1.0, 0.0, 0.0, 1.0));
 
         assert_eq!(t.font_size, 24.0);
+        assert_eq!(t.color, Srgba::new(1.0, 0.0, 0.0, 1.0));
     }
 
     #[test]
@@ -150,5 +153,80 @@ mod tests {
     fn owned_string_into_element() {
         let t: Text = String::from("hello").into_element();
         assert_eq!(t.content, "hello");
+    }
+
+    // --- Paint tests ---
+
+    /// Run the full layout+paint pipeline for a Text element and return the scene.
+    fn paint_text(content: &str, font_size: f32) -> Scene {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        let mut elem = text(content).font_size(font_size);
+
+        // Layout phase
+        let mut layout_cx = LayoutContext::new(&mut layout_engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = elem.request_layout(&mut layout_cx);
+        layout_engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+
+        // Paint phase
+        let bounds = layout_engine.layout_bounds(node_id);
+        let mut cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+        elem.paint(bounds, &mut cx);
+
+        scene
+    }
+
+    #[test]
+    fn text_element_paints_text_run_for_nonempty_content() {
+        let scene = paint_text("Hello", 16.0);
+        assert!(
+            scene.text_run_count() > 0,
+            "non-empty text should push at least one TextRun to the scene"
+        );
+    }
+
+    #[test]
+    fn text_element_does_not_paint_when_empty() {
+        let scene = paint_text("", 16.0);
+        assert_eq!(
+            scene.text_run_count(),
+            0,
+            "empty text content should produce no TextRuns"
+        );
+    }
+
+    #[test]
+    fn text_element_larger_font_size_produces_text_run() {
+        // Both small and large font sizes should successfully produce text runs
+        let scene_small = paint_text("A", 12.0);
+        let scene_large = paint_text("A", 48.0);
+        assert!(
+            scene_small.text_run_count() > 0,
+            "12px font should produce a text run"
+        );
+        assert!(
+            scene_large.text_run_count() > 0,
+            "48px font should produce a text run"
+        );
+    }
+
+    #[test]
+    fn text_element_no_quads_painted() {
+        // Text elements paint text runs, not quads
+        let scene = paint_text("Hello", 16.0);
+        assert_eq!(
+            scene.quad_count(),
+            0,
+            "text element should not paint any quads"
+        );
     }
 }
