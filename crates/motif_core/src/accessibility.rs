@@ -394,4 +394,64 @@ mod tests {
         fm.focus_prev();
         assert_eq!(fm.focused(), Some(AccessId(2)));
     }
+
+    #[test]
+    fn focus_manager_focus_next_with_empty_order_does_nothing() {
+        let mut fm = FocusManager::new();
+        fm.set_focus(AccessId(42));
+        // No focus order set — focus_next should be a no-op
+        fm.focus_next();
+        assert_eq!(fm.focused(), Some(AccessId(42)));
+    }
+
+    #[test]
+    fn focus_manager_focus_prev_with_empty_order_does_nothing() {
+        let mut fm = FocusManager::new();
+        fm.set_focus(AccessId(42));
+        // No focus order set — focus_prev should be a no-op
+        fm.focus_prev();
+        assert_eq!(fm.focused(), Some(AccessId(42)));
+    }
+
+    #[test]
+    fn focus_manager_focus_next_when_focused_not_in_order_selects_first() {
+        let mut fm = FocusManager::new();
+        fm.set_focus_order(vec![AccessId(1), AccessId(2), AccessId(3)]);
+        // Focus on an element that is NOT in the focus order
+        fm.set_focus(AccessId(99));
+        fm.focus_next();
+        // Should fall back to index 0 (first in order)
+        assert_eq!(fm.focused(), Some(AccessId(1)));
+    }
+
+    #[test]
+    fn focus_manager_focus_prev_when_focused_not_in_order_selects_last() {
+        let mut fm = FocusManager::new();
+        fm.set_focus_order(vec![AccessId(1), AccessId(2), AccessId(3)]);
+        // Focus on an element that is NOT in the focus order
+        fm.set_focus(AccessId(99));
+        fm.focus_prev();
+        // Should fall back to the last element in the order
+        assert_eq!(fm.focused(), Some(AccessId(3)));
+    }
+
+    #[test]
+    fn focus_manager_single_element_focus_next_stays() {
+        let mut fm = FocusManager::new();
+        fm.set_focus_order(vec![AccessId(1)]);
+        fm.set_focus(AccessId(1));
+        fm.focus_next();
+        // Wraps around to itself
+        assert_eq!(fm.focused(), Some(AccessId(1)));
+    }
+
+    #[test]
+    fn focus_manager_single_element_focus_prev_stays() {
+        let mut fm = FocusManager::new();
+        fm.set_focus_order(vec![AccessId(1)]);
+        fm.set_focus(AccessId(1));
+        fm.focus_prev();
+        // Wraps around to itself
+        assert_eq!(fm.focused(), Some(AccessId(1)));
+    }
 }
