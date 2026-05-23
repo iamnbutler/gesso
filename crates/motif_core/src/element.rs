@@ -513,4 +513,153 @@ mod tests {
             Some(ElementId(1))
         );
     }
+
+    #[test]
+    fn render_view_renders_empty_element() {
+        struct EmptyView;
+        impl Render for EmptyView {
+            fn render(&mut self, _cx: &mut ViewContext<Self>) -> impl IntoElement {
+                Empty
+            }
+        }
+
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        {
+            let mut cx = WindowContext::new(&mut scene, &mut text_ctx, ScaleFactor(1.0));
+            let mut view = EmptyView;
+            render_view(
+                &mut view,
+                &mut cx,
+                &mut layout_engine,
+                &mut hit_tree,
+                Size::new(800.0, 600.0),
+            );
+        }
+
+        // Empty element contributes no quads
+        assert_eq!(scene.quad_count(), 0);
+    }
+
+    #[test]
+    fn render_view_calls_render_and_can_mutate_view_state() {
+        struct Counter {
+            render_count: u32,
+        }
+        impl Render for Counter {
+            fn render(&mut self, _cx: &mut ViewContext<Self>) -> impl IntoElement {
+                self.render_count += 1;
+                Empty
+            }
+        }
+
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+        let mut view = Counter { render_count: 0 };
+
+        {
+            let mut cx = WindowContext::new(&mut scene, &mut text_ctx, ScaleFactor(1.0));
+            render_view(
+                &mut view,
+                &mut cx,
+                &mut layout_engine,
+                &mut hit_tree,
+                Size::new(800.0, 600.0),
+            );
+        }
+
+        // render() was called exactly once and the view's state reflects that
+        assert_eq!(view.render_count, 1);
+    }
+
+    #[test]
+    fn paint_context_offset_defaults_to_zero() {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let layout_engine = LayoutEngine::new();
+
+        let cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+
+        let offset = cx.offset();
+        assert_eq!(offset.x, 0.0_f32);
+        assert_eq!(offset.y, 0.0_f32);
+    }
+
+    #[test]
+    fn paint_context_set_offset_shifts_layout_bounds() {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        // Request and compute layout for an Empty element
+        let mut empty = Empty;
+        let node_id = {
+            let mut layout_cx =
+                LayoutContext::new(&mut layout_engine, &mut text_ctx, ScaleFactor(1.0));
+            empty.request_layout(&mut layout_cx)
+        };
+        layout_engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+
+        let mut cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+
+        let base_bounds = cx.layout_bounds(node_id);
+
+        // Apply an offset and verify the bounds shift accordingly
+        cx.set_offset(Point::new(10.0, 20.0));
+        let shifted_bounds = cx.layout_bounds(node_id);
+
+        assert_eq!(cx.offset().x, 10.0_f32);
+        assert_eq!(cx.offset().y, 20.0_f32);
+        assert_eq!(shifted_bounds.origin.x, base_bounds.origin.x + 10.0);
+        assert_eq!(shifted_bounds.origin.y, base_bounds.origin.y + 20.0);
+        // Size is unaffected by offset
+        assert_eq!(shifted_bounds.size.width, base_bounds.size.width);
+        assert_eq!(shifted_bounds.size.height, base_bounds.size.height);
+    }
+
+    #[test]
+    fn paint_context_paint_child_paints_wrapped_element() {
+        let mut scene = Scene::new();
+        let mut text_ctx = TextContext::new();
+        let mut hit_tree = HitTree::new();
+        let mut layout_engine = LayoutEngine::new();
+
+        let mut any = AnyElement::new(Empty);
+        {
+            let mut layout_cx =
+                LayoutContext::new(&mut layout_engine, &mut text_ctx, ScaleFactor(1.0));
+            let node_id = any.request_layout(&mut layout_cx);
+            layout_engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        }
+
+        let mut cx = PaintContext::new(
+            &mut scene,
+            &mut text_ctx,
+            &mut hit_tree,
+            &layout_engine,
+            ScaleFactor(1.0),
+        );
+        // Empty child adds nothing — paint_child should complete without panic
+        cx.paint_child(&mut any);
+        assert_eq!(scene.quad_count(), 0);
+    }
 }
