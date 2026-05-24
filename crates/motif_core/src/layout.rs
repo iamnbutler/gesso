@@ -418,4 +418,99 @@ mod tests {
         assert_eq!(inner_bounds.origin.x, 15.0);
         assert_eq!(inner_bounds.origin.y, 15.0);
     }
+
+    /// A leaf created without a MeasureContext and with no explicit dimensions exercises
+    /// the `node_context = None` branch in `measure_node()`, which returns `Size::ZERO`.
+    #[test]
+    fn leaf_without_context_defaults_to_zero_size() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        let leaf = engine.new_leaf(Style::default());
+        engine.compute_layout(leaf, 800.0, 600.0, &mut text_ctx);
+
+        let bounds = engine.layout_bounds(leaf);
+        assert_eq!(bounds.size.width, 0.0, "contextless leaf should have zero width");
+        assert_eq!(bounds.size.height, 0.0, "contextless leaf should have zero height");
+        assert_eq!(bounds.origin.x, 0.0);
+        assert_eq!(bounds.origin.y, 0.0);
+    }
+
+    /// Verifies that `layout_bounds()` correctly accumulates absolute coordinates across
+    /// five nesting levels — exercising the recursive parent-walk more thoroughly than
+    /// the existing three-level test.
+    #[test]
+    fn deeply_nested_layout_five_levels() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        let innermost = engine.new_leaf(Style {
+            size: taffy::Size {
+                width: length(10.0),
+                height: length(10.0),
+            },
+            ..Default::default()
+        });
+
+        // Wrap in 4 containers, each adding 5px padding on every side.
+        let mut current = innermost;
+        for _ in 0..4 {
+            current = engine.new_with_children(
+                Style {
+                    padding: taffy::Rect {
+                        left: length(5.0),
+                        right: length(5.0),
+                        top: length(5.0),
+                        bottom: length(5.0),
+                    },
+                    ..Default::default()
+                },
+                &[current],
+            );
+        }
+
+        engine.compute_layout(current, 800.0, 600.0, &mut text_ctx);
+
+        let innermost_bounds = engine.layout_bounds(innermost);
+        // 4 levels × 5px padding each = 20px accumulated offset on each axis.
+        assert_eq!(innermost_bounds.origin.x, 20.0);
+        assert_eq!(innermost_bounds.origin.y, 20.0);
+        assert_eq!(innermost_bounds.size.width, 10.0);
+        assert_eq!(innermost_bounds.size.height, 10.0);
+    }
+
+    /// Verifies that calling `clear()` fully resets the engine so a second layout pass
+    /// using freshly-created nodes produces correct, independent results.
+    #[test]
+    fn clear_and_reuse_engine() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        // First layout pass.
+        let node = engine.new_leaf(Style {
+            size: taffy::Size {
+                width: length(100.0),
+                height: length(80.0),
+            },
+            ..Default::default()
+        });
+        engine.compute_layout(node, 800.0, 600.0, &mut text_ctx);
+        let first_bounds = engine.layout_bounds(node);
+        assert_eq!(first_bounds.size.width, 100.0);
+        assert_eq!(first_bounds.size.height, 80.0);
+
+        // Clear and start a fresh second pass with different dimensions.
+        engine.clear();
+        let node2 = engine.new_leaf(Style {
+            size: taffy::Size {
+                width: length(40.0),
+                height: length(60.0),
+            },
+            ..Default::default()
+        });
+        engine.compute_layout(node2, 800.0, 600.0, &mut text_ctx);
+        let second_bounds = engine.layout_bounds(node2);
+        assert_eq!(second_bounds.size.width, 40.0);
+        assert_eq!(second_bounds.size.height, 60.0);
+    }
 }
