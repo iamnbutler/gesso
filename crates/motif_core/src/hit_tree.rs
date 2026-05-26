@@ -293,4 +293,45 @@ mod tests {
         let entries = tree.entries();
         assert_eq!(entries[0].z_index, 0); // reset
     }
+
+    // --- Edge cases ---
+
+    #[test]
+    fn hit_test_negative_origin() {
+        let mut tree = HitTree::new();
+        // Element straddling the origin: occupies [-50, 50) x [-50, 50)
+        tree.push(ElementId(1), rect(-50.0, -50.0, 100.0, 100.0));
+
+        // Inside at the origin
+        assert_eq!(tree.hit_test(pt(0.0, 0.0)), Some(ElementId(1)));
+        // Inside near inclusive top-left corner
+        assert_eq!(tree.hit_test(pt(-50.0, -50.0)), Some(ElementId(1)));
+        // Inside near exclusive right/bottom boundary
+        assert_eq!(tree.hit_test(pt(49.0, 49.0)), Some(ElementId(1)));
+        // Right edge is exclusive
+        assert_eq!(tree.hit_test(pt(50.0, 0.0)), None);
+        // Bottom edge is exclusive
+        assert_eq!(tree.hit_test(pt(0.0, 50.0)), None);
+        // Far outside
+        assert_eq!(tree.hit_test(pt(-100.0, 0.0)), None);
+    }
+
+    #[test]
+    fn hit_test_zero_size_elements() {
+        let mut tree = HitTree::new();
+        // Zero-width element
+        tree.push(ElementId(1), rect(50.0, 50.0, 0.0, 100.0));
+        // Zero-height element
+        tree.push(ElementId(2), rect(50.0, 50.0, 100.0, 0.0));
+        // Fully zero-size element
+        tree.push(ElementId(3), rect(50.0, 50.0, 0.0, 0.0));
+
+        // None of these can contain any point because the exclusion condition
+        // `point < origin + 0` is never satisfied when size is zero.
+        assert_eq!(tree.hit_test(pt(50.0, 50.0)), None);
+        assert_eq!(tree.hit_test(pt(75.0, 75.0)), None);
+        assert_eq!(tree.hit_test(pt(0.0, 0.0)), None);
+        // hit_test_all must also return empty
+        assert!(tree.hit_test_all(pt(50.0, 75.0)).is_empty());
+    }
 }
