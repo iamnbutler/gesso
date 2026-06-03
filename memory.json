@@ -1,21 +1,21 @@
 {
-  "last_run": "2026-06-02T00:00:00Z",
-  "last_run_id": "26845197316",
+  "last_run": "2026-06-03T00:00:00Z",
+  "last_run_id": "26910272535",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-02",
+    "task_11_monthly_summary": "2026-06-03",
+    "task_8_release": "2026-06-03",
+    "task_6_stale_nudges": "2026-06-03",
+    "task_1_triage": "2026-06-03",
     "task_7_labels": "2026-06-02",
     "task_10_forward": "2026-06-02",
     "task_5_maintain_prs": "2026-06-01",
-    "task_1_triage": "2026-06-01",
     "task_9_welcome": "2026-05-31",
-    "task_6_stale_nudges": "2026-05-30",
     "task_4_deps": "2026-05-27",
-    "task_8_release": "2026-05-27",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
   },
@@ -178,7 +178,7 @@
     "93": "monthly summary june 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-02: Task 11: Updated June 2026 summary (#93) — confirmed issue number. Task 7: Label audit complete, no changes needed (all 5 open issues + sampled PRs adequately labeled). Task 10: Key observation — repository dormant since 2026-03-04 (3 months, 0 new maintainer commits). 57 open Repo Assist PRs have NO recorded CI runs (total CI runs ever: 49, last on 2026-03-04). Draft PRs likely not triggering CI. Added CI check note to monthly summary. Next run priorities: task_9_welcome (2026-05-31), task_6_stale_nudges (2026-05-30 but no human PRs), task_1_triage (check for new activity). Skip task_2/task_3 while backlog >50. Note: no human activity on any issues or PRs since last run.",
+  "notes": "2026-06-03: Task 11: Updated June 2026 summary (#93) — added CI explanation (GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering workflows) and release infrastructure note. Task 8: release.yml confirmed ready, no releases made, no unreleased changes to bundle. Task 6: All open PRs are Repo Assist PRs waiting on maintainer — no human PRs to nudge. Task 1: No new issues/comments since last run. Next run priorities: task_7_labels (2026-06-02), task_10_forward (2026-06-02), task_5_maintain_prs (2026-06-01). Dep check due ~2026-06-10. Continue to skip task_2/task_3 while backlog >50 PRs.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-05-05",
   "maintainer_feature_branches": ["feature/devtools", "feature/focus-system", "feature/hot-reload", "feature/input-system", "feature/quad-borders"],
@@ -193,7 +193,14 @@
     "total_ci_runs": 49,
     "last_ci_run_date": "2026-03-04",
     "repo_assist_pr_ci_runs": 0,
-    "note": "57 Repo Assist PRs (created 2026-03-04 through 2026-05-27) have no CI runs. Draft PRs likely not triggering pull_request event in ci.yml. Noted in monthly summary #93."
+    "note": "57 Repo Assist PRs (created 2026-03-04 through 2026-05-27) have no CI runs. Root cause confirmed 2026-06-03: GitHub security restriction prevents github-actions[bot] GITHUB_TOKEN from triggering other workflow runs. Noted in monthly summary #93."
+  },
+  "release_workflow_observation_2026_06_03": {
+    "release_yml_exists": true,
+    "trigger": "push vX.Y.Z tag or published release",
+    "pipeline": "validate (fmt+clippy+test+dry-run publish) -> draft-release -> publish to crates.io",
+    "releases_made": 0,
+    "note": "Release pipeline is ready but no releases made. Project still pre-release with 57 open draft PRs."
   },
   "dep_audit_2026_05_27": {
     "cargo_lock_versions_after_update": {
