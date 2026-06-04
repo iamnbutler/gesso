@@ -1,19 +1,19 @@
 {
-  "last_run": "2026-06-03T00:00:00Z",
-  "last_run_id": "26910272535",
+  "last_run": "2026-06-04T00:00:00Z",
+  "last_run_id": "26975544550",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-03",
+    "task_11_monthly_summary": "2026-06-04",
+    "task_10_forward": "2026-06-04",
+    "task_5_maintain_prs": "2026-06-04",
     "task_8_release": "2026-06-03",
     "task_6_stale_nudges": "2026-06-03",
     "task_1_triage": "2026-06-03",
     "task_7_labels": "2026-06-02",
-    "task_10_forward": "2026-06-02",
-    "task_5_maintain_prs": "2026-06-01",
     "task_9_welcome": "2026-05-31",
     "task_4_deps": "2026-05-27",
     "task_3_improvements": "2026-05-24",
@@ -24,7 +24,7 @@
     "12": "2026-03-04",
     "15": "2026-03-12",
     "23": "2026-03-05",
-    "48": "2026-05-05",
+    "48": "2026-06-04",
     "49": "2026-05-11",
     "51": "2026-05-08",
     "67": "2026-06-01"
@@ -165,7 +165,8 @@
     "accessibility-focus-edge-cases",
     "layout-zero-context-deep-nesting-clear-reuse-tests",
     "hit-tree-negative-origin-zero-size-tests",
-    "deps-update-2026-05-27"
+    "deps-update-2026-05-27",
+    "pr-merge-order-updated-issue-48-2026-06-04"
   ],
   "issues_created": {
     "13": "fix doc name clash",
@@ -178,15 +179,20 @@
     "93": "monthly summary june 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-03: Task 11: Updated June 2026 summary (#93) — added CI explanation (GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering workflows) and release infrastructure note. Task 8: release.yml confirmed ready, no releases made, no unreleased changes to bundle. Task 6: All open PRs are Repo Assist PRs waiting on maintainer — no human PRs to nudge. Task 1: No new issues/comments since last run. Next run priorities: task_7_labels (2026-06-02), task_10_forward (2026-06-02), task_5_maintain_prs (2026-06-01). Dep check due ~2026-06-10. Continue to skip task_2/task_3 while backlog >50 PRs.",
+  "notes": "2026-06-04: Task 5 — verified PRs #36, #39, #41, #92 all have mergeable_state=clean (no merge conflicts). Task 10 — added comment to issue #48 updating merge order to cover all 57 PRs (#71-#92 are new: 15 pure test PRs in batch 2, #71/#72/#76 standalone features, #73/#74/#75 multiline chain, #92 deps). Task 11 — updated June 2026 monthly summary. Next run priorities: task_7_labels (2026-06-02 - due), task_9_welcome (2026-05-31 - due), task_1_triage (check for new issues), task_4_deps (next check ~2026-06-10). Continue to skip task_2/task_3 while backlog >50 PRs. View memoization (spool item mmc4hsu7-or3m) is the only major spool item without a Repo Assist PR — hold until backlog clears.",
   "pr_merge_order_issue": "48",
-  "pr_merge_order_updated": "2026-05-05",
+  "pr_merge_order_updated": "2026-06-04",
   "maintainer_feature_branches": ["feature/devtools", "feature/focus-system", "feature/hot-reload", "feature/input-system", "feature/quad-borders"],
   "maintainer_feature_branches_noted": "2026-05-28",
   "maintainer_feature_branches_last_commit": "2026-03-04",
   "open_repo_assist_prs": [20, 21, 22, 25, 27, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92],
+  "pr_mergeability_verified_2026_06_04": {
+    "prs_checked": [36, 39, 41, 92],
+    "all_clean": true,
+    "note": "All 4 checked PRs have mergeable_state=clean. No merge conflicts detected across the sample."
+  },
   "open_repo_assist_prs_pending": [],
-  "prs_to_close": [],
+  "prs_to_close": [20, 21],
   "priority_pr": 36,
   "checked_off_by_maintainer": [],
   "ci_observation_2026_06_02": {
