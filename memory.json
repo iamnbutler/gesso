@@ -1,20 +1,20 @@
 {
-  "last_run": "2026-06-04T00:00:00Z",
-  "last_run_id": "26975544550",
+  "last_run": "2026-06-05T00:00:00Z",
+  "last_run_id": "27036323188",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-04",
+    "task_11_monthly_summary": "2026-06-05",
+    "task_5_maintain_prs": "2026-06-05",
+    "task_7_labels": "2026-06-05",
+    "task_9_welcome": "2026-06-05",
+    "task_1_triage": "2026-06-05",
     "task_10_forward": "2026-06-04",
-    "task_5_maintain_prs": "2026-06-04",
     "task_8_release": "2026-06-03",
     "task_6_stale_nudges": "2026-06-03",
-    "task_1_triage": "2026-06-03",
-    "task_7_labels": "2026-06-02",
-    "task_9_welcome": "2026-05-31",
     "task_4_deps": "2026-05-27",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
@@ -179,7 +179,7 @@
     "93": "monthly summary june 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-04: Task 5 — verified PRs #36, #39, #41, #92 all have mergeable_state=clean (no merge conflicts). Task 10 — added comment to issue #48 updating merge order to cover all 57 PRs (#71-#92 are new: 15 pure test PRs in batch 2, #71/#72/#76 standalone features, #73/#74/#75 multiline chain, #92 deps). Task 11 — updated June 2026 monthly summary. Next run priorities: task_7_labels (2026-06-02 - due), task_9_welcome (2026-05-31 - due), task_1_triage (check for new issues), task_4_deps (next check ~2026-06-10). Continue to skip task_2/task_3 while backlog >50 PRs. View memoization (spool item mmc4hsu7-or3m) is the only major spool item without a Repo Assist PR — hold until backlog clears.",
+  "notes": "2026-06-05: Task 5 — checked mergeability of PRs #22, #44, #52, #63, #77; all mergeable_state=clean. 9 PRs now verified conflict-free across two runs (previous run: #36, #39, #41, #92). Task 7 — label audit complete: all 5 open issues and 30+ sampled PRs properly labeled, no changes needed. Task 9 — no new contributors in past 24h; repo dormant since 2026-03-04. Task 1 — no new issues; all 5 open issues have RA comments. Task 11 — updated June 2026 monthly summary. Next run priorities: task_4_deps (next check ~2026-06-10), task_8_release (check for any new commits), task_6_stale_nudges, task_10_forward (continue mergeability checks of remaining PRs). Continue to skip task_2/task_3 while backlog >50 PRs. View memoization (spool item mmc4hsu7-or3m) is the only major spool item without a Repo Assist PR — hold until backlog clears.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "maintainer_feature_branches": ["feature/devtools", "feature/focus-system", "feature/hot-reload", "feature/input-system", "feature/quad-borders"],
@@ -190,6 +190,11 @@
     "prs_checked": [36, 39, 41, 92],
     "all_clean": true,
     "note": "All 4 checked PRs have mergeable_state=clean. No merge conflicts detected across the sample."
+  },
+  "pr_mergeability_verified_2026_06_05": {
+    "prs_checked": [22, 44, 52, 63, 77],
+    "all_clean": true,
+    "note": "All 5 checked PRs have mergeable_state=clean. PR #22 has an older base SHA (d9e101fb) but still merges cleanly. 9 PRs total verified conflict-free across two runs."
   },
   "open_repo_assist_prs_pending": [],
   "prs_to_close": [20, 21],
