@@ -1,21 +1,21 @@
 {
-  "last_run": "2026-06-07T00:00:00Z",
-  "last_run_id": "27102762964",
+  "last_run": "2026-06-10T00:00:00Z",
+  "last_run_id": "27302262764",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-07",
+    "task_11_monthly_summary": "2026-06-10",
+    "task_4_deps": "2026-06-10",
+    "task_9_welcome": "2026-06-10",
+    "task_1_triage": "2026-06-10",
     "task_5_maintain_prs": "2026-06-07",
     "task_10_forward": "2026-06-06",
     "task_8_release": "2026-06-06",
     "task_6_stale_nudges": "2026-06-06",
     "task_7_labels": "2026-06-05",
-    "task_9_welcome": "2026-06-05",
-    "task_1_triage": "2026-06-05",
-    "task_4_deps": "2026-05-27",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
   },
@@ -166,7 +166,8 @@
     "layout-zero-context-deep-nesting-clear-reuse-tests",
     "hit-tree-negative-origin-zero-size-tests",
     "deps-update-2026-05-27",
-    "pr-merge-order-updated-issue-48-2026-06-04"
+    "pr-merge-order-updated-issue-48-2026-06-04",
+    "zerocopy-0.8.52-patch-2026-06-10"
   ],
   "issues_created": {
     "13": "fix doc name clash",
@@ -179,7 +180,7 @@
     "93": "monthly summary june 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-07: Task 5 — MERGEABILITY AUDIT COMPLETE. All 57 Repo Assist PRs verified mergeable_state=clean across four runs (2026-06-04: #36,#39,#41,#92; 2026-06-05: #22,#44,#52,#63,#77; 2026-06-06: #25,#37,#38,#40,#43,#53,#58,#71; 2026-06-07: #27,#42,#45,#46,#47,#54,#55,#56,#57,#59,#60,#61,#62,#64,#65,#66,#68,#69,#70,#72,#73,#74,#75,#76,#78,#79,#80,#81,#82,#83,#84,#85,#86,#87,#88,#89,#90,#91). No merge conflicts anywhere. Task 11 — updated June 2026 monthly summary. Next run priorities: task_7_labels (2026-06-05), task_9_welcome (2026-06-05), task_1_triage (check for new issues/activity), task_4_deps (next check ~2026-06-10). Continue to skip task_2/task_3 while backlog >50 PRs. Task 6/8/10 coverage is current.",
+  "notes": "2026-06-10: Task 4 — dep audit complete. Checked PR #92 branch: only 2 new packages since 2026-06-09 update (zerocopy 0.8.51→0.8.52, zerocopy-derive). Applied and pushed to PR #92. From main, 131 packages available — all bundled in PR #92 (relative to main). Task 1/9 — no new issues or contributors. Next run priorities: task_5_maintain_prs (2026-06-07), task_7_labels (2026-06-05), task_6_stale_nudges (2026-06-06), task_8_release (2026-06-06), task_10_forward (2026-06-06). Continue to skip task_2/task_3 while backlog >50 PRs.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "maintainer_feature_branches": ["feature/devtools", "feature/focus-system", "feature/hot-reload", "feature/input-system", "feature/quad-borders"],
@@ -230,13 +231,13 @@
       "glam": "0.32.1",
       "parley": "0.7.0",
       "smallvec": "1.15.1",
-      "swash": "0.2.7",
+      "swash": "0.2.8",
       "taffy": "0.9.2",
       "winit": "0.30.13",
       "accesskit_winit": "0.32.2",
       "glamour": "0.18.0",
       "subsecond": "0.7.9"
     },
-    "notes": "Ran cargo update 2026-05-27. 129 packages updated. Major bumps available but deferred: glam 0.33.0, rand 0.10.1. Next check ~2026-06-10."
+    "notes": "Ran cargo update 2026-05-27. 129 packages updated. Major bumps available but deferred: glam 0.33.0, rand 0.10.1. Updated PR #92 on 2026-06-09 with 26 more packages (swash 0.2.7→0.2.8, skrifa 0.40.0→0.42.1, etc.). Updated PR #92 on 2026-06-10 with zerocopy 0.8.51→0.8.52. Next check ~2026-06-17."
   }
 }
