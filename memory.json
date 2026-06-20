@@ -1,21 +1,21 @@
 {
-  "last_run": "2026-06-19T00:00:00Z",
-  "last_run_id": "27845228891",
+  "last_run": "2026-06-20T00:00:00Z",
+  "last_run_id": "27881823574",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-19",
+    "task_11_monthly_summary": "2026-06-20",
+    "task_1_triage": "2026-06-20",
+    "task_6_stale_nudges": "2026-06-20",
+    "task_7_labels": "2026-06-20",
+    "task_10_forward": "2026-06-20",
     "task_4_deps": "2026-06-19",
     "task_9_welcome": "2026-06-19",
     "task_8_release": "2026-06-19",
     "task_5_maintain_prs": "2026-06-18",
-    "task_1_triage": "2026-06-18",
-    "task_7_labels": "2026-06-17",
-    "task_10_forward": "2026-06-17",
-    "task_6_stale_nudges": "2026-06-16",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
   },
@@ -107,7 +107,7 @@
     "94": "Research: view memoization — scene equality check + RepaintBoundary design (created 2026-06-17)"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-19: Task 4 — dep audit, pushed 5 updates to PR #92 (bytes 1.11.1→1.12.0, cc 1.2.64→1.2.65, getrandom 0.4.2→0.4.3, syn 2.0.117→2.0.118, wayland-protocols 0.32.12→0.32.13; 17 stale wasm/wit-bindgen packages removed). Task 9/8 — no new contributors, no new commits on main, no release warranted. Task 11 — updated monthly summary #93. All 57 Repo Assist PRs still open. Next dep check ~2026-06-24 (5 days). Skip task_2/task_3 while backlog >50 PRs.",
+  "notes": "2026-06-20: Task 6 — all open PRs are Repo Assist PRs; no stale human PRs to nudge. Task 7 — label audit complete, all labels correct. Task 1 — no new issues or human activity; all open issues have Repo Assist comments. Task 10 — studied scene.rs and text.rs for Option C (scene equality check from issue #94): Edges<T>/Corners<T> already derive PartialEq; DeviceRect is glamour::Rect<DevicePixels>; FontData is re-exported from parley (parley::FontData) and likely lacks PartialEq — GlyphKey uses font.data.id() + font.index for hashing instead. Full PartialEq on TextRun would need manual impl or hash-based approach; estimated ~80 lines total; deferred until backlog <10 PRs. Task 11 — updated monthly summary #93. Next dep check ~2026-06-24 (4 days). Skip task_2/task_3 while backlog >50 PRs.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92],
@@ -144,5 +144,10 @@
     },
     "deferred_major_bumps": ["glam 0.33.0", "rand 0.10.1"],
     "next_check": "2026-06-24"
+  },
+  "option_c_analysis": {
+    "date": "2026-06-20",
+    "findings": "Edges<T> and Corners<T> already derive PartialEq. DeviceRect is glamour::Rect<DevicePixels> — glamour likely derives PartialEq on its types. Srgba from palette likely implements PartialEq. FontData from parley likely lacks PartialEq (codebase uses font.data.id() + font.index for hashing in GlyphKey instead of direct equality). TextRun PartialEq would need manual impl comparing font_id+font_index. Estimated ~80 lines total. Deferred until backlog <10 PRs.",
+    "status": "deferred"
   }
 }
