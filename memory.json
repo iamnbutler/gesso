@@ -1,13 +1,14 @@
 {
-  "last_run": "2026-06-23T00:00:00Z",
-  "last_run_id": "28052345946",
+  "last_run": "2026-06-24T00:00:00Z",
+  "last_run_id": "28124923295",
   "monthly_summary_issue": 93,
   "monthly_summary_month": "2026-06",
   "monthly_summary_march_closed": true,
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-06-23",
+    "task_11_monthly_summary": "2026-06-24",
+    "task_4_deps": "2026-06-24",
     "task_5_maintain_prs": "2026-06-23",
     "task_7_labels": "2026-06-23",
     "task_8_release": "2026-06-23",
@@ -15,7 +16,6 @@
     "task_6_stale_nudges": "2026-06-22",
     "task_9_welcome": "2026-06-22",
     "task_10_forward": "2026-06-21",
-    "task_4_deps": "2026-06-19",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
   },
@@ -107,7 +107,7 @@
     "94": "Research: view memoization — scene equality check + RepaintBoundary design (created 2026-06-17)"
   },
   "backlog_cursor": null,
-  "notes": "2026-06-23: Task 5 — spot-checked PRs #36, #92; #36 mergeable_state: clean; #92 mergeable_state: unstable (CI not running from bot, not a conflict); main still at 57a5ad8. Task 7 — label audit, no changes needed. Task 8 — release check, no new commits, no release warranted. Task 11 — updated monthly summary #93. Next dep check ~2026-06-24. Skip task_2/task_3 while backlog >50 PRs.",
+  "notes": "2026-06-24: Task 4 — dep audit; 12 new patch updates pushed to PR #92 (arrayvec, js-sys, log, memmap2, quote, uuid, wasm-bindgen+family, web-sys). Task 11 — updated monthly summary #93 (rewrote to correct format). Main still at 57a5ad8. Next dep check ~2026-07-01. Skip task_2/task_3 while backlog >50 PRs.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92],
@@ -124,26 +124,31 @@
     "missing_readme_field": true
   },
   "dep_audit": {
-    "last_updated": "2026-06-19",
+    "last_updated": "2026-06-24",
     "current_versions": {
+      "arrayvec": "0.7.7",
       "bytes": "1.12.0",
       "cc": "1.2.65",
       "getrandom": "0.4.3",
+      "js-sys": "0.3.103",
+      "log": "0.4.33",
+      "memmap2": "0.9.11",
+      "quote": "1.0.46",
       "syn": "2.0.118",
-      "wayland-protocols": "0.32.13",
       "swash": "0.2.9",
       "smallvec": "1.15.2",
       "accesskit": "0.24.1",
       "accesskit_macos": "0.26.2",
+      "uuid": "1.23.4",
+      "wayland-protocols": "0.32.13",
+      "wasm-bindgen": "0.2.126",
+      "web-sys": "0.3.103",
       "winit": "0.30.13",
       "glam": "0.32.1",
-      "zerocopy": "0.8.52",
-      "wasm-bindgen": "0.2.125",
-      "js-sys": "0.3.102",
-      "web-sys": "0.3.102"
+      "zerocopy": "0.8.52"
     },
-    "deferred_major_bumps": ["glam 0.33.0", "rand 0.10.1"],
-    "next_check": "2026-06-24"
+    "deferred_major_bumps": ["glam 0.33.1", "rand 0.10.1"],
+    "next_check": "2026-07-01"
   },
   "option_c_analysis": {
     "date": "2026-06-20",
