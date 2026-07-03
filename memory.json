@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-07-02T00:00:00Z",
-  "last_run_id": "28616853706",
+  "last_run": "2026-07-03T00:00:00Z",
+  "last_run_id": "28680261334",
   "monthly_summary_issue": 95,
   "monthly_summary_month": "2026-07",
   "monthly_summary_june_closed": true,
@@ -8,14 +8,14 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-07-02",
+    "task_11_monthly_summary": "2026-07-03",
+    "task_10_forward": "2026-07-03",
+    "task_7_labels": "2026-07-03",
     "task_5_maintain_prs": "2026-07-02",
     "task_1_triage": "2026-07-02",
-    "task_7_labels": "2026-07-01",
     "task_6_stale_nudges": "2026-07-01",
     "task_9_welcome": "2026-07-01",
     "task_4_deps": "2026-06-30",
-    "task_10_forward": "2026-06-30",
     "task_8_release": "2026-06-28",
     "task_3_improvements": "2026-05-24",
     "task_2_fix_prs": "2026-05-01"
@@ -110,7 +110,7 @@
     "95": "monthly summary july 2026 - OPEN (created 2026-07-01, confirmed #95)"
   },
   "backlog_cursor": null,
-  "notes": "2026-07-02: Task 11 — corrected open PR count to 57 (last run inaccurately reported 50; 7 PRs #25,#27,#37,#38,#39,#40,#42 previously thought closed are still open). Task 5 — verified priority PRs: #36 (clean), #41 (clean), #58 (clean), #92 (unstable/CI-only). All PRs are based on current main SHA 57a5ad830597ef24f02f951f54198df090eff48a — no merge conflicts. Task 1 — no new human activity on any open issue. Skip task_2/task_3 while backlog >10 PRs (currently 57). Next dep check 2026-07-07.",
+  "notes": "2026-07-03: Task 10 — codebase audit found 5 active TODO comments in production code: layout.rs:161 (max_width wrapping → PR #39), todomvc.rs:483 and playground.rs:918,921,924 (clipboard → PR #53). All 5 active TODOs are addressed by open PRs. Updated monthly summary #95 to highlight #39 and #53 as 'Fixes remaining code TODOs'. Task 7 — all 57 PRs and 6 issues have appropriate labels, no changes needed. Main still at 57a5ad8. No new human activity. Skip task_2/task_3 while backlog >10 PRs (currently 57). Next dep check 2026-07-07.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92],
