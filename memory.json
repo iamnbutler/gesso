@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-07-05T19:00:00Z",
-  "last_run_id": "28752513856",
+  "last_run": "2026-07-06T19:00:00Z",
+  "last_run_id": "28818437126",
   "monthly_summary_issue": 95,
   "monthly_summary_month": "2026-07",
   "monthly_summary_june_closed": true,
@@ -8,12 +8,12 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-07-05",
-    "task_10_forward": "2026-07-05",
+    "task_11_monthly_summary": "2026-07-06",
+    "task_7_labels": "2026-07-06",
+    "task_10_forward": "2026-07-06",
     "task_1_triage": "2026-07-05",
     "task_5_maintain_prs": "2026-07-05",
     "task_9_welcome": "2026-07-05",
-    "task_7_labels": "2026-07-03",
     "task_6_stale_nudges": "2026-07-01",
     "task_4_deps": "2026-06-30",
     "task_8_release": "2026-06-28",
@@ -110,7 +110,7 @@
     "95": "monthly summary july 2026 - OPEN (created 2026-07-01, confirmed #95)"
   },
   "backlog_cursor": null,
-  "notes": "2026-07-05: Steady state — no new human activity, no new commits (main still at 57a5ad8), 57 open Repo Assist PRs unchanged, all conflict-free. Codebase scan confirmed scene.rs types (Quad, TextRun, GlyphInstance) lack PartialEq — re-validates Option C feasibility per issue #94. Updated monthly summary #95. Tasks deferred: task_2/task_3 (backlog >10 PRs), task_4 (next check 2026-07-07), task_8 (no new commits), task_6 (all open PRs are Repo Assist PRs waiting on maintainer — no human author nudges needed). 2026-07-03: Codebase audit found 5 active TODO comments — all addressed by open PRs (#39 fixes layout.rs max_width; #53 fixes 4 clipboard TODOs). Next dep check 2026-07-07.",
+  "notes": "2026-07-06: Steady state — no new human activity, no new commits (main still at 57a5ad8), 57 open Repo Assist PRs unchanged. Confirmed PR #35 (maintainer's TodoMVC demo) merged 2026-03-04 — PR #20 verified superseded. Added issue #15 close suggestion to monthly summary (wontfix, expired Mar 2026, Repo Assist already commented 2026-03-12). Dep audit due 2026-07-07. 2026-07-05: Codebase scan confirmed scene.rs types (Quad, TextRun, GlyphInstance) lack PartialEq — re-validates Option C feasibility per issue #94. 2026-07-03: Codebase audit found 5 active TODO comments — all addressed by open PRs (#39 fixes layout.rs max_width; #53 fixes 4 clipboard TODOs). Next dep check 2026-07-07.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92],
@@ -150,5 +150,12 @@
     "date": "2026-06-30",
     "status": "deferred — covered-by-pr-41",
     "pr": "#41"
+  },
+  "pr35_verified": {
+    "date": "2026-07-06",
+    "state": "merged",
+    "merged_at": "2026-03-04T15:17:55Z",
+    "merged_by": "iamnbutler",
+    "note": "Maintainer's TodoMVC demo — confirms PR #20 is superseded"
   }
 }
