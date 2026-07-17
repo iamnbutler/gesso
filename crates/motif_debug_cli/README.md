@@ -52,6 +52,21 @@ motif-debug --socket /tmp/motif-debug-12345.sock scene.stats
 |---------|-------------|
 | `input.state` | Current cursor position, pressed buttons, modifier keys |
 
+### Input simulation
+
+Simulate user input in the running motif app:
+
+```
+input.activate                         # bring app window to front
+input.move_to <x> <y>                  # move mouse to window-local coordinates
+input.click <x> <y>                    # click at window-local coordinates
+input.mouse_down <x> <y>              # press mouse button at coordinates
+input.mouse_up <x> <y>                # release mouse button at coordinates
+input.drag <x1> <y1> <x2> <y2>        # drag from one point to another
+```
+
+Coordinates are in logical pixels relative to the window.
+
 ### Screenshots
 
 ```
