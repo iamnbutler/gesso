@@ -1,18 +1,18 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-07-16
+2026-07-18
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper)
 - No tags/releases exist (version: 0.0.1)
-- 57 open Repo Assist draft PRs (all from github-actions[bot])
+- 58 open Repo Assist draft PRs (57 existing + PR #96 added 2026-07-17)
 - 6 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
 ## Open Issues
 - #15: [agentics] Repo Assist failed — labeled `wontfix`, expired Mar 2026 → suggest close
-- #48: [Repo Assist] PR backlog merge order — 17 draft PRs guide (outdated: now 57 PRs)
+- #48: [Repo Assist] PR backlog merge order — 17 draft PRs guide (outdated: now 58 PRs)
 - #49: [Repo Assist] Research: wgpu rendering backend
 - #51: [Repo Assist] Research: text metrics debug example
 - #94: [Repo Assist] Research: view memoization (Option C ready: ~40 lines, no PartialEq on Quad/TextRun/GlyphInstance)
@@ -23,13 +23,15 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 
 ## Monthly Summary Issue
 - Current: #95 (July 2026)
-- Updated: 2026-07-16
+- Updated: 2026-07-18
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 57 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 58 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-07-18: Tasks 1, 7, 8, 11
+- 2026-07-17: Tasks 5, 9, 10, 11
 - 2026-07-16: Tasks 1, 2, 3, 6, 11
 - 2026-07-15: Tasks 7, 8, 10, 11
 - 2026-07-14: Tasks 5, 6, 9, 10, 11
@@ -55,6 +57,7 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 - #53: Clipboard TODOs fix (TODO fix)
 - #92: Dependency updates (refreshed 2026-07-07)
 - #41: opt-level=3 for deps
+- #96: docs(debug-cli): document input simulation commands (2026-07-17)
 
 ## PRs to Close
 - #20: Superseded by maintainer PR #35
@@ -62,7 +65,7 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 57 PRs from Repo Assist; no human PRs exist
+- All 58 PRs from Repo Assist; no human PRs exist
 
 ## Dependency Audit
 - Last audit: 2026-07-07 (PR #92 updated with full dep refresh)
@@ -71,6 +74,7 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 
 ## Fix Attempts
 - PR #92: Dependency updates (refreshed 2026-07-07, awaiting merge)
+- PR #96: docs(debug-cli): document input simulation commands (2026-07-17)
 - All p1/p2 TODO items have open PRs
 
 ## Improvement Ideas Submitted (do not re-propose)
@@ -79,6 +83,7 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 - Text metrics debug example (issue #51, PR #56)
 - Theme trait (PR #44)
 - PR backlog merge order guide (issue #48)
+- Debug CLI input simulation docs (PR #96)
 
 ## Structural Notes
 - Project: immediate-mode Rust UI framework, Metal GPU backend, macOS only currently

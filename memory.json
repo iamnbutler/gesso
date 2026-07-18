@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-07-16T00:00:00Z",
-  "last_run_id": "29528485270",
+  "last_run": "2026-07-18T00:00:00Z",
+  "last_run_id": "29657999353",
   "monthly_summary_issue": 95,
   "monthly_summary_month": "2026-07",
   "monthly_summary_june_closed": true,
@@ -8,16 +8,16 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-07-16",
-    "task_1_triage": "2026-07-16",
+    "task_11_monthly_summary": "2026-07-18",
+    "task_1_triage": "2026-07-18",
+    "task_7_labels": "2026-07-18",
+    "task_8_release": "2026-07-18",
+    "task_6_stale_nudges": "2026-07-16",
     "task_2_fix_prs": "2026-07-16",
     "task_3_improvements": "2026-07-16",
-    "task_6_stale_nudges": "2026-07-16",
-    "task_8_release": "2026-07-15",
-    "task_7_labels": "2026-07-15",
-    "task_10_forward": "2026-07-15",
-    "task_9_welcome": "2026-07-13",
-    "task_5_maintain_prs": "2026-07-13",
+    "task_5_maintain_prs": "2026-07-17",
+    "task_9_welcome": "2026-07-17",
+    "task_10_forward": "2026-07-17",
     "task_2_fix_prs_reviewed": "2026-07-12",
     "task_3_improvements_reviewed": "2026-07-12",
     "task_4_deps": "2026-07-07"
@@ -101,7 +101,8 @@
     "accessibility-focus-edge-cases": "pr-89-open",
     "layout-additional-tests": "pr-90-open",
     "hit-tree-edge-case-tests": "pr-91-open",
-    "deps-update-2026-05-27": "pr-92-open-refreshed-2026-07-07"
+    "deps-update-2026-05-27": "pr-92-open-refreshed-2026-07-07",
+    "debug-cli-input-sim-docs": "pr-96-open"
   },
   "issues_created": {
     "48": "PR backlog merge order",
@@ -112,10 +113,10 @@
     "95": "monthly summary july 2026 - OPEN (created 2026-07-01, confirmed #95)"
   },
   "backlog_cursor": null,
-  "notes": "2026-07-16: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 1 (triage): all 6 issues have Repo Assist comments, no new human engagement. Task 6 (stale nudges): all 57 PRs are from github-actions[bot], no human PRs to nudge. Task 2 (fix PRs): no bug-labeled issues without existing PRs. Task 3 (improvements): 57-PR backlog still too large to add new PRs. Updated monthly summary issue #95. 2026-07-15: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 8: release workflow confirmed ready, no new commits. Task 7: all labels verified current, no changes needed. Task 10: reviewed TODO.md and llms.txt — workspace Cargo.toml missing readme field (deferred until backlog < 10); no other new gaps. Updated monthly summary issue #95. 2026-07-13: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 9: no new PRs/issues since 2026-07-12, no new contributors. Task 5: structural CI limitation persists (GitHub blocks github-actions[bot] triggers); no merge conflicts. Task 10: reviewed TODO.md — all p1/p2 items have open PRs; Metal struct alignment gotcha already documented in llms.txt; 'visual regression test harness' (p3) is the only TODO without a PR (related to PR #37 screenshot diffing). Updated monthly summary issue #95. 2026-07-12: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 2 reviewed: no bug-labeled issues open; all bugs addressed by PRs. Task 3 reviewed: 57-PR backlog too large for new PRs, deferred per policy. Updated monthly summary issue #95. 2026-07-11: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. All issues have existing Repo Assist comments; no fixable bugs without existing PRs; no new contributors; no label changes needed. 2026-07-07: Ran dep audit (due today). PR #92 branch refreshed with 13 additional Cargo.lock updates. 2026-07-05: Codebase scan confirmed scene.rs types (Quad, TextRun, GlyphInstance) lack PartialEq — re-validates Option C feasibility per issue #94. 2026-07-03: Codebase audit found 5 active TODO comments — all addressed by open PRs (#39 fixes layout.rs max_width; #53 fixes 4 clipboard TODOs).",
+  "notes": "2026-07-18: Steady state — no new human activity on 6 open issues or 58 open PRs; main still at 57a5ad8. Task 1 (triage): all 6 issues have Repo Assist comments, no new human engagement. Task 7 (labels): all 58 open PRs and 6 issues remain appropriately labeled, no changes needed. Task 8 (release): workflow ready, no new commits. Updated monthly summary issue #95 with PR count correction (57→58) and proper PR #96 reference. 2026-07-17: Steady state — found documentation gap in motif_debug_cli/README.md — 6 input simulation commands fully implemented but not documented. Created PR #96 docs(debug-cli): document input simulation commands in README. Tasks 5 (maintain PRs), 9 (welcome), 10 (forward), 11 (monthly summary). 2026-07-16: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 1 (triage): all 6 issues have Repo Assist comments, no new human engagement. Task 6 (stale nudges): all 57 PRs are from github-actions[bot], no human PRs to nudge. Task 2 (fix PRs): no bug-labeled issues without existing PRs. Task 3 (improvements): 57-PR backlog still too large to add new PRs. Updated monthly summary issue #95. 2026-07-15: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 8: release workflow confirmed ready, no new commits. Task 7: all labels verified current, no changes needed. Task 10: reviewed TODO.md and llms.txt — workspace Cargo.toml missing readme field (deferred until backlog < 10); no other new gaps. Updated monthly summary issue #95. 2026-07-13: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 9: no new PRs/issues since 2026-07-12, no new contributors. Task 5: structural CI limitation persists (GitHub blocks github-actions[bot] triggers); no merge conflicts. Task 10: reviewed TODO.md — all p1/p2 items have open PRs; Metal struct alignment gotcha already documented in llms.txt; 'visual regression test harness' (p3) is the only TODO without a PR (related to PR #37 screenshot diffing). Updated monthly summary issue #95. 2026-07-12: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. Task 2 reviewed: no bug-labeled issues open; all bugs addressed by PRs. Task 3 reviewed: 57-PR backlog too large for new PRs, deferred per policy. Updated monthly summary issue #95. 2026-07-11: Steady state — no new human activity on 6 open issues or 57 open PRs; main still at 57a5ad8. All issues have existing Repo Assist comments; no fixable bugs without existing PRs; no new contributors; no label changes needed. 2026-07-07: Ran dep audit (due today). PR #92 branch refreshed with 13 additional Cargo.lock updates. 2026-07-05: Codebase scan confirmed scene.rs types (Quad, TextRun, GlyphInstance) lack PartialEq — re-validates Option C feasibility per issue #94. 2026-07-03: Codebase audit found 5 active TODO comments — all addressed by open PRs (#39 fixes layout.rs max_width; #53 fixes 4 clipboard TODOs).",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
-  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92],
+  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96],
   "mergeability_verified": {
     "date": "2026-07-02",
     "clean": [36, 41, 58],
@@ -128,7 +129,7 @@
   "prs_to_close": [20, 21],
   "priority_pr": 36,
   "checked_off_by_maintainer": [],
-  "ci_observation": "57 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows (confirmed 2026-06-03). PR #92 shows mergeable_state: unstable due to CI not running (not a conflict).",
+  "ci_observation": "58 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows (confirmed 2026-06-03). PR #92 shows mergeable_state: unstable due to CI not running (not a conflict).",
   "release_workflow": "release.yml ready; push vX.Y.Z tag to trigger validate→draft-release pipeline. No releases made yet. Version is 0.0.1.",
   "release_readiness": {
     "date_checked": "2026-06-28",
