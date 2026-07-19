@@ -15,6 +15,27 @@ pub struct Quad {
     pub clip_bounds: Option<DeviceRect>,
 }
 
+impl PartialEq for Quad {
+    fn eq(&self, other: &Self) -> bool {
+        fn rect_eq(a: &DeviceRect, b: &DeviceRect) -> bool {
+            a.origin.x == b.origin.x
+                && a.origin.y == b.origin.y
+                && a.size.width == b.size.width
+                && a.size.height == b.size.height
+        }
+        rect_eq(&self.bounds, &other.bounds)
+            && self.background == other.background
+            && self.border_color == other.border_color
+            && self.border_widths == other.border_widths
+            && self.corner_radii == other.corner_radii
+            && match (&self.clip_bounds, &other.clip_bounds) {
+                (Some(a), Some(b)) => rect_eq(a, b),
+                (None, None) => true,
+                _ => false,
+            }
+    }
+}
+
 impl Quad {
     pub fn new(bounds: DeviceRect, background: impl Into<Srgba>) -> Self {
         Self {
@@ -29,7 +50,7 @@ impl Quad {
 }
 
 /// A positioned glyph within a text run.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct GlyphInstance {
     /// Glyph ID in the font.
     pub glyph_id: u32,
@@ -54,6 +75,20 @@ pub struct TextRun {
     pub normalized_coords: Vec<i16>,
     /// Glyphs to render.
     pub glyphs: Vec<GlyphInstance>,
+}
+
+impl PartialEq for TextRun {
+    fn eq(&self, other: &Self) -> bool {
+        // Compare font by blob ID + index rather than full byte content.
+        self.origin.x == other.origin.x
+            && self.origin.y == other.origin.y
+            && self.color == other.color
+            && self.font_size == other.font_size
+            && self.font.data.id() == other.font.data.id()
+            && self.font.index == other.font.index
+            && self.normalized_coords == other.normalized_coords
+            && self.glyphs == other.glyphs
+    }
 }
 
 impl TextRun {
@@ -84,7 +119,7 @@ impl TextRun {
 }
 
 /// Holds all primitives for a frame, ready for rendering.
-#[derive(Default)]
+#[derive(Default, Clone, PartialEq)]
 pub struct Scene {
     quads: Vec<Quad>,
     text_runs: Vec<TextRun>,

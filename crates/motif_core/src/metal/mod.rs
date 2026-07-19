@@ -428,6 +428,8 @@ pub struct MetalRenderer {
     glyph_instance_capacity: usize,
     glyph_atlas: GlyphAtlas,
     glyph_cache: GlyphCache,
+    // Scene memoization: skip rendering when nothing has changed.
+    prev_scene: Option<Scene>,
 }
 
 impl MetalRenderer {
@@ -510,6 +512,7 @@ impl MetalRenderer {
             glyph_instance_capacity: INITIAL_INSTANCE_CAPACITY,
             glyph_atlas,
             glyph_cache,
+            prev_scene: None,
         }
     }
 
@@ -533,6 +536,13 @@ impl Renderer for MetalRenderer {
 
         if quads.is_empty() && text_runs.is_empty() {
             return;
+        }
+
+        // Skip re-rendering when the scene is identical to the previous frame.
+        if let Some(ref prev) = self.prev_scene {
+            if scene == prev {
+                return;
+            }
         }
 
         // Prepare quad instances
@@ -642,6 +652,9 @@ impl Renderer for MetalRenderer {
 
         command_buffer.present_drawable(drawable);
         command_buffer.commit();
+
+        // Cache scene for memoization on the next frame.
+        self.prev_scene = Some(scene.clone());
     }
 }
 
