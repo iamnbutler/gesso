@@ -6,7 +6,10 @@
   - do not test things that the compiler can validate (Foo is an f32, bar can be initialized...)
   - write the tests, make them fail, then write the logic to make them pass.
 - use `motif-debug` CLI to inspect running apps
-  - `motif-debug scene.stats` - quad/text counts, viewport
-  - `motif-debug scene.quads` - list all quads
-  - `motif-debug screenshot` - capture current frame
-  - `motif-debug` (no args) - REPL mode
+  - scene inspection: `scene.stats` (quad/text counts, viewport, scale), `scene.quads` (all quads with bounds/color), `scene.text_runs` (origin, font size, glyph count)
+  - input inspection: `input.state` (cursor position, pressed buttons, modifier keys)
+  - screenshots: `screenshot [path]` - capture current frame to PNG (auto-generates path if omitted)
+  - debug overlays: `draw.quad x y w h r g b a` (logical px, color 0.0–1.0), `debug.list`, `debug.remove <id>`, `debug.clear`
+  - input simulation: `input.activate` (bring window to front), `input.move_to <x> <y>`, `input.click <x> <y>`, `input.mouse_down <x> <y>`, `input.mouse_up <x> <y>`, `input.drag <x1> <y1> <x2> <y2>`
+  - flags: `--json` (raw JSON output for scripting), `--socket <path>` (connect to specific socket)
+  - `motif-debug` (no args) - REPL mode (`quit`/`exit` to leave)
