@@ -40,6 +40,42 @@ motif-debug scene.stats            # inspect running app
 motif-debug screenshot             # capture frame
 ```
 
+## Debug CLI (`motif-debug`)
+
+Connects to a running motif process via Unix socket (`/tmp/motif-debug-{pid}.sock`).
+
+```bash
+# Scene inspection
+motif-debug scene.stats                          # quad count, text runs, viewport, scale
+motif-debug scene.quads                          # all quads with bounds and color
+motif-debug scene.text_runs                      # text runs: origin, font size, glyph count
+
+# Input state
+motif-debug input.state                          # cursor position, buttons, modifiers
+
+# Screenshots
+motif-debug screenshot [path]                    # capture frame to PNG (auto-path if omitted)
+
+# Debug overlays
+motif-debug draw.quad x y w h r g b a           # add overlay quad (logical px, colors 0.0–1.0)
+motif-debug debug.list                           # list active overlays
+motif-debug debug.remove <id>                    # remove overlay by id
+motif-debug debug.clear                          # clear all overlays
+
+# Input simulation (macOS, uses CGEvent)
+motif-debug input.activate                       # bring app window to front
+motif-debug input.move_to <x> <y>               # move cursor to window-local coords
+motif-debug input.click <x> <y>                 # click at coords
+motif-debug input.mouse_down <x> <y>            # press mouse button
+motif-debug input.mouse_up <x> <y>              # release mouse button
+motif-debug input.drag <x1> <y1> <x2> <y2>     # drag from one point to another
+
+# Flags and REPL
+motif-debug --json scene.stats                   # raw JSON output (for scripting)
+motif-debug --socket /path/to/sock scene.stats   # explicit socket path
+motif-debug                                      # interactive REPL mode (quit/exit to leave)
+```
+
 ## Known Issues
 
 Metal's `float3` has 16-byte alignment (not 12). Use three `float` fields instead of `float3 _padding` in shaders.
