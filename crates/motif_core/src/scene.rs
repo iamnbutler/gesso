@@ -101,26 +101,32 @@ impl Scene {
         self.text_runs.clear();
     }
 
+    /// Append a quad to the scene. Quads are rendered in insertion order (painter's algorithm).
     pub fn push_quad(&mut self, quad: Quad) {
         self.quads.push(quad);
     }
 
+    /// All quads in the scene, in draw order.
     pub fn quads(&self) -> &[Quad] {
         &self.quads
     }
 
+    /// Number of quads currently in the scene.
     pub fn quad_count(&self) -> usize {
         self.quads.len()
     }
 
+    /// Append a text run to the scene.
     pub fn push_text_run(&mut self, text_run: TextRun) {
         self.text_runs.push(text_run);
     }
 
+    /// All text runs in the scene, in draw order.
     pub fn text_runs(&self) -> &[TextRun] {
         &self.text_runs
     }
 
+    /// Number of text runs currently in the scene.
     pub fn text_run_count(&self) -> usize {
         self.text_runs.len()
     }

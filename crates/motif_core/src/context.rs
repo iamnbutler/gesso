@@ -1,4 +1,20 @@
 //! DrawContext provides a painter's stack for building scenes.
+//!
+//! [`DrawContext`] is the primary interface used inside a component's [`crate::Render::render`]
+//! or [`crate::RenderOnce::render`] implementation to emit quads and text runs into the
+//! current frame's [`Scene`].
+//!
+//! ## Coordinate system
+//!
+//! All coordinates passed to `DrawContext` are in **logical pixels** (device-independent).
+//! The context applies the window's [`ScaleFactor`] automatically when converting to device
+//! pixels for the scene.
+//!
+//! ## Painter's stack
+//!
+//! `DrawContext` maintains an *offset stack* and an optional *clip stack* that accumulate
+//! across nested [`DrawContext::with_offset`] and [`DrawContext::with_clip`] calls.  Each
+//! `paint_*` call is affected by the *current* accumulated offset and clip bounds.
 
 use crate::{
     AccessId, AccessNode, AccessRole, AccessTree, DevicePoint, DeviceRect, Point, Quad, Rect,
@@ -17,6 +33,7 @@ pub struct DrawContext<'a> {
 }
 
 impl<'a> DrawContext<'a> {
+    /// Create a `DrawContext` without accessibility support.
     pub fn new(scene: &'a mut Scene, scale_factor: ScaleFactor) -> Self {
         Self {
             scene,
