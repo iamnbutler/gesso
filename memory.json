@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-08-21T00:00:00Z",
-  "last_run_id": "32519002910",
+  "last_run": "2026-08-22T00:00:00Z",
+  "last_run_id": "32593903666",
   "monthly_summary_issue": 103,
   "monthly_summary_month": "2026-08",
   "monthly_summary_july_closed": true,
@@ -9,17 +9,17 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-08-21",
+    "task_11_monthly_summary": "2026-08-22",
+    "task_1_triage": "2026-08-22",
+    "task_2_fix_prs": "2026-08-22",
+    "task_6_stale_nudges": "2026-08-22",
+    "task_9_welcome": "2026-08-22",
     "task_3_improvements": "2026-08-21",
-    "task_1_triage": "2026-08-20",
     "task_5_maintain_prs": "2026-08-20",
-    "task_7_labels": "2026-08-18",
     "task_8_release": "2026-08-19",
+    "task_7_labels": "2026-08-18",
     "task_4_deps": "2026-08-17",
-    "task_10_forward": "2026-08-16",
-    "task_9_welcome": "2026-08-14",
-    "task_6_stale_nudges": "2026-08-11",
-    "task_2_fix_prs": "2026-08-12"
+    "task_10_forward": "2026-08-16"
   },
   "issues_commented": {
     "11": "2026-03-04",
@@ -131,7 +131,7 @@
     "103": "monthly summary august 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-08-21: Task 3 run — scanned codebase for improvements. No uncovered TODO items in source. Found doc gaps: Scene public methods (push_quad/quads/quad_count/push_text_run/text_runs/text_run_count) lacked doc comments; DrawContext::new() lacked doc; DrawContext module doc was sparse. Created PR #108 with focused doc improvements. 62 open Repo Assist PRs total (added #108). Main still at 57a5ad8. All 13 open issues have Repo Assist comments. Dep audit next check: 2026-09-07. Bench CI fix (#101-#107) requires workflow-scope permissions — blocked. PRs #20 and #21 should be closed. Issues #15 and #98 should be closed.",
+  "notes": "2026-08-22: Tasks 1,2,6,9,11 run. No new human activity; main still at 57a5ad8. 13 open issues (all have Repo Assist comments). 62 open Repo Assist draft PRs. No human PRs to nudge. No new contributors. No fixable bugs found (all p1/p2 TODOs have open PRs). Updated monthly summary #103. Dep audit next check: 2026-09-07. Bench CI fix (#101-#107) blocked — requires workflow-scope permissions. PRs #20 and #21 should be closed. Issues #15 and #98 should be closed.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-06-04",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108],
