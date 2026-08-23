@@ -2,6 +2,7 @@
 //!
 //! Provides a real Metal rendering environment for tests.
 
+use crate::snapshot::SceneSnapshot;
 use motif_core::{
     DeviceRect, ElementId, HitTree, Point, Quad, Rect, ScaleFactor, Scene, Size, TextContext,
 };
@@ -127,6 +128,28 @@ impl TestHarness {
     /// Get window size in logical pixels.
     pub fn size(&self) -> Size {
         self.size
+    }
+
+    /// Capture a [`SceneSnapshot`] of the current rendered scene.
+    ///
+    /// Snapshots record quads and text runs in device pixels. At the default
+    /// 2× scale factor, a logical 100×50 quad maps to a 200×100 device quad.
+    ///
+    /// Use [`assert_scene_snapshot`](Self::assert_scene_snapshot) to compare
+    /// against an expected snapshot in tests.
+    pub fn snapshot(&self) -> SceneSnapshot {
+        SceneSnapshot::capture(&self.scene)
+    }
+
+    /// Assert that the current scene matches an expected [`SceneSnapshot`].
+    ///
+    /// Panics with a human-readable diff if the scenes differ.
+    #[track_caller]
+    pub fn assert_scene_snapshot(&self, expected: &SceneSnapshot) {
+        let actual = self.snapshot();
+        if let Some(diff) = expected.diff(&actual) {
+            panic!("scene snapshot mismatch:\n{diff}");
+        }
     }
 
     /// Assert the number of registered hit regions.
