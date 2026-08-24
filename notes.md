@@ -1,53 +1,45 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-07-18
+2026-08-24
 
 ## Repository State
-- Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper)
+- Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 58 open Repo Assist draft PRs (57 existing + PR #96 added 2026-07-17)
-- 6 open issues (all have Repo Assist comments)
+- 63 open Repo Assist draft PRs
+- 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
 ## Open Issues
 - #15: [agentics] Repo Assist failed — labeled `wontfix`, expired Mar 2026 → suggest close
-- #48: [Repo Assist] PR backlog merge order — 17 draft PRs guide (outdated: now 58 PRs)
+- #48: [Repo Assist] PR backlog merge order — updated 2026-08-24, now covers all 63 PRs
 - #49: [Repo Assist] Research: wgpu rendering backend
 - #51: [Repo Assist] Research: text metrics debug example
-- #94: [Repo Assist] Research: view memoization (Option C ready: ~40 lines, no PartialEq on Quad/TextRun/GlyphInstance)
-- #95: [Repo Assist] Monthly Activity 2026-07 (current month summary)
+- #94: [Repo Assist] Research: view memoization (implemented as PR #97)
+- #98: [Repo Assist] docs(claude.md) issue artifact — suggest close (resolved by PR #99)
+- #101–#107: [Repo Assist] ci(bench) push-failed issues — blocked, maintainer must apply manually
+- #103: [Repo Assist] Monthly Activity 2026-08 (current month summary)
 
 ## Comments Made
-All 6 open issues have at least one Repo Assist comment. Do not re-engage unless new human activity appears.
+All 13 open issues have at least one Repo Assist comment. Do not re-engage unless new human activity appears.
 
 ## Monthly Summary Issue
-- Current: #95 (July 2026)
-- Updated: 2026-07-18
+- Current: #103 (August 2026)
+- Updated: 2026-08-24
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 58 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 63 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
-- 2026-07-18: Tasks 1, 7, 8, 11
-- 2026-07-17: Tasks 5, 9, 10, 11
-- 2026-07-16: Tasks 1, 2, 3, 6, 11
-- 2026-07-15: Tasks 7, 8, 10, 11
-- 2026-07-14: Tasks 5, 6, 9, 10, 11
-- 2026-07-13: Tasks 5, 9, 10, 11
-- 2026-07-12: Tasks 2, 3, 11
-- 2026-07-11: Tasks 1, 4 (deps check), 6, 7, 11
-- 2026-07-10: Tasks 1, 8 (release check), 7, 6, 11
-- 2026-07-09: Tasks 1, 4, 7, 11
-- 2026-07-08: Tasks 7, 9, 6, 4, 11
-- 2026-07-07: Task 4 (deps update PR #92), 11
-- 2026-07-06: Tasks 1 (issue review), 7 (labels), 11
-- 2026-07-05: Task 3 (codebase scan/view memoization), 1, 9, 11
-- 2026-07-04: Tasks 1, 9, 11
-- 2026-07-03: Tasks 3 (TODO audit), 7, 11
-- 2026-07-02: Task 5 (PR count correction + mergeability), 1, 9, 11
-- 2026-07-01: Task 11 (new monthly summary)
+- 2026-08-24: Tasks 5, 10, 11
+- 2026-08-23: Tasks 7, 10, 11
+- 2026-08-22: Tasks 1, 2, 6, 9, 11
+- 2026-08-21: Tasks 3, 11
+- 2026-08-20: Tasks 1, 5, 11
+- 2026-08-19: Tasks 1, 5, 8, 11
+- 2026-08-18: Tasks 1, 7, 11
+- 2026-08-17: Tasks 1, 4, 5, 11
 
 ## Priority PRs (conflict-free, ready to merge)
 - #36: Multi-click detection (p1 blocker)
@@ -55,9 +47,9 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 - #71: Element tree query devtools (p1)
 - #39: max_width text wrapping fix (TODO fix)
 - #53: Clipboard TODOs fix (TODO fix)
-- #92: Dependency updates (refreshed 2026-07-07)
+- #92: Dependency updates (refreshed 2026-08-02 with 162 updates)
 - #41: opt-level=3 for deps
-- #96: docs(debug-cli): document input simulation commands (2026-07-17)
+- #97: View memoization
 
 ## PRs to Close
 - #20: Superseded by maintainer PR #35
@@ -65,25 +57,22 @@ All 6 open issues have at least one Repo Assist comment. Do not re-engage unless
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 58 PRs from Repo Assist; no human PRs exist
+- All 63 PRs from Repo Assist; no human PRs exist
+- Full merge order guide in issue #48 (last updated 2026-08-24)
 
 ## Dependency Audit
-- Last audit: 2026-07-07 (PR #92 updated with full dep refresh)
-- Next audit: 2026-08-07
-- Post-PR-#92 merges: plan glam v0.33.x, rand v0.10.x follow-up
+- Last audit: 2026-08-02 (PR #92 updated with 162 package updates)
+- Next audit: 2026-09-07
 
-## Fix Attempts
-- PR #92: Dependency updates (refreshed 2026-07-07, awaiting merge)
-- PR #96: docs(debug-cli): document input simulation commands (2026-07-17)
-- All p1/p2 TODO items have open PRs
+## TODO Coverage
+- All p1/p2 TODO items: open PRs exist
+- P3 "Visual regression test harness": PR #109 (done 2026-08-23)
+- P3 "Move hardcoded colors to theme": blocked on PR #44 (Theme trait) merging first
 
-## Improvement Ideas Submitted (do not re-propose)
-- View memoization research (issue #94)
-- wgpu backend research (issue #49)
-- Text metrics debug example (issue #51, PR #56)
-- Theme trait (PR #44)
-- PR backlog merge order guide (issue #48)
-- Debug CLI input simulation docs (PR #96)
+## Bench CI Fix
+- Status: BLOCKED — modifying .github/workflows/ requires workflow permission scope
+- Maintainer must apply patch from issue #107 or run 31635670794 artifacts
+- Then close issues #101, #102, #104, #105, #106, #107
 
 ## Structural Notes
 - Project: immediate-mode Rust UI framework, Metal GPU backend, macOS only currently

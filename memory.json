@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-08-23T00:00:00Z",
-  "last_run_id": "32661401100",
+  "last_run": "2026-08-24T00:00:00Z",
+  "last_run_id": "32769238325",
   "monthly_summary_issue": 103,
   "monthly_summary_month": "2026-08",
   "monthly_summary_july_closed": true,
@@ -9,15 +9,15 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-08-23",
-    "task_10_forward": "2026-08-23",
+    "task_11_monthly_summary": "2026-08-24",
+    "task_10_forward": "2026-08-24",
+    "task_5_maintain_prs": "2026-08-24",
     "task_7_labels": "2026-08-23",
     "task_1_triage": "2026-08-22",
     "task_2_fix_prs": "2026-08-22",
     "task_6_stale_nudges": "2026-08-22",
     "task_9_welcome": "2026-08-22",
     "task_3_improvements": "2026-08-21",
-    "task_5_maintain_prs": "2026-08-20",
     "task_8_release": "2026-08-19",
     "task_4_deps": "2026-08-17"
   },
@@ -26,7 +26,7 @@
     "12": "2026-03-04",
     "15": "2026-03-12",
     "23": "2026-03-05",
-    "48": "2026-06-04",
+    "48": "2026-08-24",
     "49": "2026-05-11",
     "51": "2026-05-08",
     "67": "2026-06-01",
@@ -132,9 +132,9 @@
     "103": "monthly summary august 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-08-23: Tasks 10,7,11 run. Created PR #109: feat(test): SceneSnapshot for scene-level visual regression testing — resolves p3 TODO 'Visual regression test harness'. Labels on all 13 issues and 63 PRs reviewed — all correctly labelled. No new human activity; main still at 57a5ad8. 63 open Repo Assist draft PRs. Remaining uncovered p3 TODO: 'Move hardcoded colors to theme' (depends on PR #44 merging first). Dep audit next check: 2026-09-07. Bench CI fix (#101-#107) blocked — requires workflow-scope permissions. PRs #20 and #21 should be closed. Issues #15 and #98 should be closed.",
+  "notes": "2026-08-24: Tasks 10,5,11 run. Added update comment to issue #48 (merge order guide) — 6 new PRs (#96,#97,#99,#100,#108,#109) added, total now 63 PRs. Confirmed 63 PRs all conflict-free (main still at 57a5ad8, unchanged since March 2026). No new human activity. Dep audit next check: 2026-09-07. Bench CI fix (#101-#107) blocked. PRs #20 and #21 should be closed. Issues #15 and #98 should be closed. Remaining uncovered p3 TODO: 'Move hardcoded colors to theme' (depends on PR #44 merging first).",
   "pr_merge_order_issue": "48",
-  "pr_merge_order_updated": "2026-06-04",
+  "pr_merge_order_updated": "2026-08-24",
   "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108,109],
   "mergeability_verified": {
     "date": "2026-07-02",
