@@ -1,7 +1,7 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-24
+2026-08-25
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
@@ -25,13 +25,14 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-24
+- Updated: 2026-08-25
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
 - PR cursor: all 63 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-08-25: Tasks 1, 5, 7, 11
 - 2026-08-24: Tasks 5, 10, 11
 - 2026-08-23: Tasks 7, 10, 11
 - 2026-08-22: Tasks 1, 2, 6, 9, 11
@@ -68,6 +69,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - All p1/p2 TODO items: open PRs exist
 - P3 "Visual regression test harness": PR #109 (done 2026-08-23)
 - P3 "Move hardcoded colors to theme": blocked on PR #44 (Theme trait) merging first
+- Inline TODOs: max_width in layout.rs → covered by PR #39; clipboard in playground.rs/todomvc.rs → covered by PR #53
 
 ## Bench CI Fix
 - Status: BLOCKED — modifying .github/workflows/ requires workflow permission scope
