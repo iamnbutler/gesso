@@ -1,12 +1,12 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-25
+2026-08-26
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 63 open Repo Assist draft PRs
+- 64 open Repo Assist draft PRs (including new PR #110)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
@@ -25,13 +25,14 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-25
+- Updated: 2026-08-26
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 63 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 64 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-08-26: Tasks 10, 11
 - 2026-08-25: Tasks 1, 5, 7, 11
 - 2026-08-24: Tasks 5, 10, 11
 - 2026-08-23: Tasks 7, 10, 11
@@ -46,6 +47,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #110: Nested clip intersection fix (correctness bug)
 - #39: max_width text wrapping fix (TODO fix)
 - #53: Clipboard TODOs fix (TODO fix)
 - #92: Dependency updates (refreshed 2026-08-02 with 162 updates)
@@ -58,8 +60,11 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 63 PRs from Repo Assist; no human PRs exist
+- All 64 PRs from Repo Assist; no human PRs exist
 - Full merge order guide in issue #48 (last updated 2026-08-24)
+
+## Bug Found and Fixed (2026-08-26)
+- **DrawContext::with_clip nested clip bug**: Inner clips did not intersect with outer clips — only the innermost clip was applied. This meant content inside a nested scrollable/clipped container could render outside a parent container's bounds. Fixed in PR #110. The fix computes rect intersection when pushing onto the clip stack. Three new tests added.
 
 ## Dependency Audit
 - Last audit: 2026-08-02 (PR #92 updated with 162 package updates)
