@@ -69,6 +69,10 @@ impl<'a> DrawContext<'a> {
     }
 
     /// Execute closure with clip bounds applied.
+    ///
+    /// When nested, clip regions are intersected so that inner clips cannot
+    /// extend beyond outer clips. This ensures content never renders outside
+    /// a parent container's bounds.
     pub fn with_clip<R>(&mut self, bounds: Rect, f: impl FnOnce(&mut Self) -> R) -> R {
         // Transform clip bounds by current offset
         let offset = self.current_offset();
@@ -76,7 +80,26 @@ impl<'a> DrawContext<'a> {
             Point::new(bounds.origin.x + offset.x, bounds.origin.y + offset.y),
             bounds.size,
         );
-        self.clip_stack.push(clipped);
+        // Intersect with any existing clip so nested clips compose correctly.
+        // Without intersection an inner clip would override the outer clip,
+        // allowing content to escape a parent container's bounds.
+        let effective = if let Some(&outer) = self.clip_stack.last() {
+            let x1 = outer.origin.x.max(clipped.origin.x);
+            let y1 = outer.origin.y.max(clipped.origin.y);
+            let x2 =
+                (outer.origin.x + outer.size.width).min(clipped.origin.x + clipped.size.width);
+            let y2 =
+                (outer.origin.y + outer.size.height).min(clipped.origin.y + clipped.size.height);
+            if x2 > x1 && y2 > y1 {
+                Rect::new(Point::new(x1, y1), Size::new(x2 - x1, y2 - y1))
+            } else {
+                // Clips don't overlap: nothing should be visible in this region.
+                Rect::new(Point::new(x1, y1), Size::new(0.0, 0.0))
+            }
+        } else {
+            clipped
+        };
+        self.clip_stack.push(effective);
         let result = f(self);
         self.clip_stack.pop();
         result
@@ -297,6 +320,103 @@ mod tests {
         assert_eq!(clip.origin.y, 10.0);
         assert_eq!(clip.size.width, 50.0);
         assert_eq!(clip.size.height, 50.0);
+    }
+
+    #[test]
+    fn nested_clips_are_intersected() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        // Outer clip: (0,0) to (100,100)
+        cx.with_clip(
+            Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 100.0)),
+            |cx| {
+                // Inner clip: (50,50) to (150,150) — extends beyond outer
+                cx.with_clip(
+                    Rect::new(Point::new(50.0, 50.0), Size::new(100.0, 100.0)),
+                    |cx| {
+                        cx.paint_quad(
+                            Rect::new(Point::new(0.0, 0.0), Size::new(200.0, 200.0)),
+                            Srgba::new(1.0, 0.0, 0.0, 1.0),
+                        );
+                    },
+                );
+            },
+        );
+
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 1);
+        let clip = quads[0].clip_bounds.expect("should have clip bounds");
+        // Effective clip is intersection: (50,50) to (100,100) → size (50,50)
+        assert_eq!(clip.origin.x, 50.0);
+        assert_eq!(clip.origin.y, 50.0);
+        assert_eq!(clip.size.width, 50.0);
+        assert_eq!(clip.size.height, 50.0);
+    }
+
+    #[test]
+    fn nested_clip_contained_within_outer() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        // Outer clip: (0,0,200,200)
+        cx.with_clip(
+            Rect::new(Point::new(0.0, 0.0), Size::new(200.0, 200.0)),
+            |cx| {
+                // Inner clip: (10,10,50,50) — fully inside outer
+                cx.with_clip(
+                    Rect::new(Point::new(10.0, 10.0), Size::new(50.0, 50.0)),
+                    |cx| {
+                        cx.paint_quad(
+                            Rect::new(Point::new(0.0, 0.0), Size::new(300.0, 300.0)),
+                            Srgba::new(0.0, 1.0, 0.0, 1.0),
+                        );
+                    },
+                );
+            },
+        );
+
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 1);
+        let clip = quads[0].clip_bounds.expect("should have clip bounds");
+        // When inner is fully inside outer, effective clip = inner
+        assert_eq!(clip.origin.x, 10.0);
+        assert_eq!(clip.origin.y, 10.0);
+        assert_eq!(clip.size.width, 50.0);
+        assert_eq!(clip.size.height, 50.0);
+    }
+
+    #[test]
+    fn non_overlapping_nested_clips_produce_zero_size() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        // Outer clip: (0,0,50,50)
+        cx.with_clip(
+            Rect::new(Point::new(0.0, 0.0), Size::new(50.0, 50.0)),
+            |cx| {
+                // Inner clip: (100,100,50,50) — no overlap with outer
+                cx.with_clip(
+                    Rect::new(Point::new(100.0, 100.0), Size::new(50.0, 50.0)),
+                    |cx| {
+                        cx.paint_quad(
+                            Rect::new(Point::new(0.0, 0.0), Size::new(200.0, 200.0)),
+                            Srgba::new(0.0, 0.0, 1.0, 1.0),
+                        );
+                    },
+                );
+            },
+        );
+
+        let quads = scene.quads();
+        assert_eq!(quads.len(), 1);
+        let clip = quads[0].clip_bounds.expect("should have clip bounds");
+        // No intersection: zero-size clip (nothing visible)
+        assert_eq!(clip.size.width, 0.0);
+        assert_eq!(clip.size.height, 0.0);
     }
 
     #[test]
