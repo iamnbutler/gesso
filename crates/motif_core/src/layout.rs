@@ -79,20 +79,26 @@ impl LayoutEngine {
     ///
     /// Taffy returns positions relative to parent, so we walk up the tree
     /// to accumulate the absolute position.
+    ///
+    /// This implementation iterates up the parent chain rather than recursing,
+    /// which avoids O(depth²) `layout()` calls when computing bounds for many nodes
+    /// in a deep tree.
     pub fn layout_bounds(&self, id: NodeId) -> Rect {
         let layout = self.taffy.layout(id).expect("node not found");
 
-        // Taffy works in logical pixels
+        // Taffy works in logical pixels; start with this node's relative position
         let mut bounds = Rect::new(
             Point::new(layout.location.x, layout.location.y),
             Size::new(layout.size.width, layout.size.height),
         );
 
-        // Walk up to parent and add its origin
-        if let Some(parent_id) = self.taffy.parent(id) {
-            let parent_bounds = self.layout_bounds(parent_id);
-            bounds.origin.x += parent_bounds.origin.x;
-            bounds.origin.y += parent_bounds.origin.y;
+        // Walk up the parent chain, accumulating each ancestor's offset
+        let mut current = id;
+        while let Some(parent_id) = self.taffy.parent(current) {
+            let parent_layout = self.taffy.layout(parent_id).expect("node not found");
+            bounds.origin.x += parent_layout.location.x;
+            bounds.origin.y += parent_layout.location.y;
+            current = parent_id;
         }
 
         bounds
@@ -417,5 +423,54 @@ mod tests {
         // Inner should be at (5 + 10, 5 + 10) = (15, 15) absolute
         assert_eq!(inner_bounds.origin.x, 15.0);
         assert_eq!(inner_bounds.origin.y, 15.0);
+    }
+
+    #[test]
+    fn deeply_nested_layout_absolute_positions() {
+        // Verifies layout_bounds accumulates offsets correctly across many levels.
+        // Each level adds 5px of padding on all sides.
+        const DEPTH: usize = 8;
+        const PADDING: f32 = 5.0;
+
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        let leaf = engine.new_leaf(Style {
+            size: taffy::Size {
+                width: length(10.0),
+                height: length(10.0),
+            },
+            ..Default::default()
+        });
+
+        let padded_style = Style {
+            padding: taffy::Rect {
+                left: length(PADDING),
+                right: length(PADDING),
+                top: length(PADDING),
+                bottom: length(PADDING),
+            },
+            ..Default::default()
+        };
+
+        let mut current_child = leaf;
+        for _ in 0..DEPTH {
+            current_child = engine.new_with_children(padded_style.clone(), &[current_child]);
+        }
+
+        engine.compute_layout(current_child, 800.0, 600.0, &mut text_ctx);
+
+        let leaf_bounds = engine.layout_bounds(leaf);
+
+        // Leaf should be offset by PADDING * DEPTH on each axis
+        let expected_offset = PADDING * DEPTH as f32;
+        assert_eq!(
+            leaf_bounds.origin.x, expected_offset,
+            "leaf x should accumulate all ancestor padding offsets"
+        );
+        assert_eq!(
+            leaf_bounds.origin.y, expected_offset,
+            "leaf y should accumulate all ancestor padding offsets"
+        );
     }
 }
