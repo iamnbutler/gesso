@@ -1,12 +1,12 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-28
+2026-08-29
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 65 open Repo Assist draft PRs (including new PR #111)
+- 66 open Repo Assist draft PRs (including new PR #112)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
@@ -25,13 +25,14 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-28
+- Updated: 2026-08-29
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 65 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 66 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-08-29: Tasks 10, 11
 - 2026-08-28: Tasks 3, 11
 - 2026-08-26: Tasks 10, 11
 - 2026-08-25: Tasks 1, 5, 7, 11
@@ -48,6 +49,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #112: Div layout API — padding_x/y, margin, min/max size (2026-08-29)
 - #111: layout_bounds O(depth) iterative fix (perf improvement — 2026-08-28)
 - #110: Nested clip intersection fix (correctness bug)
 - #39: max_width text wrapping fix (TODO fix)
@@ -62,14 +64,22 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 65 PRs from Repo Assist; no human PRs exist
+- All 66 PRs from Repo Assist; no human PRs exist
 - Full merge order guide in issue #48 (last updated 2026-08-24)
 
+## Div Layout API Added (2026-08-29)
+- **PR #112**: Added 18 new layout methods to `Div`:
+  - Asymmetric padding: `padding_x`, `padding_y`, `padding_top/right/bottom/left`
+  - Margins: `margin`, `margin_x`, `margin_y`, `margin_top/right/bottom/left`
+  - Size constraints: `min_width`, `min_height`, `max_width`, `max_height`
+- Fills gap between `padding(f32)` (uniform only) and real-world CSS-like layout needs
+- All delegate to taffy `Style` fields; 13 new tests
+
 ## Perf Bug Found and Fixed (2026-08-28)
-- **layout_bounds() O(depth²) recursion**: `layout_bounds()` was recursive — each call at depth D made D*(D+1)/2 `taffy.layout()` calls. For a node at depth 8, that's 36 calls instead of 9. Since `layout_bounds` is called 2–7 times per element during paint (button, checkbox, text_input, div), this compounds in deep trees. Fixed in PR #111. The fix uses an iterative loop up the parent chain, making exactly one `taffy.layout()` call per ancestor. Test added: `deeply_nested_layout_absolute_positions` (8 levels × 5px padding).
+- **layout_bounds() O(depth²) recursion**: Fixed in PR #111. Iterative O(depth) loop. Test: `deeply_nested_layout_absolute_positions` (8 levels × 5px padding).
 
 ## Bug Found and Fixed (2026-08-26)
-- **DrawContext::with_clip nested clip bug**: Inner clips did not intersect with outer clips — only the innermost clip was applied. This meant content inside a nested scrollable/clipped container could render outside a parent container's bounds. Fixed in PR #110. The fix computes rect intersection when pushing onto the clip stack. Three new tests added.
+- **DrawContext::with_clip nested clip bug**: Fixed in PR #110. Inner clips now intersect with outer clips. Three new tests.
 
 ## Dependency Audit
 - Last audit: 2026-08-02 (PR #92 updated with 162 package updates)

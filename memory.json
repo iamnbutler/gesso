@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-08-28T00:00:00Z",
-  "last_run_id": "33139195631",
+  "last_run": "2026-08-29T00:00:00Z",
+  "last_run_id": "33228125044",
   "monthly_summary_issue": 103,
   "monthly_summary_month": "2026-08",
   "monthly_summary_july_closed": true,
@@ -9,12 +9,12 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-08-28",
+    "task_11_monthly_summary": "2026-08-29",
+    "task_10_forward": "2026-08-29",
     "task_3_improvements": "2026-08-28",
-    "task_10_forward": "2026-08-26",
-    "task_7_labels": "2026-08-25",
-    "task_5_maintain_prs": "2026-08-25",
     "task_1_triage": "2026-08-25",
+    "task_5_maintain_prs": "2026-08-25",
+    "task_7_labels": "2026-08-25",
     "task_6_stale_nudges": "2026-08-22",
     "task_9_welcome": "2026-08-22",
     "task_2_fix_prs": "2026-08-22",
@@ -116,6 +116,7 @@
     "scene-snapshot": "pr-109-open",
     "nested-clip-intersection": "pr-110-open",
     "layout-bounds-iterative": "pr-111-open",
+    "div-layout-api": "pr-112-open",
     "bench-ci-jsonl": "issue-101-push-failed-6-attempts-workflow-scope-required"
   },
   "issues_created": {
@@ -134,21 +135,21 @@
     "103": "monthly summary august 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-08-28: Tasks 3, 11 run. Found genuine perf issue: layout_bounds() was recursive O(depth²) — each call at depth D made D*(D+1)/2 taffy.layout() calls. Fixed in PR #111 (layout-bounds-iterative). Now O(depth): single iterative walk up parent chain. Added deeply_nested_layout_absolute_positions test (8 levels). Linux build fails due to fontconfig (known infra). All 13 issues still have RA comments, no new human activity. Next priority tasks: 1 (triage), 5 (PR maintenance). Dep audit next check: 2026-09-07.",
+  "notes": "2026-08-29: Tasks 10, 11 run. Task 10: Identified that Div only had padding(f32) for uniform padding — no asymmetric padding, margin, or size constraint methods. Added padding_x/y, padding_top/right/bottom/left, margin/margin_x/y/margin_top/right/bottom/left, min_width/height, max_width/height to div.rs. 13 new tests (builder value assertions + taffy layout effect tests). PR #112 created. Build fails on Linux due to fontconfig (known infra). All taffy types verified in taffy-0.9.2 source. Task 11: Updated monthly summary #103. Next priority tasks: 1 (triage), 5 (PR maintenance). Dep audit next check: 2026-09-07.",
   "pr_merge_order_issue": "48",
   "pr_merge_order_updated": "2026-08-24",
-  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108,109,110,111],
+  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108,109,110,111,112],
   "mergeability_verified": {
     "date": "2026-08-25",
     "clean": [36, 41, 58],
     "unstable_ci_only": [92],
     "base_sha_main": "57a5ad830597ef24f02f951f54198df090eff48a",
-    "note": "All PRs target current main SHA — all conflict-free. Verified 2026-08-25. PR #111 also targets same SHA."
+    "note": "All PRs target current main SHA — all conflict-free. Verified 2026-08-25. PRs #110, #111, #112 also target same SHA."
   },
   "prs_to_close": [20, 21],
   "priority_pr": 36,
   "checked_off_by_maintainer": [],
-  "ci_observation": "65 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows. Mark PRs Ready for review to trigger CI.",
+  "ci_observation": "66 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows. Mark PRs Ready for review to trigger CI.",
   "release_workflow": "release.yml ready; push vX.Y.Z tag to trigger validate->draft-release pipeline. Version is 0.0.1.",
   "dep_audit": {
     "last_updated": "2026-08-02",
@@ -176,5 +177,10 @@
     "date": "2026-08-28",
     "pr": 111,
     "description": "layout_bounds() was recursive O(depth²): node at depth D made D*(D+1)/2 taffy.layout() calls. Converted to iterative O(depth) loop over parent chain. Called 2-7 times per element during paint, so this matters for deep trees. Added deeply_nested_layout_absolute_positions test (8 levels, 5px padding each)."
+  },
+  "div_layout_api": {
+    "date": "2026-08-29",
+    "pr": 112,
+    "description": "Added padding_x/y, padding_top/right/bottom/left, margin, margin_x/y, margin_top/right/bottom/left, min_width/height, max_width/height to Div. Previously only uniform padding(f32). 13 new tests. All methods delegate to taffy Style fields (margin: Rect<LengthPercentageAuto>, min_size/max_size: Size<Dimension>)."
   }
 }
