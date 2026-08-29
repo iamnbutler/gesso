@@ -118,6 +118,27 @@ impl<'a> DrawContext<'a> {
         self.scale_factor.scale_point(origin)
     }
 
+    /// Paint a filled quad with uniform rounded corners.
+    pub fn paint_rounded_quad(&mut self, bounds: Rect, fill: impl Into<Srgba>, radius: f32) {
+        let mut quad = Quad::new(self.to_device_rect(bounds), fill).with_corner_radius(radius);
+        self.apply_clip(&mut quad);
+        self.scene.push_quad(quad);
+    }
+
+    /// Paint a filled quad with a uniform border.
+    pub fn paint_outlined_quad(
+        &mut self,
+        bounds: Rect,
+        fill: impl Into<Srgba>,
+        border_color: impl Into<Srgba>,
+        border_width: f32,
+    ) {
+        let mut quad = Quad::new(self.to_device_rect(bounds), fill)
+            .with_border(border_color, border_width);
+        self.apply_clip(&mut quad);
+        self.scene.push_quad(quad);
+    }
+
     /// Paint text at the given position.
     ///
     /// The position is the baseline origin (left side of first glyph baseline).
@@ -406,5 +427,68 @@ mod tests {
         );
 
         assert!(scene.text_run_count() > 0);
+    }
+
+    #[test]
+    fn paint_rounded_quad_sets_corner_radii() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.paint_rounded_quad(
+            Rect::new(Point::new(10.0, 10.0), Size::new(80.0, 40.0)),
+            Srgba::new(1.0, 0.0, 0.0, 1.0),
+            8.0,
+        );
+
+        assert_eq!(scene.quad_count(), 1);
+        let quad = &scene.quads()[0];
+        assert_eq!(quad.corner_radii.top_left, 8.0);
+        assert_eq!(quad.corner_radii.top_right, 8.0);
+        assert_eq!(quad.corner_radii.bottom_right, 8.0);
+        assert_eq!(quad.corner_radii.bottom_left, 8.0);
+    }
+
+    #[test]
+    fn paint_rounded_quad_applies_offset() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.with_offset(Point::new(50.0, 20.0), |cx| {
+            cx.paint_rounded_quad(
+                Rect::new(Point::new(0.0, 0.0), Size::new(40.0, 20.0)),
+                Srgba::new(0.0, 1.0, 0.0, 1.0),
+                4.0,
+            );
+        });
+
+        let quad = &scene.quads()[0];
+        assert_eq!(quad.bounds.origin.x, 50.0);
+        assert_eq!(quad.bounds.origin.y, 20.0);
+        assert_eq!(quad.corner_radii.top_left, 4.0);
+    }
+
+    #[test]
+    fn paint_outlined_quad_sets_border() {
+        let mut scene = Scene::new();
+        let scale = ScaleFactor(1.0);
+        let mut cx = DrawContext::new(&mut scene, scale);
+
+        cx.paint_outlined_quad(
+            Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 50.0)),
+            Srgba::new(1.0, 1.0, 1.0, 1.0),
+            Srgba::new(0.0, 0.0, 0.0, 1.0),
+            2.0,
+        );
+
+        assert_eq!(scene.quad_count(), 1);
+        let quad = &scene.quads()[0];
+        assert_eq!(quad.background, Srgba::new(1.0, 1.0, 1.0, 1.0));
+        assert_eq!(quad.border_color, Srgba::new(0.0, 0.0, 0.0, 1.0));
+        assert_eq!(quad.border_widths.top, 2.0);
+        assert_eq!(quad.border_widths.right, 2.0);
+        assert_eq!(quad.border_widths.bottom, 2.0);
+        assert_eq!(quad.border_widths.left, 2.0);
     }
 }

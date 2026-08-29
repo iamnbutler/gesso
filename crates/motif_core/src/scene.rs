@@ -26,6 +26,32 @@ impl Quad {
             clip_bounds: None,
         }
     }
+
+    /// Set a uniform corner radius on all four corners.
+    pub fn with_corner_radius(mut self, radius: f32) -> Self {
+        self.corner_radii = Corners::all(radius);
+        self
+    }
+
+    /// Set per-corner radii.
+    pub fn with_corner_radii(mut self, radii: Corners<f32>) -> Self {
+        self.corner_radii = radii;
+        self
+    }
+
+    /// Set a uniform border with the given color and width.
+    pub fn with_border(mut self, color: impl Into<Srgba>, width: f32) -> Self {
+        self.border_color = color.into();
+        self.border_widths = Edges::all(width);
+        self
+    }
+
+    /// Set a border with per-edge widths.
+    pub fn with_border_widths(mut self, color: impl Into<Srgba>, widths: Edges<f32>) -> Self {
+        self.border_color = color.into();
+        self.border_widths = widths;
+        self
+    }
 }
 
 /// A positioned glyph within a text run.
@@ -80,6 +106,74 @@ impl TextRun {
 
     pub fn push_glyph(&mut self, glyph_id: u32, x: f32, y: f32) {
         self.glyphs.push(GlyphInstance { glyph_id, x, y });
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{Corners, DevicePoint, DeviceRect, DeviceSize, Edges};
+    use palette::Srgba;
+
+    fn make_bounds() -> DeviceRect {
+        DeviceRect::new(DevicePoint::new(0.0, 0.0), DeviceSize::new(100.0, 50.0))
+    }
+
+    #[test]
+    fn quad_with_corner_radius_sets_all_corners() {
+        let quad = Quad::new(make_bounds(), Srgba::new(1.0, 0.0, 0.0, 1.0)).with_corner_radius(8.0);
+        assert_eq!(quad.corner_radii.top_left, 8.0);
+        assert_eq!(quad.corner_radii.top_right, 8.0);
+        assert_eq!(quad.corner_radii.bottom_right, 8.0);
+        assert_eq!(quad.corner_radii.bottom_left, 8.0);
+    }
+
+    #[test]
+    fn quad_with_corner_radii_sets_per_corner() {
+        let radii = Corners {
+            top_left: 2.0,
+            top_right: 4.0,
+            bottom_right: 6.0,
+            bottom_left: 8.0,
+        };
+        let quad = Quad::new(make_bounds(), Srgba::new(1.0, 0.0, 0.0, 1.0)).with_corner_radii(radii);
+        assert_eq!(quad.corner_radii.top_left, 2.0);
+        assert_eq!(quad.corner_radii.top_right, 4.0);
+        assert_eq!(quad.corner_radii.bottom_right, 6.0);
+        assert_eq!(quad.corner_radii.bottom_left, 8.0);
+    }
+
+    #[test]
+    fn quad_with_border_sets_color_and_width() {
+        let quad = Quad::new(make_bounds(), Srgba::new(1.0, 0.0, 0.0, 1.0))
+            .with_border(Srgba::new(0.0, 0.0, 1.0, 1.0), 2.0);
+        assert_eq!(quad.border_color, Srgba::new(0.0, 0.0, 1.0, 1.0));
+        assert_eq!(quad.border_widths.top, 2.0);
+        assert_eq!(quad.border_widths.right, 2.0);
+        assert_eq!(quad.border_widths.bottom, 2.0);
+        assert_eq!(quad.border_widths.left, 2.0);
+    }
+
+    #[test]
+    fn quad_with_border_widths_sets_per_edge_widths() {
+        let widths = Edges { top: 1.0, right: 2.0, bottom: 3.0, left: 4.0 };
+        let quad = Quad::new(make_bounds(), Srgba::new(1.0, 0.0, 0.0, 1.0))
+            .with_border_widths(Srgba::new(0.0, 1.0, 0.0, 1.0), widths);
+        assert_eq!(quad.border_color, Srgba::new(0.0, 1.0, 0.0, 1.0));
+        assert_eq!(quad.border_widths.top, 1.0);
+        assert_eq!(quad.border_widths.right, 2.0);
+        assert_eq!(quad.border_widths.bottom, 3.0);
+        assert_eq!(quad.border_widths.left, 4.0);
+    }
+
+    #[test]
+    fn quad_builder_methods_chain() {
+        let quad = Quad::new(make_bounds(), Srgba::new(0.5, 0.5, 0.5, 1.0))
+            .with_corner_radius(4.0)
+            .with_border(Srgba::new(0.0, 0.0, 0.0, 1.0), 1.0);
+        assert_eq!(quad.corner_radii.top_left, 4.0);
+        assert_eq!(quad.border_widths.top, 1.0);
+        assert_eq!(quad.background, Srgba::new(0.5, 0.5, 0.5, 1.0));
     }
 }
 
