@@ -111,6 +111,117 @@ impl Div {
         self
     }
 
+    /// Set horizontal padding (left and right).
+    pub fn padding_x(mut self, padding: f32) -> Self {
+        self.style.padding.left = taffy::style::LengthPercentage::length(padding);
+        self.style.padding.right = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set vertical padding (top and bottom).
+    pub fn padding_y(mut self, padding: f32) -> Self {
+        self.style.padding.top = taffy::style::LengthPercentage::length(padding);
+        self.style.padding.bottom = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set top padding.
+    pub fn padding_top(mut self, padding: f32) -> Self {
+        self.style.padding.top = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set bottom padding.
+    pub fn padding_bottom(mut self, padding: f32) -> Self {
+        self.style.padding.bottom = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set left padding.
+    pub fn padding_left(mut self, padding: f32) -> Self {
+        self.style.padding.left = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set right padding.
+    pub fn padding_right(mut self, padding: f32) -> Self {
+        self.style.padding.right = taffy::style::LengthPercentage::length(padding);
+        self
+    }
+
+    /// Set margin on all sides.
+    pub fn margin(mut self, margin: f32) -> Self {
+        self.style.margin = taffy::Rect {
+            left: taffy::style::LengthPercentageAuto::length(margin),
+            right: taffy::style::LengthPercentageAuto::length(margin),
+            top: taffy::style::LengthPercentageAuto::length(margin),
+            bottom: taffy::style::LengthPercentageAuto::length(margin),
+        };
+        self
+    }
+
+    /// Set horizontal margin (left and right).
+    pub fn margin_x(mut self, margin: f32) -> Self {
+        self.style.margin.left = taffy::style::LengthPercentageAuto::length(margin);
+        self.style.margin.right = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set vertical margin (top and bottom).
+    pub fn margin_y(mut self, margin: f32) -> Self {
+        self.style.margin.top = taffy::style::LengthPercentageAuto::length(margin);
+        self.style.margin.bottom = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set top margin.
+    pub fn margin_top(mut self, margin: f32) -> Self {
+        self.style.margin.top = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set bottom margin.
+    pub fn margin_bottom(mut self, margin: f32) -> Self {
+        self.style.margin.bottom = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set left margin.
+    pub fn margin_left(mut self, margin: f32) -> Self {
+        self.style.margin.left = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set right margin.
+    pub fn margin_right(mut self, margin: f32) -> Self {
+        self.style.margin.right = taffy::style::LengthPercentageAuto::length(margin);
+        self
+    }
+
+    /// Set minimum width in logical pixels.
+    pub fn min_width(mut self, width: f32) -> Self {
+        self.style.min_size.width = taffy::style::Dimension::length(width);
+        self
+    }
+
+    /// Set minimum height in logical pixels.
+    pub fn min_height(mut self, height: f32) -> Self {
+        self.style.min_size.height = taffy::style::Dimension::length(height);
+        self
+    }
+
+    /// Set maximum width in logical pixels.
+    pub fn max_width(mut self, width: f32) -> Self {
+        self.style.max_size.width = taffy::style::Dimension::length(width);
+        self
+    }
+
+    /// Set maximum height in logical pixels.
+    pub fn max_height(mut self, height: f32) -> Self {
+        self.style.max_size.height = taffy::style::Dimension::length(height);
+        self
+    }
+
     /// Set justify content (main axis alignment).
     pub fn justify_content(mut self, justify: layout::JustifyContent) -> Self {
         self.style.justify_content = Some(justify);
@@ -326,5 +437,261 @@ mod tests {
             .child(crate::element::Empty)
             .child(crate::element::Empty);
         assert_eq!(d.children.len(), 2);
+    }
+
+    #[test]
+    fn padding_x_sets_horizontal_only() {
+        let d = div().padding_x(10.0);
+        assert_eq!(
+            d.style.padding.left,
+            taffy::style::LengthPercentage::length(10.0)
+        );
+        assert_eq!(
+            d.style.padding.right,
+            taffy::style::LengthPercentage::length(10.0)
+        );
+        // Vertical padding unchanged (zero by default)
+        assert_eq!(
+            d.style.padding.top,
+            taffy::style::LengthPercentage::length(0.0)
+        );
+        assert_eq!(
+            d.style.padding.bottom,
+            taffy::style::LengthPercentage::length(0.0)
+        );
+    }
+
+    #[test]
+    fn padding_y_sets_vertical_only() {
+        let d = div().padding_y(8.0);
+        assert_eq!(
+            d.style.padding.top,
+            taffy::style::LengthPercentage::length(8.0)
+        );
+        assert_eq!(
+            d.style.padding.bottom,
+            taffy::style::LengthPercentage::length(8.0)
+        );
+        assert_eq!(
+            d.style.padding.left,
+            taffy::style::LengthPercentage::length(0.0)
+        );
+        assert_eq!(
+            d.style.padding.right,
+            taffy::style::LengthPercentage::length(0.0)
+        );
+    }
+
+    #[test]
+    fn padding_individual_sides() {
+        let d = div()
+            .padding_top(1.0)
+            .padding_right(2.0)
+            .padding_bottom(3.0)
+            .padding_left(4.0);
+        assert_eq!(
+            d.style.padding.top,
+            taffy::style::LengthPercentage::length(1.0)
+        );
+        assert_eq!(
+            d.style.padding.right,
+            taffy::style::LengthPercentage::length(2.0)
+        );
+        assert_eq!(
+            d.style.padding.bottom,
+            taffy::style::LengthPercentage::length(3.0)
+        );
+        assert_eq!(
+            d.style.padding.left,
+            taffy::style::LengthPercentage::length(4.0)
+        );
+    }
+
+    #[test]
+    fn padding_x_y_combined() {
+        let d = div().padding_x(16.0).padding_y(8.0);
+        assert_eq!(
+            d.style.padding.left,
+            taffy::style::LengthPercentage::length(16.0)
+        );
+        assert_eq!(
+            d.style.padding.right,
+            taffy::style::LengthPercentage::length(16.0)
+        );
+        assert_eq!(
+            d.style.padding.top,
+            taffy::style::LengthPercentage::length(8.0)
+        );
+        assert_eq!(
+            d.style.padding.bottom,
+            taffy::style::LengthPercentage::length(8.0)
+        );
+    }
+
+    #[test]
+    fn margin_sets_all_sides() {
+        let d = div().margin(12.0);
+        assert_eq!(
+            d.style.margin.top,
+            taffy::style::LengthPercentageAuto::length(12.0)
+        );
+        assert_eq!(
+            d.style.margin.right,
+            taffy::style::LengthPercentageAuto::length(12.0)
+        );
+        assert_eq!(
+            d.style.margin.bottom,
+            taffy::style::LengthPercentageAuto::length(12.0)
+        );
+        assert_eq!(
+            d.style.margin.left,
+            taffy::style::LengthPercentageAuto::length(12.0)
+        );
+    }
+
+    #[test]
+    fn margin_x_sets_horizontal_only() {
+        let d = div().margin_x(20.0);
+        assert_eq!(
+            d.style.margin.left,
+            taffy::style::LengthPercentageAuto::length(20.0)
+        );
+        assert_eq!(
+            d.style.margin.right,
+            taffy::style::LengthPercentageAuto::length(20.0)
+        );
+    }
+
+    #[test]
+    fn margin_y_sets_vertical_only() {
+        let d = div().margin_y(4.0);
+        assert_eq!(
+            d.style.margin.top,
+            taffy::style::LengthPercentageAuto::length(4.0)
+        );
+        assert_eq!(
+            d.style.margin.bottom,
+            taffy::style::LengthPercentageAuto::length(4.0)
+        );
+    }
+
+    #[test]
+    fn margin_individual_sides() {
+        let d = div()
+            .margin_top(1.0)
+            .margin_right(2.0)
+            .margin_bottom(3.0)
+            .margin_left(4.0);
+        assert_eq!(
+            d.style.margin.top,
+            taffy::style::LengthPercentageAuto::length(1.0)
+        );
+        assert_eq!(
+            d.style.margin.right,
+            taffy::style::LengthPercentageAuto::length(2.0)
+        );
+        assert_eq!(
+            d.style.margin.bottom,
+            taffy::style::LengthPercentageAuto::length(3.0)
+        );
+        assert_eq!(
+            d.style.margin.left,
+            taffy::style::LengthPercentageAuto::length(4.0)
+        );
+    }
+
+    #[test]
+    fn min_width_affects_layout() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        // A div with zero explicit size but min_width=100
+        let node = div().min_width(100.0);
+        let mut d = node;
+        let mut layout_cx = LayoutContext::new(&mut engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = d.request_layout(&mut layout_cx);
+        engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        let bounds = engine.layout_bounds(node_id);
+        assert!(
+            bounds.size.width >= 100.0,
+            "min_width should enforce minimum width"
+        );
+    }
+
+    #[test]
+    fn max_width_constrains_layout() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        // Explicit width of 500 capped at max_width 200
+        let mut d = div().width(500.0).max_width(200.0);
+        let mut layout_cx = LayoutContext::new(&mut engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = d.request_layout(&mut layout_cx);
+        engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        let bounds = engine.layout_bounds(node_id);
+        assert!(
+            bounds.size.width <= 200.0,
+            "max_width should cap width at 200"
+        );
+    }
+
+    #[test]
+    fn min_height_affects_layout() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        let mut d = div().min_height(40.0);
+        let mut layout_cx = LayoutContext::new(&mut engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = d.request_layout(&mut layout_cx);
+        engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        let bounds = engine.layout_bounds(node_id);
+        assert!(
+            bounds.size.height >= 40.0,
+            "min_height should enforce minimum height"
+        );
+    }
+
+    #[test]
+    fn max_height_constrains_layout() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        // Fixed 300px height but capped at 100px
+        let mut d = div().height(300.0).max_height(100.0);
+        let mut layout_cx = LayoutContext::new(&mut engine, &mut text_ctx, ScaleFactor(1.0));
+        let node_id = d.request_layout(&mut layout_cx);
+        engine.compute_layout(node_id, 800.0, 600.0, &mut text_ctx);
+        let bounds = engine.layout_bounds(node_id);
+        assert!(
+            bounds.size.height <= 100.0,
+            "max_height should cap height at 100"
+        );
+    }
+
+    #[test]
+    fn margin_creates_spacing_between_siblings() {
+        let mut engine = LayoutEngine::new();
+        let mut text_ctx = TextContext::new();
+
+        let child1 = div().size(Size::new(50.0, 50.0)).margin_bottom(20.0);
+        let child2 = div().size(Size::new(50.0, 50.0));
+
+        let mut parent = div()
+            .flex_col()
+            .child(child1)
+            .child(child2);
+
+        let mut layout_cx = LayoutContext::new(&mut engine, &mut text_ctx, ScaleFactor(1.0));
+        let parent_id = parent.request_layout(&mut layout_cx);
+        engine.compute_layout(parent_id, 800.0, 600.0, &mut text_ctx);
+
+        // Find child node IDs — they are the two children in the engine
+        // We can verify by checking that total parent height includes the margin
+        let parent_bounds = engine.layout_bounds(parent_id);
+        // 50 (child1) + 20 (margin-bottom) + 50 (child2) = 120
+        assert_eq!(
+            parent_bounds.size.height, 120.0,
+            "margin_bottom should add spacing between children"
+        );
     }
 }
