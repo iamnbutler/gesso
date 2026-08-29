@@ -6,7 +6,7 @@
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 66 open Repo Assist draft PRs (including new PR #112)
+- 67 open Repo Assist draft PRs (including new PR #113)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
@@ -25,14 +25,15 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-29
+- Updated: 2026-08-29 (run 33276701461)
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 66 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 67 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
-- 2026-08-29: Tasks 10, 11
+- 2026-08-29 run2: Tasks 3, 11
+- 2026-08-29 run1: Tasks 10, 11
 - 2026-08-28: Tasks 3, 11
 - 2026-08-26: Tasks 10, 11
 - 2026-08-25: Tasks 1, 5, 7, 11
@@ -49,6 +50,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #113: Quad builder API + DrawContext convenience paint methods (2026-08-29)
 - #112: Div layout API — padding_x/y, margin, min/max size (2026-08-29)
 - #111: layout_bounds O(depth) iterative fix (perf improvement — 2026-08-28)
 - #110: Nested clip intersection fix (correctness bug)
@@ -56,7 +58,6 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #53: Clipboard TODOs fix (TODO fix)
 - #92: Dependency updates (refreshed 2026-08-02 with 162 updates)
 - #41: opt-level=3 for deps
-- #97: View memoization
 
 ## PRs to Close
 - #20: Superseded by maintainer PR #35
@@ -64,8 +65,18 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 66 PRs from Repo Assist; no human PRs exist
+- All 67 PRs from Repo Assist; no human PRs exist
 - Full merge order guide in issue #48 (last updated 2026-08-24)
+
+## Quad Builder API Added (2026-08-29)
+- **PR #113**: Added Quad builder methods and DrawContext convenience paint methods:
+  - `Quad::with_corner_radius(f32)`: uniform corner radius
+  - `Quad::with_corner_radii(Corners<f32>)`: per-corner radii
+  - `Quad::with_border(color, f32)`: uniform border
+  - `Quad::with_border_widths(color, Edges<f32>)`: per-edge border
+  - `DrawContext::paint_rounded_quad(bounds, fill, radius)`: common rounded rect case
+  - `DrawContext::paint_outlined_quad(bounds, fill, border_color, width)`: bordered rect
+- 8 new tests (5 in scene.rs, 3 in context.rs)
 
 ## Div Layout API Added (2026-08-29)
 - **PR #112**: Added 18 new layout methods to `Div`:
@@ -73,10 +84,9 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
   - Margins: `margin`, `margin_x`, `margin_y`, `margin_top/right/bottom/left`
   - Size constraints: `min_width`, `min_height`, `max_width`, `max_height`
 - Fills gap between `padding(f32)` (uniform only) and real-world CSS-like layout needs
-- All delegate to taffy `Style` fields; 13 new tests
 
 ## Perf Bug Found and Fixed (2026-08-28)
-- **layout_bounds() O(depth²) recursion**: Fixed in PR #111. Iterative O(depth) loop. Test: `deeply_nested_layout_absolute_positions` (8 levels × 5px padding).
+- **layout_bounds() O(depth²) recursion**: Fixed in PR #111. Iterative O(depth) loop.
 
 ## Bug Found and Fixed (2026-08-26)
 - **DrawContext::with_clip nested clip bug**: Fixed in PR #110. Inner clips now intersect with outer clips. Three new tests.
