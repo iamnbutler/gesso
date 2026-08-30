@@ -95,6 +95,54 @@ impl<'a> DrawContext<'a> {
         self.scene.push_quad(quad);
     }
 
+    /// Paint a horizontal line (thin filled rectangle).
+    ///
+    /// The top-left corner is at `(x, y)`. The line extends `length` pixels to
+    /// the right and is `thickness` pixels tall. Useful for separators and
+    /// dividers.
+    ///
+    /// ```ignore
+    /// // Draw a 1 px separator across 300 px
+    /// cx.paint_h_line(0.0, 50.0, 300.0, Srgba::new(0.5, 0.5, 0.5, 1.0), 1.0);
+    /// ```
+    pub fn paint_h_line(
+        &mut self,
+        x: f32,
+        y: f32,
+        length: f32,
+        color: impl Into<Srgba>,
+        thickness: f32,
+    ) {
+        self.paint_quad(
+            Rect::new(Point::new(x, y), Size::new(length, thickness)),
+            color,
+        );
+    }
+
+    /// Paint a vertical line (thin filled rectangle).
+    ///
+    /// The top-left corner is at `(x, y)`. The line extends `length` pixels
+    /// downward and is `thickness` pixels wide. Useful for separators and
+    /// dividers.
+    ///
+    /// ```ignore
+    /// // Draw a 1 px vertical divider 200 px tall
+    /// cx.paint_v_line(100.0, 0.0, 200.0, Srgba::new(0.5, 0.5, 0.5, 1.0), 1.0);
+    /// ```
+    pub fn paint_v_line(
+        &mut self,
+        x: f32,
+        y: f32,
+        length: f32,
+        color: impl Into<Srgba>,
+        thickness: f32,
+    ) {
+        self.paint_quad(
+            Rect::new(Point::new(x, y), Size::new(thickness, length)),
+            color,
+        );
+    }
+
     /// Apply current clip stack to quad.
     fn apply_clip(&self, quad: &mut Quad) {
         if let Some(clip) = self.clip_stack.last() {
@@ -406,5 +454,93 @@ mod tests {
         );
 
         assert!(scene.text_run_count() > 0);
+    }
+
+    #[test]
+    fn paint_h_line_creates_quad_with_correct_dimensions() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(1.0));
+        cx.paint_h_line(10.0, 20.0, 100.0, Srgba::new(0.0, 0.0, 0.0, 1.0), 2.0);
+
+        assert_eq!(scene.quad_count(), 1);
+        let q = &scene.quads()[0];
+        // At 1x scale: origin=(10, 20), size=(100, 2)
+        assert_eq!(q.bounds.origin.x, 10.0);
+        assert_eq!(q.bounds.origin.y, 20.0);
+        assert_eq!(q.bounds.size.width, 100.0);
+        assert_eq!(q.bounds.size.height, 2.0);
+    }
+
+    #[test]
+    fn paint_v_line_creates_quad_with_correct_dimensions() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(1.0));
+        cx.paint_v_line(10.0, 20.0, 80.0, Srgba::new(0.0, 0.0, 0.0, 1.0), 1.0);
+
+        assert_eq!(scene.quad_count(), 1);
+        let q = &scene.quads()[0];
+        // At 1x scale: origin=(10, 20), size=(1, 80)
+        assert_eq!(q.bounds.origin.x, 10.0);
+        assert_eq!(q.bounds.origin.y, 20.0);
+        assert_eq!(q.bounds.size.width, 1.0);
+        assert_eq!(q.bounds.size.height, 80.0);
+    }
+
+    #[test]
+    fn paint_h_line_respects_offset() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(1.0));
+        cx.with_offset(Point::new(50.0, 30.0), |cx| {
+            cx.paint_h_line(0.0, 0.0, 200.0, Srgba::new(1.0, 0.0, 0.0, 1.0), 1.0);
+        });
+
+        let q = &scene.quads()[0];
+        assert_eq!(q.bounds.origin.x, 50.0);
+        assert_eq!(q.bounds.origin.y, 30.0);
+        assert_eq!(q.bounds.size.width, 200.0);
+        assert_eq!(q.bounds.size.height, 1.0);
+    }
+
+    #[test]
+    fn paint_v_line_respects_offset() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(1.0));
+        cx.with_offset(Point::new(25.0, 10.0), |cx| {
+            cx.paint_v_line(0.0, 0.0, 150.0, Srgba::new(0.0, 1.0, 0.0, 1.0), 2.0);
+        });
+
+        let q = &scene.quads()[0];
+        assert_eq!(q.bounds.origin.x, 25.0);
+        assert_eq!(q.bounds.origin.y, 10.0);
+        assert_eq!(q.bounds.size.width, 2.0);
+        assert_eq!(q.bounds.size.height, 150.0);
+    }
+
+    #[test]
+    fn paint_h_line_scale_factor_applied() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(2.0));
+        cx.paint_h_line(10.0, 5.0, 100.0, Srgba::new(0.0, 0.0, 0.0, 1.0), 1.0);
+
+        let q = &scene.quads()[0];
+        // At 2x scale: all coordinates and sizes doubled
+        assert_eq!(q.bounds.origin.x, 20.0);
+        assert_eq!(q.bounds.origin.y, 10.0);
+        assert_eq!(q.bounds.size.width, 200.0);
+        assert_eq!(q.bounds.size.height, 2.0);
+    }
+
+    #[test]
+    fn paint_v_line_scale_factor_applied() {
+        let mut scene = Scene::new();
+        let mut cx = DrawContext::new(&mut scene, ScaleFactor(2.0));
+        cx.paint_v_line(5.0, 10.0, 100.0, Srgba::new(0.0, 0.0, 0.0, 1.0), 1.0);
+
+        let q = &scene.quads()[0];
+        // At 2x scale
+        assert_eq!(q.bounds.origin.x, 10.0);
+        assert_eq!(q.bounds.origin.y, 20.0);
+        assert_eq!(q.bounds.size.width, 2.0);
+        assert_eq!(q.bounds.size.height, 200.0);
     }
 }
