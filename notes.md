@@ -1,18 +1,18 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-29
+2026-08-30
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 67 open Repo Assist draft PRs (including new PR #113)
+- 68 open Repo Assist draft PRs (including new PR #114)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
 ## Open Issues
 - #15: [agentics] Repo Assist failed — labeled `wontfix`, expired Mar 2026 → suggest close
-- #48: [Repo Assist] PR backlog merge order — updated 2026-08-24, now covers all 63 PRs
+- #48: [Repo Assist] PR backlog merge order — updated 2026-08-24, covers 63 PRs (4 new since: #110-#113, need update)
 - #49: [Repo Assist] Research: wgpu rendering backend
 - #51: [Repo Assist] Research: text metrics debug example
 - #94: [Repo Assist] Research: view memoization (implemented as PR #97)
@@ -25,13 +25,14 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-29 (run 33276701461)
+- Updated: 2026-08-30 (run 33337637555)
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 67 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 68 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-08-30: Tasks 1, 3, 7, 11
 - 2026-08-29 run2: Tasks 3, 11
 - 2026-08-29 run1: Tasks 10, 11
 - 2026-08-28: Tasks 3, 11
@@ -50,6 +51,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #114: DrawContext::paint_h_line + paint_v_line (2026-08-30)
 - #113: Quad builder API + DrawContext convenience paint methods (2026-08-29)
 - #112: Div layout API — padding_x/y, margin, min/max size (2026-08-29)
 - #111: layout_bounds O(depth) iterative fix (perf improvement — 2026-08-28)
@@ -65,8 +67,15 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 67 PRs from Repo Assist; no human PRs exist
-- Full merge order guide in issue #48 (last updated 2026-08-24)
+- All 68 PRs from Repo Assist; no human PRs exist
+- Full merge order guide in issue #48 (last updated 2026-08-24, covers 63 PRs; #110-#114 added since)
+
+## DrawContext Line Helpers Added (2026-08-30)
+- **PR #114**: Added axis-aligned line convenience methods to DrawContext:
+  - `paint_h_line(x, y, length, color, thickness)`: horizontal separator/divider
+  - `paint_v_line(x, y, length, color, thickness)`: vertical separator/divider
+- Both delegate to `paint_quad`; offset, clip, and scale factor apply automatically
+- 6 new tests: dimensions at 1× scale, offset accumulation, 2× HiDPI scaling (each method)
 
 ## Quad Builder API Added (2026-08-29)
 - **PR #113**: Added Quad builder methods and DrawContext convenience paint methods:
