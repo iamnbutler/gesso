@@ -1,6 +1,7 @@
 pub mod accessibility;
 pub mod arc_str;
 pub mod callbacks;
+pub mod color;
 pub mod context;
 pub mod element;
 pub mod elements;
@@ -19,6 +20,7 @@ pub mod metal;
 pub use accessibility::*;
 pub use arc_str::*;
 pub use callbacks::*;
+pub use color::*;
 pub use context::*;
 pub use element::*;
 pub use elements::*;
