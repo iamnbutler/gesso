@@ -1,18 +1,18 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-30
+2026-08-31
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 68 open Repo Assist draft PRs (including new PR #114)
+- 69 open Repo Assist draft PRs (including new PR #115)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
 ## Open Issues
 - #15: [agentics] Repo Assist failed — labeled `wontfix`, expired Mar 2026 → suggest close
-- #48: [Repo Assist] PR backlog merge order — updated 2026-08-24, covers 63 PRs (4 new since: #110-#113, need update)
+- #48: [Repo Assist] PR backlog merge order — updated 2026-08-31, covers all 69 PRs (#110-#115 added)
 - #49: [Repo Assist] Research: wgpu rendering backend
 - #51: [Repo Assist] Research: text metrics debug example
 - #94: [Repo Assist] Research: view memoization (implemented as PR #97)
@@ -22,16 +22,18 @@
 
 ## Comments Made
 All 13 open issues have at least one Repo Assist comment. Do not re-engage unless new human activity appears.
+- #48 last updated: 2026-08-31 (added PRs #110-#115 to merge order guide)
 
 ## Monthly Summary Issue
 - Current: #103 (August 2026)
-- Updated: 2026-08-30 (run 33337637555)
+- Updated: 2026-08-31 (run 33449533484)
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
-- PR cursor: all 68 PRs from Repo Assist, no human PRs to nudge
+- PR cursor: all 69 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-08-31: Tasks 5, 10, 11
 - 2026-08-30: Tasks 1, 3, 7, 11
 - 2026-08-29 run2: Tasks 3, 11
 - 2026-08-29 run1: Tasks 10, 11
@@ -51,6 +53,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #115: Color helpers (rgb, rgba, gray, rgb_u8, rgba_u8, with_alpha) — 2026-08-31
 - #114: DrawContext::paint_h_line + paint_v_line (2026-08-30)
 - #113: Quad builder API + DrawContext convenience paint methods (2026-08-29)
 - #112: Div layout API — padding_x/y, margin, min/max size (2026-08-29)
@@ -67,8 +70,19 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 
 ## PR Notes
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
-- All 68 PRs from Repo Assist; no human PRs exist
-- Full merge order guide in issue #48 (last updated 2026-08-24, covers 63 PRs; #110-#114 added since)
+- All 69 PRs from Repo Assist; no human PRs exist
+- Full merge order guide in issue #48 (last updated 2026-08-31, covers all 69 PRs)
+
+## Color Helpers Added (2026-08-31)
+- **PR #115**: Added `color` module to `motif_core` with 6 color construction helpers:
+  - `rgb(r, g, b)`: opaque color from [0.0, 1.0] floats
+  - `rgba(r, g, b, a)`: color with alpha from [0.0, 1.0] floats
+  - `gray(v)`: opaque gray from single lightness value
+  - `rgb_u8(r, g, b)`: opaque color from [0, 255] u8 values
+  - `rgba_u8(r, g, b, a)`: color with alpha from [0, 255] u8 values
+  - `with_alpha(color, alpha)`: clone a color with new alpha
+- All re-exported from crate root via `pub use color::*`
+- 11 unit tests; infra build failure (Linux missing fontconfig - parley dep)
 
 ## DrawContext Line Helpers Added (2026-08-30)
 - **PR #114**: Added axis-aligned line convenience methods to DrawContext:
@@ -115,9 +129,15 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - Maintainer must apply patch from issue #107 or run 31635670794 artifacts
 - Then close issues #101, #102, #104, #105, #106, #107
 
+## Future Improvement Ideas
+- `Edges::new(top, right, bottom, left)` explicit constructor (currently only `all()` and `symmetric()`)
+- `Corners::new(tl, tr, br, bl)` explicit constructor (currently only `all()` and `top_bottom()`)
+- These would pair well with PR #113 (Quad builder API)
+
 ## Structural Notes
 - Project: immediate-mode Rust UI framework, Metal GPU backend, macOS only currently
 - Codebase: motif, motif_core, motif_debug, motif_debug_cli, motif_test crates
-- Uses Taffy for layout, swash for text rasterization
+- Uses Taffy for layout, swash for text rasterization, parley for text layout
 - Active streams: text-input-rewrite, todomvc, layout, theming, cross-platform, devtools, animation, accessibility
 - All major feature areas have open Repo Assist PRs
+- Linux build blocked by missing fontconfig (parley dep) — all PRs use infrastructure note

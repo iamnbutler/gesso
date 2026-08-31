@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-08-30T00:00:00Z",
-  "last_run_id": "33337637555",
+  "last_run": "2026-08-31T00:00:00Z",
+  "last_run_id": "33449533484",
   "monthly_summary_issue": 103,
   "monthly_summary_month": "2026-08",
   "monthly_summary_july_closed": true,
@@ -9,12 +9,12 @@
   "monthly_summary_april_closed": true,
   "monthly_summary_may_closed": true,
   "tasks_run_last": {
-    "task_11_monthly_summary": "2026-08-30",
+    "task_11_monthly_summary": "2026-08-31",
+    "task_10_forward": "2026-08-31",
+    "task_5_maintain_prs": "2026-08-31",
     "task_3_improvements": "2026-08-30",
     "task_1_triage": "2026-08-30",
     "task_7_labels": "2026-08-30",
-    "task_10_forward": "2026-08-29",
-    "task_5_maintain_prs": "2026-08-25",
     "task_6_stale_nudges": "2026-08-22",
     "task_9_welcome": "2026-08-22",
     "task_2_fix_prs": "2026-08-22",
@@ -26,7 +26,7 @@
     "12": "2026-03-04",
     "15": "2026-03-12",
     "23": "2026-03-05",
-    "48": "2026-08-24",
+    "48": "2026-08-31",
     "49": "2026-05-11",
     "51": "2026-05-08",
     "67": "2026-06-01",
@@ -119,6 +119,7 @@
     "div-layout-api": "pr-112-open",
     "quad-builder-api": "pr-113-open",
     "drawcontext-line-helpers": "pr-114-open",
+    "color-helpers": "pr-115-open",
     "bench-ci-jsonl": "issue-101-push-failed-6-attempts-workflow-scope-required"
   },
   "issues_created": {
@@ -137,21 +138,21 @@
     "103": "monthly summary august 2026 - OPEN"
   },
   "backlog_cursor": null,
-  "notes": "2026-08-30: Tasks 1, 3, 7, 11 run. Task 3: Added paint_h_line and paint_v_line to DrawContext (context.rs). 6 new tests. PR #114 created. Task 1: Verified 13 open issues, no new human activity. Task 7: Spot-checked PRs #39 (bug label OK), #41 (performance label OK). Task 11: Updated monthly summary #103. Next priority tasks: 5 (PR maintenance), 6/9 (stale nudges/welcome), 2 (fix PRs). Round-robin: task 6, 9 overdue (last 2026-08-22), task 5 overdue (last 2026-08-25).",
+  "notes": "2026-08-31: Tasks 10, 5, 11 run. Task 10: Created PR #115 color helpers (rgb, rgba, gray, rgb_u8, rgba_u8, with_alpha) - 11 tests - infra failure on Linux (no fontconfig). Task 5: Commented on #48 with updated merge order including PRs #110-#115. Task 11: Updated monthly summary #103. Next priority tasks: 1 (triage), 3 (improvements), 7 (labels), 6/9 (stale/welcome), 2 (fix PRs), 8 (release), 4 (deps - wait until 2026-09-07). Round-robin: task 6, 9 most overdue (2026-08-22).",
   "pr_merge_order_issue": "48",
-  "pr_merge_order_updated": "2026-08-24",
-  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108,109,110,111,112,113,114],
+  "pr_merge_order_updated": "2026-08-31",
+  "open_repo_assist_prs": [20,21,22,25,27,36,37,38,39,40,41,42,43,44,45,46,47,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,96,97,99,100,108,109,110,111,112,113,114,115],
   "mergeability_verified": {
     "date": "2026-08-25",
     "clean": [36, 41, 58],
     "unstable_ci_only": [92],
     "base_sha_main": "57a5ad830597ef24f02f951f54198df090eff48a",
-    "note": "All PRs target current main SHA — all conflict-free. Verified 2026-08-25. PRs #110-#114 also target same SHA."
+    "note": "All PRs target current main SHA — all conflict-free. Verified 2026-08-25. PRs #110-#115 also target same SHA."
   },
   "prs_to_close": [20, 21],
   "priority_pr": 36,
   "checked_off_by_maintainer": [],
-  "ci_observation": "68 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows. Mark PRs Ready for review to trigger CI.",
+  "ci_observation": "69 Repo Assist PRs have no CI runs. Root cause: GitHub blocks github-actions[bot] GITHUB_TOKEN from triggering other workflows. Mark PRs Ready for review to trigger CI.",
   "release_workflow": "release.yml ready; push vX.Y.Z tag to trigger validate->draft-release pipeline. Version is 0.0.1.",
   "dep_audit": {
     "last_updated": "2026-08-02",
@@ -194,5 +195,10 @@
     "date": "2026-08-30",
     "pr": 114,
     "description": "Added paint_h_line(x, y, length, color, thickness) and paint_v_line(x, y, length, color, thickness) to DrawContext. Both delegate to paint_quad so offset/clip/scale are automatic. 6 new tests: dimensions at 1x scale, offset accumulation, 2x HiDPI scaling for each method."
+  },
+  "color_helpers": {
+    "date": "2026-08-31",
+    "pr": 115,
+    "description": "Added color module to motif_core with rgb(), rgba(), gray(), rgb_u8(), rgba_u8(), with_alpha() helpers. All re-exported from crate root. 11 unit tests. Infra build failure: Linux environment missing fontconfig (parley dep); expected to pass on macOS."
   }
 }
