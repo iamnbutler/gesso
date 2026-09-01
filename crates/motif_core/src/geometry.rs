@@ -68,6 +68,15 @@ pub struct Edges<T> {
     pub left: T,
 }
 
+impl<T> Edges<T> {
+    /// Constructs `Edges` with explicit per-edge values.
+    ///
+    /// Follows CSS order: top, right, bottom, left.
+    pub fn new(top: T, right: T, bottom: T, left: T) -> Self {
+        Self { top, right, bottom, left }
+    }
+}
+
 impl<T: Copy> Edges<T> {
     pub fn all(value: T) -> Self {
         Self {
@@ -107,6 +116,15 @@ pub struct Corners<T> {
     pub bottom_left: T,
 }
 
+impl<T> Corners<T> {
+    /// Constructs `Corners` with explicit per-corner values.
+    ///
+    /// Order: top-left, top-right, bottom-right, bottom-left (clockwise from top-left).
+    pub fn new(top_left: T, top_right: T, bottom_right: T, bottom_left: T) -> Self {
+        Self { top_left, top_right, bottom_right, bottom_left }
+    }
+}
+
 impl<T: Copy> Corners<T> {
     pub fn all(value: T) -> Self {
         Self {
@@ -123,6 +141,18 @@ impl<T: Copy> Corners<T> {
             top_right: top,
             bottom_left: bottom,
             bottom_right: bottom,
+        }
+    }
+
+    /// Sets left-side corners to one value and right-side corners to another.
+    ///
+    /// Useful for one-sided rounding (e.g. rounded-right panels).
+    pub fn left_right(left: T, right: T) -> Self {
+        Self {
+            top_left: left,
+            bottom_left: left,
+            top_right: right,
+            bottom_right: right,
         }
     }
 }
@@ -179,5 +209,62 @@ mod tests {
         };
         assert_eq!(edges.horizontal(), 6.0); // 4 + 2
         assert_eq!(edges.vertical(), 4.0); // 1 + 3
+    }
+
+    #[test]
+    fn edges_new_stores_correct_fields() {
+        let e = Edges::new(1.0_f32, 2.0, 3.0, 4.0);
+        assert_eq!(e.top, 1.0);
+        assert_eq!(e.right, 2.0);
+        assert_eq!(e.bottom, 3.0);
+        assert_eq!(e.left, 4.0);
+    }
+
+    #[test]
+    fn edges_new_non_copy() {
+        // Edges::new should accept non-Copy types.
+        let e: Edges<String> = Edges::new(
+            "top".to_string(),
+            "right".to_string(),
+            "bottom".to_string(),
+            "left".to_string(),
+        );
+        assert_eq!(e.top, "top");
+        assert_eq!(e.right, "right");
+        assert_eq!(e.bottom, "bottom");
+        assert_eq!(e.left, "left");
+    }
+
+    #[test]
+    fn corners_new_stores_correct_fields() {
+        let c = Corners::new(1.0_f32, 2.0, 3.0, 4.0);
+        assert_eq!(c.top_left, 1.0);
+        assert_eq!(c.top_right, 2.0);
+        assert_eq!(c.bottom_right, 3.0);
+        assert_eq!(c.bottom_left, 4.0);
+    }
+
+    #[test]
+    fn corners_new_non_copy() {
+        // Corners::new should accept non-Copy types.
+        let c: Corners<String> = Corners::new(
+            "tl".to_string(),
+            "tr".to_string(),
+            "br".to_string(),
+            "bl".to_string(),
+        );
+        assert_eq!(c.top_left, "tl");
+        assert_eq!(c.top_right, "tr");
+        assert_eq!(c.bottom_right, "br");
+        assert_eq!(c.bottom_left, "bl");
+    }
+
+    #[test]
+    fn corners_left_right_sets_sides_correctly() {
+        let c = Corners::left_right(10.0_f32, 20.0);
+        assert_eq!(c.top_left, 10.0);
+        assert_eq!(c.bottom_left, 10.0);
+        assert_eq!(c.top_right, 20.0);
+        assert_eq!(c.bottom_right, 20.0);
     }
 }
