@@ -3,6 +3,9 @@
 // Re-export Unit trait for users defining custom coordinate spaces
 pub use glamour::Unit;
 
+// Re-export glamour geometry traits so callers don't need `use glamour::*`
+pub use glamour::{Contains, Intersection, Union};
+
 /// Logical pixels - DPI-independent coordinate space.
 pub struct LogicalPixels;
 
@@ -146,6 +149,100 @@ impl Axis {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // ── Contains trait ───────────────────────────────────────────────────────
+
+    #[test]
+    fn rect_contains_interior_point() {
+        let r = Rect::new(Point::new(10.0, 10.0), Size::new(100.0, 100.0));
+        // Point well inside the rect
+        assert!(r.contains(&Point::new(50.0, 50.0)));
+    }
+
+    #[test]
+    fn rect_contains_min_corner_inclusive() {
+        let r = Rect::new(Point::new(10.0, 10.0), Size::new(100.0, 100.0));
+        // Min corner is inclusive
+        assert!(r.contains(&Point::new(10.0, 10.0)));
+    }
+
+    #[test]
+    fn rect_does_not_contain_exterior_point() {
+        let r = Rect::new(Point::new(10.0, 10.0), Size::new(100.0, 100.0));
+        assert!(!r.contains(&Point::new(9.0, 50.0)));
+        assert!(!r.contains(&Point::new(50.0, 9.0)));
+        assert!(!r.contains(&Point::new(200.0, 50.0)));
+    }
+
+    // ── Intersection trait ───────────────────────────────────────────────────
+
+    #[test]
+    fn overlapping_rects_produce_intersection() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 100.0));
+        let b = Rect::new(Point::new(50.0, 50.0), Size::new(100.0, 100.0));
+        let result = a.intersection(&b).expect("overlapping rects should intersect");
+        assert_eq!(result.origin.x, 50.0);
+        assert_eq!(result.origin.y, 50.0);
+        assert_eq!(result.size.width, 50.0);
+        assert_eq!(result.size.height, 50.0);
+    }
+
+    #[test]
+    fn disjoint_rects_produce_no_intersection() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0));
+        let b = Rect::new(Point::new(20.0, 0.0), Size::new(10.0, 10.0));
+        assert!(a.intersection(&b).is_none());
+    }
+
+    #[test]
+    fn rect_intersects_overlapping_rect() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(100.0, 100.0));
+        let b = Rect::new(Point::new(50.0, 50.0), Size::new(100.0, 100.0));
+        assert!(a.intersects(&b));
+    }
+
+    #[test]
+    fn rect_does_not_intersect_disjoint_rect() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0));
+        let b = Rect::new(Point::new(20.0, 0.0), Size::new(10.0, 10.0));
+        assert!(!a.intersects(&b));
+    }
+
+    #[test]
+    fn device_rect_intersection_works() {
+        // Confirms the trait re-export is generic over unit type
+        let a = DeviceRect::new(DevicePoint::new(0.0, 0.0), DeviceSize::new(100.0, 100.0));
+        let b = DeviceRect::new(DevicePoint::new(50.0, 50.0), DeviceSize::new(100.0, 100.0));
+        let result = a.intersection(&b).expect("device rects should intersect");
+        assert_eq!(result.origin.x, 50.0);
+        assert_eq!(result.origin.y, 50.0);
+    }
+
+    // ── Union trait ──────────────────────────────────────────────────────────
+
+    #[test]
+    fn rect_union_produces_bounding_box() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(50.0, 50.0));
+        let b = Rect::new(Point::new(40.0, 40.0), Size::new(50.0, 50.0));
+        let u = a.union(b);
+        assert_eq!(u.origin.x, 0.0);
+        assert_eq!(u.origin.y, 0.0);
+        assert_eq!(u.size.width, 90.0);
+        assert_eq!(u.size.height, 90.0);
+    }
+
+    #[test]
+    fn rect_union_with_disjoint_rect() {
+        let a = Rect::new(Point::new(0.0, 0.0), Size::new(10.0, 10.0));
+        let b = Rect::new(Point::new(90.0, 90.0), Size::new(10.0, 10.0));
+        let u = a.union(b);
+        assert_eq!(u.origin.x, 0.0);
+        assert_eq!(u.origin.y, 0.0);
+        assert_eq!(u.size.width, 100.0);
+        assert_eq!(u.size.height, 100.0);
+    }
+
+    // ── Scale factor ─────────────────────────────────────────────────────────
 
     #[test]
     fn scale_factor_roundtrip() {
