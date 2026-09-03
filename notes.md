@@ -1,12 +1,12 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-08-31
+2026-09-03
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 69 open Repo Assist draft PRs (including new PR #115)
+- 70 open Repo Assist draft PRs (including new PR #116)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
@@ -25,14 +25,15 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #48 last updated: 2026-08-31 (added PRs #110-#115 to merge order guide)
 
 ## Monthly Summary Issue
-- Current: #103 (August 2026)
-- Updated: 2026-08-31 (run 33449533484)
+- Current: September 2026 (created run 33809160476, issue #103 August closed)
+- Previous: #103 (August 2026) — closed 2026-09-03
 
 ## Backlog Cursor
 - Issue backlog cursor: all issues covered; reset when new issues appear
 - PR cursor: all 69 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-09-03: Tasks 3, 11
 - 2026-08-31: Tasks 5, 10, 11
 - 2026-08-30: Tasks 1, 3, 7, 11
 - 2026-08-29 run2: Tasks 3, 11
@@ -53,6 +54,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #116: Edges::new() / Corners::new() explicit constructors — 2026-09-03
 - #115: Color helpers (rgb, rgba, gray, rgb_u8, rgba_u8, with_alpha) — 2026-08-31
 - #114: DrawContext::paint_h_line + paint_v_line (2026-08-30)
 - #113: Quad builder API + DrawContext convenience paint methods (2026-08-29)
@@ -72,6 +74,13 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - GitHub blocks CI triggers for github-actions[bot] PRs via GITHUB_TOKEN — maintainer must manually mark PRs as "Ready for review" to run CI
 - All 69 PRs from Repo Assist; no human PRs exist
 - Full merge order guide in issue #48 (last updated 2026-08-31, covers all 69 PRs)
+
+## Geometry Constructors Added (2026-09-03)
+- **PR #116**: Added explicit per-element constructors to `Edges<T>` and `Corners<T>`:
+  - `Edges::new(top, right, bottom, left)`: CSS-order per-side values, no `Copy` bound
+  - `Corners::new(tl, tr, br, bl)`: clockwise from top-left per-corner values, no `Copy` bound
+- 4 new unit tests; pairs with PR #113 (Quad builder API)
+- Infra build failure (Linux missing fontconfig — expected)
 
 ## Color Helpers Added (2026-08-31)
 - **PR #115**: Added `color` module to `motif_core` with 6 color construction helpers:
@@ -130,8 +139,8 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - Then close issues #101, #102, #104, #105, #106, #107
 
 ## Future Improvement Ideas
-- `Edges::new(top, right, bottom, left)` explicit constructor (currently only `all()` and `symmetric()`)
-- `Corners::new(tl, tr, br, bl)` explicit constructor (currently only `all()` and `top_bottom()`)
+- `Edges::axial(horizontal, vertical)` convenience constructor (swapped arg order from `symmetric()`)
+- Consider `Edges::new()` / `Corners::new()` already done in PR #116
 - These would pair well with PR #113 (Quad builder API)
 
 ## Structural Notes
