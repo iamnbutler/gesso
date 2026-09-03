@@ -68,6 +68,14 @@ pub struct Edges<T> {
     pub left: T,
 }
 
+impl<T> Edges<T> {
+    /// Create edges with explicit per-side values.
+    /// Follows CSS order: top, right, bottom, left.
+    pub fn new(top: T, right: T, bottom: T, left: T) -> Self {
+        Self { top, right, bottom, left }
+    }
+}
+
 impl<T: Copy> Edges<T> {
     pub fn all(value: T) -> Self {
         Self {
@@ -105,6 +113,14 @@ pub struct Corners<T> {
     pub top_right: T,
     pub bottom_right: T,
     pub bottom_left: T,
+}
+
+impl<T> Corners<T> {
+    /// Create corners with explicit per-corner values.
+    /// Order: top-left, top-right, bottom-right, bottom-left (clockwise from top-left).
+    pub fn new(top_left: T, top_right: T, bottom_right: T, bottom_left: T) -> Self {
+        Self { top_left, top_right, bottom_right, bottom_left }
+    }
 }
 
 impl<T: Copy> Corners<T> {
@@ -179,5 +195,40 @@ mod tests {
         };
         assert_eq!(edges.horizontal(), 6.0); // 4 + 2
         assert_eq!(edges.vertical(), 4.0); // 1 + 3
+    }
+
+    #[test]
+    fn edges_new_per_side() {
+        let e: Edges<f32> = Edges::new(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(e.top, 1.0);
+        assert_eq!(e.right, 2.0);
+        assert_eq!(e.bottom, 3.0);
+        assert_eq!(e.left, 4.0);
+    }
+
+    #[test]
+    fn edges_new_sums_correctly() {
+        let e: Edges<f32> = Edges::new(5.0, 10.0, 5.0, 10.0);
+        assert_eq!(e.horizontal(), 20.0);
+        assert_eq!(e.vertical(), 10.0);
+    }
+
+    #[test]
+    fn corners_new_per_corner() {
+        let c: Corners<f32> = Corners::new(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(c.top_left, 1.0);
+        assert_eq!(c.top_right, 2.0);
+        assert_eq!(c.bottom_right, 3.0);
+        assert_eq!(c.bottom_left, 4.0);
+    }
+
+    #[test]
+    fn corners_new_distinct_radii() {
+        // Typical use: sharp top corners, rounded bottom corners
+        let c: Corners<f32> = Corners::new(0.0, 0.0, 8.0, 8.0);
+        assert_eq!(c.top_left, 0.0);
+        assert_eq!(c.top_right, 0.0);
+        assert_eq!(c.bottom_right, 8.0);
+        assert_eq!(c.bottom_left, 8.0);
     }
 }
