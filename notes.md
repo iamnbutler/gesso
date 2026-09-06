@@ -1,12 +1,12 @@
 # Repo Assist Memory — iamnbutler/motif
 
 ## Last Updated
-2026-09-03
+2026-09-06
 
 ## Repository State
 - Main branch: `57a5ad8` (feat(ci): add release workflow and version bump helper) — unchanged since March 2026
 - No tags/releases exist (version: 0.0.1)
-- 70 open Repo Assist draft PRs (including new PR #116)
+- 71 open Repo Assist draft PRs (including new PR #118)
 - 13 open issues (all have Repo Assist comments)
 - No human-authored PRs or recent human activity
 
@@ -33,6 +33,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - PR cursor: all 69 PRs from Repo Assist, no human PRs to nudge
 
 ## Round-Robin Task History
+- 2026-09-06: Tasks 10, 11
 - 2026-09-03: Tasks 3, 11
 - 2026-08-31: Tasks 5, 10, 11
 - 2026-08-30: Tasks 1, 3, 7, 11
@@ -54,6 +55,7 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - #36: Multi-click detection (p1 blocker)
 - #58: Per-item inline editing TodoMVC (p1)
 - #71: Element tree query devtools (p1)
+- #118: Edges::axial() / Corners::left_right() symmetric constructors — 2026-09-06
 - #116: Edges::new() / Corners::new() explicit constructors — 2026-09-03
 - #115: Color helpers (rgb, rgba, gray, rgb_u8, rgba_u8, with_alpha) — 2026-08-31
 - #114: DrawContext::paint_h_line + paint_v_line (2026-08-30)
@@ -139,9 +141,15 @@ All 13 open issues have at least one Repo Assist comment. Do not re-engage unles
 - Then close issues #101, #102, #104, #105, #106, #107
 
 ## Future Improvement Ideas
-- `Edges::axial(horizontal, vertical)` convenience constructor (swapped arg order from `symmetric()`)
-- Consider `Edges::new()` / `Corners::new()` already done in PR #116
-- These would pair well with PR #113 (Quad builder API)
+- `Corners::diagonal(tl_br, tr_bl)` — split corners along diagonals for visual effect patterns
+- `Edges::new()` / `Corners::new()` done in PR #116
+- `Edges::axial()` / `Corners::left_right()` done in PR #118
+
+## Geometry Axial Constructors Added (2026-09-06)
+- **PR #118**: Added `Edges::axial(horizontal, vertical)` and `Corners::left_right(left, right)`:
+  - `Edges::axial(h, v)`: x/y axis argument order (horizontal first), complements `symmetric(v, h)` CSS order
+  - `Corners::left_right(l, r)`: column-wise symmetry (TL+BL vs TR+BR), complements `top_bottom(t, b)` row-wise
+- 4 new unit tests; fmt passes; full macOS build expected to pass on CI
 
 ## Structural Notes
 - Project: immediate-mode Rust UI framework, Metal GPU backend, macOS only currently
