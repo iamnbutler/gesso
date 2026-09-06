@@ -86,6 +86,19 @@ impl<T: Copy> Edges<T> {
             right: horizontal,
         }
     }
+
+    /// Create edges with uniform horizontal (left/right) and vertical (top/bottom) values.
+    ///
+    /// Argument order follows x/y axis convention: horizontal first, vertical second.
+    /// See also [`Self::symmetric`] which uses CSS shorthand order (vertical first).
+    pub fn axial(horizontal: T, vertical: T) -> Self {
+        Self {
+            top: vertical,
+            bottom: vertical,
+            left: horizontal,
+            right: horizontal,
+        }
+    }
 }
 
 impl<T: Copy + std::ops::Add<Output = T>> Edges<T> {
@@ -123,6 +136,19 @@ impl<T: Copy> Corners<T> {
             top_right: top,
             bottom_left: bottom,
             bottom_right: bottom,
+        }
+    }
+
+    /// Create corners with uniform left (top_left, bottom_left) and right (top_right, bottom_right) values.
+    ///
+    /// Complements [`Self::top_bottom`]: together they cover both axes of corner symmetry.
+    /// Useful for components that are rounded on one side only (e.g. pill buttons, side panels).
+    pub fn left_right(left: T, right: T) -> Self {
+        Self {
+            top_left: left,
+            bottom_left: left,
+            top_right: right,
+            bottom_right: right,
         }
     }
 }
@@ -179,5 +205,38 @@ mod tests {
         };
         assert_eq!(edges.horizontal(), 6.0); // 4 + 2
         assert_eq!(edges.vertical(), 4.0); // 1 + 3
+    }
+
+    #[test]
+    fn edges_axial_sets_horizontal_and_vertical() {
+        let e = Edges::axial(4.0_f32, 8.0);
+        assert_eq!(e.left, 4.0);
+        assert_eq!(e.right, 4.0);
+        assert_eq!(e.top, 8.0);
+        assert_eq!(e.bottom, 8.0);
+    }
+
+    #[test]
+    fn edges_axial_equivalent_to_symmetric_swapped() {
+        // axial(h, v) is identical to symmetric(v, h) — argument order is the only difference
+        let axial = Edges::axial(4.0_f32, 8.0);
+        let sym = Edges::symmetric(8.0, 4.0);
+        assert_eq!(axial, sym);
+    }
+
+    #[test]
+    fn corners_left_right_sets_columns() {
+        let c = Corners::left_right(3.0_f32, 6.0);
+        assert_eq!(c.top_left, 3.0);
+        assert_eq!(c.bottom_left, 3.0);
+        assert_eq!(c.top_right, 6.0);
+        assert_eq!(c.bottom_right, 6.0);
+    }
+
+    #[test]
+    fn corners_left_right_uniform_matches_all() {
+        let lr = Corners::left_right(5.0_f32, 5.0);
+        let all = Corners::all(5.0_f32);
+        assert_eq!(lr, all);
     }
 }
